@@ -12,9 +12,12 @@ import java.util.List;
 @Dao
 public interface TaxonomicFamilyDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(List<TaxonomicFamily> user);
+    List<Long> insertAll(List<TaxonomicFamily> user);
 
     @Query("SELECT * FROM taxonomic_family")
     List<TaxonomicFamily> getAll();
+
+    @Query("DELETE FROM taxonomic_family")
+    void deleteAll();
 }
 

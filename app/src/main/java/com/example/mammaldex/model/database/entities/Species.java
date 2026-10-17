@@ -81,4 +81,8 @@ public class Species {
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
     }
+
+    public void setGenusId(Long genusId) {
+        this.genusId = genusId;
+    }
 }

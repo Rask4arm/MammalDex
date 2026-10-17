@@ -12,9 +12,12 @@ import java.util.List;
 @Dao
 public interface SpeciesDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(List<Species> user);
+    List<Long> insertAll(List<Species> user);
 
     @Query("SELECT * FROM species")
     List<Species> getAll();
+
+    @Query("DELETE FROM species")
+    void deleteAll();
 }
 

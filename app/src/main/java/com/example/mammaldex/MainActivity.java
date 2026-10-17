@@ -7,6 +7,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.room.Room;
+import androidx.sqlite.driver.AndroidSQLiteDriver;
+
+import com.example.mammaldex.model.database.AppDatabase;
+import com.example.mammaldex.model.database.DatabaseCreator;
+
+import java.util.concurrent.Executors;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -15,6 +22,27 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
+        AppDatabase db = Room.databaseBuilder(
+                        getApplicationContext(),
+                        AppDatabase.class,
+                        "database"
+                )
+                .setDriver(new AndroidSQLiteDriver())
+                .build();
+
+
+        Executors.newSingleThreadExecutor().execute(new Runnable() {
+            @Override
+            public void run() {
+                db.speciesDao().deleteAll();
+                db.taxonomicGenusDao().deleteAll();
+                db.taxonomicFamilyDao().deleteAll();
+                db.taxonomicOrderDao().deleteAll();
+                DatabaseCreator.readCsvToRoom(getApplicationContext(), db);
+
+            }
+        });
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);

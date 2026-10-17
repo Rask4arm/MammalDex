@@ -2,7 +2,9 @@ package com.example.mammaldex.model.database;
 
 import android.content.Context;
 
+import com.example.mammaldex.model.database.entities.Species;
 import com.example.mammaldex.model.database.entities.TaxonomicFamily;
+import com.example.mammaldex.model.database.entities.TaxonomicGenus;
 import com.example.mammaldex.model.database.entities.TaxonomicOrder;
 
 import java.io.BufferedReader;
@@ -19,11 +21,14 @@ public class DatabaseCreator {
 
         List<TaxonomicOrder> orderList = new ArrayList<>();
         List<TaxonomicFamily> familyList = new ArrayList<>();
-
+        List<TaxonomicGenus> genusList = new ArrayList<>();
+        List<Species> speciesList = new ArrayList<>();
 
         Map<String, String> familyToOrder = new HashMap<>();
         Map<String, String> genusToFamily = new HashMap<>();
         Map<String, String> speciesToGenus = new HashMap<>();
+
+
 
         try {
             InputStream is = context.getAssets().open("csv test.csv");
@@ -33,28 +38,26 @@ public class DatabaseCreator {
             // Skip the header row
             String headerLine = reader.readLine();
 
-            int orderCol = 18;
-            int familyCol = 14;
-            int genusCol = 9;
-            int speciesCol = 4;
-
-
             while ((line = reader.readLine()) != null) {
                 // Split by comma (handles standard CSV formats)
                 String[] tokens = line.split(",");
                 if (tokens.length >= 18) {
-                    String sciName = tokens[1].trim();
-                    String id = tokens[2].trim();
-                    String name = tokens[speciesCol].trim();
-                    String otherNames = tokens[5].trim();
-                    String genus = tokens[genusCol].trim();
-                    String family = tokens[familyCol].trim();
-                    String order = tokens[orderCol].trim();
+                    String sciName = tokens[0].trim();
+                    String id = tokens[1].trim();
+                    String name = tokens[3].trim();
+                    String otherNames = tokens[4].trim();
+                    String genus = tokens[18].trim();
+                    String family = tokens[14].trim();
+                    String order = tokens[9].trim();
 
                     orderList.add(new TaxonomicOrder(order));
+
                     familyToOrder.put(family, order);
                     genusToFamily.put(genus, family);
                     speciesToGenus.put(name, genus);
+
+                    speciesList.add(new Species(Long.parseLong(id), name, sciName, 0L, "test"));
+
                 }
             }
             reader.close();
@@ -81,20 +84,62 @@ public class DatabaseCreator {
                 familyList.add(new TaxonomicFamily(familyName, orderNameToId.get(orderName)));
             });
 
+
+
+            List<Long> familyIds = new ArrayList<>();
+
+            // Insert data into Room if the list isn't empty
+            if (!familyList.isEmpty()) {
+                familyIds = database.taxonomicFamilyDao().insertAll(familyList);
+            }
+
+            if (familyIds.size() != familyList.size()) {
+                System.out.println("familyIds and familyList are not the same size");
+            }
+
+            Map<String, Long> familyNameToId = new HashMap<>();
+            for (int i = 0; i < familyIds.size(); i++){
+                familyNameToId.put(familyList.get(i).getFamilyName(), familyIds.get(i));
+            }
+
+            genusToFamily.forEach((genusName, familyName) -> {
+                genusList.add(new TaxonomicGenus(genusName, orderNameToId.get(familyName)));
+            });
+
+            List<Long> genusIds = new ArrayList<>();
+
+            // Insert data into Room if the list isn't empty
+            if (!genusList.isEmpty()) {
+                genusIds = database.taxonomicGenusDao().insertAll(genusList);
+            }
+
+
+
+            if (genusIds.size() != genusList.size()) {
+                System.out.println("genusIds and genusList are not the same size");
+            }
+
+            Map<String, Long> genusNameToId = new HashMap<>();
+            for (int i = 0; i < genusIds.size(); i++){
+                genusNameToId.put(genusList.get(i).getGenusName(), genusIds.get(i));
+            }
+
+            for (int i = 0; i < speciesList.size(); i++){
+                speciesList.get(i).setGenusId(
+                        genusNameToId.get(
+                        speciesToGenus.get(
+                        speciesList.get(i).getName())));
+            }
+
+            List<Long> speciesIds = new ArrayList<>();
+
+            // Insert data into Room if the list isn't empty
+            if (!speciesList.isEmpty()) {
+                speciesIds = database.speciesDao().insertAll(speciesList);
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    /*
-    private static void addUnique(List<TaxonomicOrder> list, String string) {
-        boolean bool = true;
-        for(TaxonomicOrder taxonomicOrder : list) {
-            if(Objects.equals(taxonomicOrder.getOrderName(), string)) {
-                bool = false;
-            }
-        }
-        if (bool == true) {
-            list.add(new TaxonomicOrder(string));
-        }
-    }*/
 }
