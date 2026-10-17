@@ -19,5 +19,8 @@ public interface SpeciesDao {
 
     @Query("DELETE FROM species")
     void deleteAll();
+
+    @Query("UPDATE species SET image_path = :newImagePath WHERE sci_name = :sciName")
+    void updateImagePath(String sciName, String newImagePath);
 }
 

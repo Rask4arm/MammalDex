@@ -12,6 +12,7 @@ import androidx.sqlite.driver.AndroidSQLiteDriver;
 
 import com.example.mammaldex.model.database.AppDatabase;
 import com.example.mammaldex.model.database.DatabaseCreator;
+import com.example.mammaldex.model.database.ImagePathMatcher;
 
 import java.util.concurrent.Executors;
 
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
                 db.taxonomicFamilyDao().deleteAll();
                 db.taxonomicOrderDao().deleteAll();
                 DatabaseCreator.readCsvToRoom(getApplicationContext(), db);
+                ImagePathMatcher.setImagePath(getApplicationContext(), db);
 
             }
         });
