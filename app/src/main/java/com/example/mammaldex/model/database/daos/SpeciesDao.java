@@ -22,5 +22,8 @@ public interface SpeciesDao {
 
     @Query("UPDATE species SET image_path = :newImagePath WHERE sci_name = :sciName")
     void updateImagePath(String sciName, String newImagePath);
+
+    @Query("UPDATE species SET wiki_link = :newWikiLink WHERE sci_name = :sciName")
+    void updateWikiLink(String sciName, String newWikiLink);
 }
 

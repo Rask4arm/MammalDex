@@ -37,11 +37,12 @@ public class Species {
     @ColumnInfo(name = "seen")
     private int seen;
 
-    public Species(Long id, String name, String sciName, Long genusId, String wikiLink){
+    public Species(Long id, String name, String sciName, Long genusId, String imagePath, String wikiLink){
         this.id = id;
         this.name = name;
         this.sciName = sciName;
         this.genusId = genusId;
+        this.imagePath = imagePath;
         this.wikiLink = wikiLink;
         this.seen = 0;
     }

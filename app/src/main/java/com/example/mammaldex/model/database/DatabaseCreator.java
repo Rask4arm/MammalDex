@@ -56,7 +56,11 @@ public class DatabaseCreator {
                     genusToFamily.put(genus, family);
                     speciesToGenus.put(name, genus);
 
-                    speciesList.add(new Species(Long.parseLong(id), name, sciName, 0L, "test"));
+                    String wikiLink = "https://en.wikipedia.org/wiki/" + sciName;
+                    String imagePath = "@drawable/" + sciName.toLowerCase() + ".jpg";
+
+
+                    speciesList.add(new Species(Long.parseLong(id), name, sciName, 0L, imagePath, wikiLink));
 
                 }
             }
