@@ -21,25 +21,25 @@ import androidx.room.PrimaryKey;
 public class Sighting {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
-    public int id;
+    public Long id;
     @ColumnInfo(name = "species_id")
-    public int speciesId;
+    public Long speciesId;
     @ColumnInfo(name = "latitude")
     public double latitude;
     @ColumnInfo(name = "longitude")
     public double longitude;
 
-    public Sighting(int speciesId, double latitude, double longitude) {
+    public Sighting(Long speciesId, double latitude, double longitude) {
         this.speciesId = speciesId;
         this.latitude = latitude;
         this.longitude = longitude;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public int getSpeciesId() {
+    public Long getSpeciesId() {
         return speciesId;
     }
 

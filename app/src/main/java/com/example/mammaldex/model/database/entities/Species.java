@@ -23,13 +23,13 @@ public class Species {
 
     @PrimaryKey(autoGenerate = false)
     @ColumnInfo(name = "id")
-    private int id;
+    private Long id;
     @ColumnInfo(name = "name")
     private String name;
     @ColumnInfo(name = "sci_name")
     private String sciName;
     @ColumnInfo(name = "genus_id")
-    private int genusId;
+    private Long genusId;
     @ColumnInfo(name = "wiki_link")
     private String wikiLink;
     @ColumnInfo(name = "image_path")
@@ -37,7 +37,7 @@ public class Species {
     @ColumnInfo(name = "seen")
     private int seen;
 
-    public Species(int id, String name, String sciName, int genusId, String wikiLink){
+    public Species(Long id, String name, String sciName, Long genusId, String wikiLink){
         this.id = id;
         this.name = name;
         this.sciName = sciName;
@@ -46,7 +46,7 @@ public class Species {
         this.seen = 0;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
@@ -58,7 +58,7 @@ public class Species {
         return sciName;
     }
 
-    public int getGenusId() {
+    public Long getGenusId() {
         return genusId;
     }
 

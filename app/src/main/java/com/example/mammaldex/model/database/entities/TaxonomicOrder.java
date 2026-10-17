@@ -11,7 +11,7 @@ public class TaxonomicOrder {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
-    public int id;
+    public Long id;
     @ColumnInfo(name = "order_name")
     public String orderName;
 
@@ -19,7 +19,7 @@ public class TaxonomicOrder {
         this.orderName = orderName;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 

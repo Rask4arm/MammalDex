@@ -22,18 +22,18 @@ public class TaxonomicGenus {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
-    public int id;
+    public Long id;
     @ColumnInfo(name = "genus_name")
     public String genusName;
     @ColumnInfo(name = "family_id")
-    public int familyId;
+    public Long familyId;
 
-    public TaxonomicGenus(String genusName, int familyId) {
+    public TaxonomicGenus(String genusName, Long familyId) {
         this.genusName = genusName;
         this.familyId = familyId;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
@@ -41,7 +41,7 @@ public class TaxonomicGenus {
         return genusName;
     }
 
-    public int getFamilyId() {
+    public Long getFamilyId() {
         return familyId;
     }
 }

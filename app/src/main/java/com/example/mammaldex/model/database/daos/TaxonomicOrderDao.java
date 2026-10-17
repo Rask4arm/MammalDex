@@ -12,7 +12,7 @@ import java.util.List;
 @Dao
 public interface TaxonomicOrderDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(List<TaxonomicOrder> user);
+    List<Long> insertAll(List<TaxonomicOrder> orders);
 
     @Query("SELECT * FROM taxonomic_order")
     List<TaxonomicOrder> getAll();

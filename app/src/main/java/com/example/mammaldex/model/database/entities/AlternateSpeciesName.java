@@ -21,19 +21,19 @@ import androidx.room.PrimaryKey;
 public class AlternateSpeciesName {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
-    private int id;
+    private Long id;
     @ColumnInfo(name = "name")
     private String name;
     @ColumnInfo(name = "species_id")
-    private int speciesId;
+    private Long speciesId;
 
-    public AlternateSpeciesName(int id, String name, int speciesId) {
+    public AlternateSpeciesName(Long id, String name, Long speciesId) {
         this.id = id;
         this.name = name;
         this.speciesId = speciesId;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
@@ -41,7 +41,7 @@ public class AlternateSpeciesName {
         return name;
     }
 
-    public int getSpeciesId() {
+    public Long getSpeciesId() {
         return speciesId;
     }
 }
