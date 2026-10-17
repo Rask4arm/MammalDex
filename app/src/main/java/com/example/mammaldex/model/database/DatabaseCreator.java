@@ -31,7 +31,7 @@ public class DatabaseCreator {
 
 
         try {
-            InputStream is = context.getAssets().open("csv test.csv");
+            InputStream is = context.getAssets().open("data.csv");
             BufferedReader reader = new BufferedReader(new InputStreamReader(is));
             String line;
 
@@ -103,7 +103,7 @@ public class DatabaseCreator {
             }
 
             genusToFamily.forEach((genusName, familyName) -> {
-                genusList.add(new TaxonomicGenus(genusName, orderNameToId.get(familyName)));
+                genusList.add(new TaxonomicGenus(genusName, familyNameToId.get(familyName)));
             });
 
             List<Long> genusIds = new ArrayList<>();
@@ -136,7 +136,9 @@ public class DatabaseCreator {
             // Insert data into Room if the list isn't empty
             if (!speciesList.isEmpty()) {
                 speciesIds = database.speciesDao().insertAll(speciesList);
+                System.out.println("Species done inserting");
             }
+            System.out.println("database generated");
 
         } catch (Exception e) {
             e.printStackTrace();
