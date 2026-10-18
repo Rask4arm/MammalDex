@@ -57,7 +57,7 @@ public class DatabaseCreator {
                     speciesToGenus.put(name, genus);
 
                     String wikiLink = "https://en.wikipedia.org/wiki/" + sciName;
-                    String imagePath = "@drawable/" + sciName.toLowerCase() + ".jpg";
+                    String imagePath = sciName.toLowerCase();
 
 
                     speciesList.add(new Species(Long.parseLong(id), name, sciName, 0L, imagePath, wikiLink));

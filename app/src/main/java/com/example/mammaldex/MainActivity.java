@@ -1,6 +1,7 @@
 package com.example.mammaldex;
 
 import android.os.Bundle;
+import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -40,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
                 db.taxonomicFamilyDao().deleteAll();
                 db.taxonomicOrderDao().deleteAll();
                 DatabaseCreator.readCsvToRoom(getApplicationContext(), db);
-
             }
         });
 
@@ -49,5 +49,12 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        setImage();
+    }
+
+    public void setImage(){
+        ImageView imageView = findViewById(R.id.platypus);
+        imageView.setImageResource(R.drawable.ornithorhynchus_anatinus);
     }
 }
