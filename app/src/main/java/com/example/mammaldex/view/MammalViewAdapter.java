@@ -43,7 +43,6 @@ public class MammalViewAdapter extends RecyclerView.Adapter<MammalViewAdapter.Sp
         // Define your Image URL or Resource
         String imageUrl = "file:///android_asset/downloaded_images/" + endUrl + ".jpg";
 
-        System.out.println(endUrl + "work");
         // Load the image with Glide
         Glide.with(holder.itemView.getContext())               // Pass context
                 .load(imageUrl)           // Pass URL

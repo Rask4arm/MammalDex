@@ -22,18 +22,16 @@ public class Repository {
         this.speciesDao = speciesDao;
     }
 
-    public List<Species> getAllSpecies() {
-        try {
-            // 1. Submit the task to the single background thread
-            Future<List<Species>> future = executorService.submit(() -> speciesDao.getAll());
+    public void getAllSpeciesByAsync(Consumer<List<Species>> callback) {
+        executorService.submit(() -> {
 
-            // 2. Block the current thread until the background task returns the list
-            return future.get();
+            System.out.println(speciesDao.size() + "size");
+            // 1. Fetch the species on the background thread
+            List<Species> speciesList = speciesDao.getAll();
 
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-            return new ArrayList<>(); // Return empty list or handle error appropriately
-        }
+            // 2. Deliver the result asynchronously
+            callback.accept(speciesList);
+        });
     }
 
     public void getSpeciesBySciNameAsync(String sciName, Consumer<Species> callback) {

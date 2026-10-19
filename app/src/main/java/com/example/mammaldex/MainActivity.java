@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
+
         AppDatabase db = Room.databaseBuilder(
                         getApplicationContext(),
                         AppDatabase.class,
@@ -41,6 +43,20 @@ public class MainActivity extends AppCompatActivity {
                 )
                 .setDriver(new AndroidSQLiteDriver())
                 .build();
+
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+
+        RecyclerView recyclerView = findViewById(R.id.recyclerViewMammals);
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        List<Species> testList = new ArrayList<>();
+        Repository repository = new Repository(db.speciesDao());
+
 
         Executors.newSingleThreadExecutor().execute(() -> {
             try {
@@ -51,13 +67,26 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 // Now query for a species
-                Species species =
+                Species speciestest =
                         db.speciesDao().getById(1000001);
 
                 runOnUiThread(() -> {
-                    if (species != null) {
+                    if (speciestest != null) {
                     }
                 });
+
+                repository.getAllSpeciesByAsync(species -> {
+                    if (species != null) {
+                        testList.addAll(species);
+
+                    }
+                });
+
+
+
+                mammalViewAdapter = new MammalViewAdapter(testList);
+                recyclerView.setAdapter(mammalViewAdapter);
+                System.out.println("All done");
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -67,28 +96,5 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
         });
-
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
-
-        RecyclerView recyclerView = findViewById(R.id.recyclerViewMammals);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        List<Species> testList = new ArrayList<>();
-        Repository repository = new Repository(db.speciesDao());
-        //testList.add(new Species(1L, "10", "11", "12", "13", "14", "15", "16"));
-
-        repository.getSpeciesBySciNameAsync("Ornithorhynchus_anatinus", species -> {
-            if (species != null) {
-                testList.add(species);
-                System.out.println(species.getName() + "test");
-            }
-        });
-
-        mammalViewAdapter = new MammalViewAdapter(testList);
-        recyclerView.setAdapter(mammalViewAdapter);
     }
 }
