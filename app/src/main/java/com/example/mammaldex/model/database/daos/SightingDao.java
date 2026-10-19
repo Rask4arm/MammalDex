@@ -12,7 +12,7 @@ import java.util.List;
 @Dao
 public interface SightingDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(List<Sighting> user);
+    void insertAll(List<Sighting> sightings);
 
     @Query("SELECT * FROM sighting")
     List<Sighting> getAll();

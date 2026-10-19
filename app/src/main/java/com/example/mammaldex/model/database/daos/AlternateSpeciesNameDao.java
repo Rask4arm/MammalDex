@@ -12,7 +12,7 @@ import java.util.List;
 @Dao
 public interface AlternateSpeciesNameDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(List<AlternateSpeciesName> user);
+    void insertAll(List<AlternateSpeciesName> alternateSpeciesNames);
 
     @Query("SELECT * FROM alternate_species_name")
     List<AlternateSpeciesName> getAll();

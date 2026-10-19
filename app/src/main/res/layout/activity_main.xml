@@ -6,11 +6,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewMammals"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="fill" >
+        android:padding="8dp"/>
 
+    <TextView
+        android:id="@+id/test"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="test"/>
+
+<!--
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -26,11 +34,15 @@
                     android:id="@+id/platypus"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:contentDescription="platypus"
-                    >
-                </ImageView>
+                    android:contentDescription="platypus"/>
+
+                <ImageView
+                    android:id="@+id/my_image_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:scaleType="centerCrop" />
+
 
             </LinearLayout>
-        </ScrollView>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>-->
 </androidx.constraintlayout.widget.ConstraintLayout>

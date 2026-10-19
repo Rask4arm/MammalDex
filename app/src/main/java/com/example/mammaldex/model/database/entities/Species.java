@@ -9,14 +9,6 @@ import androidx.room.PrimaryKey;
 
 @Entity(
         tableName = "species",
-        foreignKeys = {
-                @ForeignKey(
-                        entity = TaxonomicGenus.class,
-                        parentColumns = "id",
-                        childColumns = "genus_id",
-                        onDelete = ForeignKey.RESTRICT
-                )
-        },
         indices = {@Index(value = {"id"}, unique = true)}
 )
 public class Species {
@@ -28,8 +20,12 @@ public class Species {
     private String name;
     @ColumnInfo(name = "sci_name")
     private String sciName;
-    @ColumnInfo(name = "genus_id")
-    private Long genusId;
+    @ColumnInfo(name = "taxonomic_genus")
+    private String taxonomicGenus;
+    @ColumnInfo(name = "taxonomic_family")
+    private String taxonomicFamily;
+    @ColumnInfo(name = "taxonomic_order")
+    private String taxonomicOrder;
     @ColumnInfo(name = "wiki_link")
     private String wikiLink;
     @ColumnInfo(name = "image_path")
@@ -37,11 +33,13 @@ public class Species {
     @ColumnInfo(name = "seen")
     private int seen;
 
-    public Species(Long id, String name, String sciName, Long genusId, String imagePath, String wikiLink){
+    public Species(Long id, String name, String sciName, String taxonomicGenus, String taxonomicFamily, String taxonomicOrder, String imagePath, String wikiLink){
         this.id = id;
         this.name = name;
         this.sciName = sciName;
-        this.genusId = genusId;
+        this.taxonomicGenus = taxonomicGenus;
+        this.taxonomicFamily = taxonomicFamily;
+        this.taxonomicOrder = taxonomicOrder;
         this.imagePath = imagePath;
         this.wikiLink = wikiLink;
         this.seen = 0;
@@ -59,8 +57,16 @@ public class Species {
         return sciName;
     }
 
-    public Long getGenusId() {
-        return genusId;
+    public String getTaxonomicGenus() {
+        return taxonomicGenus;
+    }
+
+    public String getTaxonomicFamily() {
+        return taxonomicFamily;
+    }
+
+    public String getTaxonomicOrder() {
+        return taxonomicOrder;
     }
 
     public String getWikiLink() {
@@ -81,9 +87,5 @@ public class Species {
 
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
-    }
-
-    public void setGenusId(Long genusId) {
-        this.genusId = genusId;
     }
 }
