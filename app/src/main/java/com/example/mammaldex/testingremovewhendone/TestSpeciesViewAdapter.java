@@ -20,7 +20,7 @@ public class TestSpeciesViewAdapter
 
     private final List<Species> species = new ArrayList<>();
 
-    public void setSpeciess(List<Species> newSpecies) {
+    public void setSpecies(List<Species> newSpecies) {
         species.clear();
         species.addAll(newSpecies);
         notifyDataSetChanged();

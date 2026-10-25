@@ -56,6 +56,10 @@ public class SecondFragment extends Fragment {
                 message -> secondMessage.setText(message)
         );
 
+        viewModel.getSpecies().observe(getViewLifecycleOwner(),
+                species -> adapter.setSpecies(species)
+        );
+
         // Demonstrate that both Fragments share the ViewModel.
         viewModel.updateMessage("You are on the Second Screen!");
 
