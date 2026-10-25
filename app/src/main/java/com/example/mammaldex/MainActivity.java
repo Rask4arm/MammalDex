@@ -27,15 +27,23 @@ import java.util.List;
 import java.util.concurrent.Executors;
 
 public class MainActivity extends AppCompatActivity {
-    private MammalViewAdapter mammalViewAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.example_activity);
 
+        MammalDexApp app = (MammalDexApp) getApplication();
 
+        DatabaseInitializer initializer = new DatabaseInitializer(this, app.getDatabase());
+
+        initializer.initialize(() -> {System.out.println(app.getRepository().getAllSpecies().getValue());},
+                error -> {System.out.println("Initializer didn't work");}
+        );
+    }
+}
+/**
         AppDatabase db = Room.databaseBuilder(
                         getApplicationContext(),
                         AppDatabase.class,
@@ -43,20 +51,6 @@ public class MainActivity extends AppCompatActivity {
                 )
                 .setDriver(new AndroidSQLiteDriver())
                 .build();
-
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
-
-        RecyclerView recyclerView = findViewById(R.id.recyclerViewMammals);
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        List<Species> testList = new ArrayList<>();
-        Repository repository = new Repository(db.speciesDao());
-
 
         Executors.newSingleThreadExecutor().execute(() -> {
             try {
@@ -75,26 +69,19 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-                repository.getAllSpeciesByAsync(species -> {
-                    if (species != null) {
-                        testList.addAll(species);
-
-                    }
-                });
-
-
-
-                mammalViewAdapter = new MammalViewAdapter(testList);
-                recyclerView.setAdapter(mammalViewAdapter);
-                System.out.println("All done");
-
             } catch (Exception e) {
                 e.printStackTrace();
 
                 runOnUiThread(() -> {
-                    // Show an error if initialization or querying fails.
+                    System.out.println("Something went wrong");
                 });
             }
         });
+
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.nav_host), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
     }
-}
+}*/

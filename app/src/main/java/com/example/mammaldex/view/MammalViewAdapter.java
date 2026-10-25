@@ -4,10 +4,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -15,20 +16,38 @@ import com.example.mammaldex.R;
 import com.example.mammaldex.model.database.entities.Species;
 
 import java.util.List;
-import java.util.Locale;
+import java.util.Objects;
 
-public class MammalViewAdapter extends RecyclerView.Adapter<MammalViewAdapter.SpeciesViewHolder> {
+public class MammalViewAdapter extends ListAdapter<Species, MammalViewAdapter.SpeciesViewHolder> {
     private List<Species> speciesList;
 
-    public MammalViewAdapter(List<Species> speciesList) {
-        this.speciesList = speciesList;
+    public interface onSpeciesClick {
+        void onClick(Species species);
+    }
+
+    private final onSpeciesClick listener;
+
+    public MammalViewAdapter(onSpeciesClick listener) {
+        super(new DiffUtil.ItemCallback<Species>() {
+            @Override
+            public boolean areItemsTheSame(Species a, Species b) {
+                return a.getId().equals(b.getId());
+            }
+
+            @Override
+            public boolean areContentsTheSame(Species a, Species b) {
+                return a.getId().equals(b.getId()) && Objects.equals(a.getSeen(), b.getSeen());
+            }
+        });
+
+        this.listener = listener;
     }
 
     @NonNull
     @Override
     public SpeciesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new SpeciesViewHolder(
-                LayoutInflater.from(parent.getContext()).inflate(R.layout.mammal_item, parent,false)
+                LayoutInflater.from(parent.getContext()).inflate(R.layout.species_item, parent,false)
         );
     }
 
@@ -44,9 +63,11 @@ public class MammalViewAdapter extends RecyclerView.Adapter<MammalViewAdapter.Sp
         String imageUrl = "file:///android_asset/downloaded_images/" + endUrl + ".jpg";
 
         // Load the image with Glide
-        Glide.with(holder.itemView.getContext())               // Pass context
-                .load(imageUrl)           // Pass URL
-                .into(holder.imageViewSpecies);         // Target ImageView
+        Glide.with(holder.itemView.getContext())
+                .load(imageUrl)
+                .into(holder.imageViewSpecies);
+        holder.itemView.setOnClickListener(v -> listener.onClick(currentSpecies));
+
     }
 
     @Override
@@ -55,9 +76,9 @@ public class MammalViewAdapter extends RecyclerView.Adapter<MammalViewAdapter.Sp
     }
 
     static class SpeciesViewHolder extends RecyclerView.ViewHolder {
-        ImageView imageViewSpecies;
-        TextView textViewName;
-        TextView textViewSciName;
+        final ImageView imageViewSpecies;
+        final TextView textViewName;
+        final TextView textViewSciName;
 
 
         public SpeciesViewHolder(@NonNull View itemView) {
@@ -69,11 +90,9 @@ public class MammalViewAdapter extends RecyclerView.Adapter<MammalViewAdapter.Sp
     }
 
     public static String capitalize(String input) {
-        // Check for null or empty strings to prevent errors
         if (input == null || input.isEmpty()) {
             return input;
         }
-        // Uppercase the first character and append the remaining string
         return input.substring(0, 1).toUpperCase() + input.substring(1);
     }
 }

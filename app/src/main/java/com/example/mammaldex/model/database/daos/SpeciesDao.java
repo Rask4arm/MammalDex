@@ -16,7 +16,7 @@ public interface SpeciesDao {
     List<Long> insertAll(List<Species> species);
 
     @Query("SELECT * FROM species")
-    List<Species> getAll();
+    LiveData<List<Species>> getAll();
 
     @Query("SELECT * FROM species WHERE sci_name = :sciName")
     Species getBySciName(String sciName);
