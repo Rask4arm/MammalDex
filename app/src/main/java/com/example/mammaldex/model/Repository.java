@@ -25,7 +25,6 @@ public class Repository {
     public void getSpeciesBySciNameAsync(String sciName, Consumer<Species> callback) {
         executorService.submit(() -> {
 
-            System.out.println(speciesDao.size() + "size");
             // 1. Fetch the species on the background thread
             Species species = speciesDao.getBySciName(sciName);
 
