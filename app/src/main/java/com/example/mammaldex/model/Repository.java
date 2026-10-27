@@ -1,17 +1,14 @@
-package com.example.mammaldex.model.database;
+package com.example.mammaldex.model;
 
 import androidx.lifecycle.LiveData;
 
 import com.example.mammaldex.model.database.daos.SpeciesDao;
 import com.example.mammaldex.model.database.entities.Species;
+import com.example.mammaldex.model.database.local.AppDatabase;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 import java.util.function.Consumer;
 
 public class Repository {

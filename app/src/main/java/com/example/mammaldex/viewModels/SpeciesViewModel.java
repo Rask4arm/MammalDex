@@ -3,7 +3,7 @@ package com.example.mammaldex.viewModels;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.mammaldex.model.database.Repository;
+import com.example.mammaldex.model.Repository;
 import com.example.mammaldex.model.database.entities.Species;
 
 import java.util.List;

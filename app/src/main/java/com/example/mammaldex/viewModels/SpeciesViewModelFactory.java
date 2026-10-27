@@ -1,11 +1,10 @@
-package com.example.mammaldex;
+package com.example.mammaldex.viewModels;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.mammaldex.model.database.Repository;
-import com.example.mammaldex.viewModels.SpeciesViewModel;
+import com.example.mammaldex.model.Repository;
 
 public class SpeciesViewModelFactory implements ViewModelProvider.Factory {
     private final Repository repository;

@@ -7,54 +7,41 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.DiffUtil;
-import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.mammaldex.R;
 import com.example.mammaldex.model.database.entities.Species;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
-public class MammalViewAdapter extends ListAdapter<Species, MammalViewAdapter.SpeciesViewHolder> {
-    private List<Species> speciesList;
+public class SpeciesViewAdapter extends RecyclerView.Adapter<SpeciesViewAdapter.SpeciesViewHolder> {
 
-    public interface onSpeciesClick {
-        void onClick(Species species);
-    }
+    private final List<Species> species = new ArrayList<>();
 
-    private final onSpeciesClick listener;
-
-    public MammalViewAdapter(onSpeciesClick listener) {
-        super(new DiffUtil.ItemCallback<Species>() {
-            @Override
-            public boolean areItemsTheSame(Species a, Species b) {
-                return a.getId().equals(b.getId());
-            }
-
-            @Override
-            public boolean areContentsTheSame(Species a, Species b) {
-                return a.getId().equals(b.getId()) && Objects.equals(a.getSeen(), b.getSeen());
-            }
-        });
-
-        this.listener = listener;
+    public void setSpecies(List<Species> newSpecies) {
+        species.clear();
+        species.addAll(newSpecies);
+        notifyDataSetChanged();
     }
 
     @NonNull
     @Override
-    public SpeciesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new SpeciesViewHolder(
-                LayoutInflater.from(parent.getContext()).inflate(R.layout.species_item, parent,false)
-        );
+    public SpeciesViewHolder onCreateViewHolder(
+            @NonNull ViewGroup parent,
+            int viewType) {
+
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.species_item, parent, false);
+
+        return new SpeciesViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull SpeciesViewHolder holder, int position) {
-        Species currentSpecies = speciesList.get(position);
-        holder.imageViewSpecies.setImageResource(R.drawable.ornithorhynchus_anatinus);
+        Species currentSpecies = species.get(position);
+
         holder.textViewName.setText(currentSpecies.getName());
         holder.textViewSciName.setText(currentSpecies.getSciName());
 
@@ -66,20 +53,18 @@ public class MammalViewAdapter extends ListAdapter<Species, MammalViewAdapter.Sp
         Glide.with(holder.itemView.getContext())
                 .load(imageUrl)
                 .into(holder.imageViewSpecies);
-        holder.itemView.setOnClickListener(v -> listener.onClick(currentSpecies));
-
     }
 
     @Override
     public int getItemCount() {
-        return speciesList.size();
+        return species.size();
     }
 
     static class SpeciesViewHolder extends RecyclerView.ViewHolder {
-        final ImageView imageViewSpecies;
-        final TextView textViewName;
-        final TextView textViewSciName;
 
+        ImageView imageViewSpecies;
+        TextView textViewName;
+        TextView textViewSciName;
 
         public SpeciesViewHolder(@NonNull View itemView) {
             super(itemView);

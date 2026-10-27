@@ -1,4 +1,4 @@
-package com.example.mammaldex.model.database;
+package com.example.mammaldex.model.database.local;
 
 import android.content.Context;
 

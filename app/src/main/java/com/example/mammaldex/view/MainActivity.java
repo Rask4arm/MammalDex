@@ -1,30 +1,13 @@
-package com.example.mammaldex;
+package com.example.mammaldex.view;
 
 import android.os.Bundle;
-import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.room.Room;
-import androidx.sqlite.driver.AndroidSQLiteDriver;
 
-import com.bumptech.glide.Glide;
-import com.example.mammaldex.model.database.AppDatabase;
-import com.example.mammaldex.model.database.DatabaseCreator;
-import com.example.mammaldex.model.database.ImagePathMatcher;
-import com.example.mammaldex.model.database.Repository;
-import com.example.mammaldex.model.database.entities.Species;
-import com.example.mammaldex.view.MammalViewAdapter;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.Executors;
+import com.example.mammaldex.model.database.DatabaseInitializer;
+import com.example.mammaldex.MammalDexApp;
+import com.example.mammaldex.R;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.example_activity);
+        setContentView(R.layout.activity_main);
 
         MammalDexApp app = (MammalDexApp) getApplication();
 

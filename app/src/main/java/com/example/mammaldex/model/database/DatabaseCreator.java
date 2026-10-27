@@ -3,6 +3,7 @@ package com.example.mammaldex.model.database;
 import android.content.Context;
 
 import com.example.mammaldex.model.database.entities.Species;
+import com.example.mammaldex.model.database.local.AppDatabase;
 
 import java.io.BufferedReader;
 import java.io.InputStream;

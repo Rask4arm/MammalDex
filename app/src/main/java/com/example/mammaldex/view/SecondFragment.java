@@ -1,9 +1,8 @@
-package com.example.mammaldex.testingremovewhendone;
+package com.example.mammaldex.view;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,12 +12,15 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mammaldex.MammalDexApp;
 import com.example.mammaldex.R;
+import com.example.mammaldex.viewModels.SpeciesViewModelFactory;
+import com.example.mammaldex.viewModels.SpeciesViewModel;
 
 public class SecondFragment extends Fragment {
 
-    private MainViewModel viewModel;
-    private TestSpeciesViewAdapter adapter;
+    private SpeciesViewModel viewModel;
+    private SpeciesViewAdapter adapter;
 
     public SecondFragment() {
         super(R.layout.fragment_second);
@@ -30,9 +32,6 @@ public class SecondFragment extends Fragment {
             @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        TextView secondMessage =
-                view.findViewById(R.id.secondMessage);
-
         RecyclerView recyclerView =
                 view.findViewById(R.id.species_list);
 
@@ -43,25 +42,17 @@ public class SecondFragment extends Fragment {
                 new LinearLayoutManager(requireContext())
         );
 
-        adapter = new TestSpeciesViewAdapter();
+        adapter = new SpeciesViewAdapter();
 
         recyclerView.setAdapter(adapter);
 
-        viewModel = new ViewModelProvider(
-                requireActivity()
-        ).get(MainViewModel.class);
+        MammalDexApp app = (MammalDexApp) requireActivity().getApplication();
 
-        viewModel.getMessage().observe(
-                getViewLifecycleOwner(),
-                message -> secondMessage.setText(message)
-        );
+        viewModel = new ViewModelProvider(this, new SpeciesViewModelFactory(app.getRepository())).get(SpeciesViewModel.class);
 
         viewModel.getSpecies().observe(getViewLifecycleOwner(),
                 species -> adapter.setSpecies(species)
         );
-
-        // Demonstrate that both Fragments share the ViewModel.
-        viewModel.updateMessage("You are on the Second Screen!");
 
         btnHome.setOnClickListener(v ->
                 Navigation.findNavController(v)

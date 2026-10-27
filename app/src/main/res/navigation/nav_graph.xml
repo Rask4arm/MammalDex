@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.mammaldex.testingremovewhendone.HomeFragment"
+        android:name="com.example.mammaldex.view.HomeFragment"
         android:label="Home">
 
         <action
@@ -18,7 +18,7 @@
 
     <fragment
         android:id="@+id/secondFragment"
-        android:name="com.example.mammaldex.testingremovewhendone.SecondFragment"
+        android:name="com.example.mammaldex.view.SecondFragment"
         android:label="Second" />
 
 </navigation>

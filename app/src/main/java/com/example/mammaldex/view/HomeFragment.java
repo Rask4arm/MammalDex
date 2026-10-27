@@ -1,4 +1,4 @@
-package com.example.mammaldex.testingremovewhendone;
+package com.example.mammaldex.view;
 
 import android.os.Bundle;
 import android.view.View;
@@ -8,14 +8,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import com.example.mammaldex.R;
 
 public class HomeFragment extends Fragment {
-
-    private MainViewModel viewModel;
 
     public HomeFragment() {
         super(R.layout.fragment_home);
@@ -32,15 +29,6 @@ public class HomeFragment extends Fragment {
 
         Button btnNext =
                 view.findViewById(R.id.btnNext);
-
-        viewModel = new ViewModelProvider(
-                requireActivity()
-        ).get(MainViewModel.class);
-
-        viewModel.getMessage().observe(
-                getViewLifecycleOwner(),
-                message -> homeMessage.setText(message)
-        );
 
         btnNext.setOnClickListener(v ->
                 Navigation.findNavController(v)

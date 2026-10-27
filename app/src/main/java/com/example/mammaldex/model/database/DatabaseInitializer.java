@@ -1,12 +1,11 @@
-package com.example.mammaldex;
+package com.example.mammaldex.model.database;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Looper;
 
-import com.example.mammaldex.model.database.AppDatabase;
-import com.example.mammaldex.model.database.DatabaseCreator;
+import com.example.mammaldex.model.database.local.AppDatabase;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
