@@ -22,14 +22,7 @@ public class Repository {
         return speciesDao.getAll();
     }
 
-    public void getSpeciesBySciNameAsync(String sciName, Consumer<Species> callback) {
-        executorService.submit(() -> {
-
-            // 1. Fetch the species on the background thread
-            Species species = speciesDao.getBySciName(sciName);
-
-            // 2. Deliver the result asynchronously
-            callback.accept(species);
-        });
+    public LiveData<List<Species>> getSpeciesWhereNamesContains(String search) {
+        return speciesDao.getSpeciesWhereNamesContains(search);
     }
 }
