@@ -27,14 +27,17 @@ public class AlternateSpeciesName {
     @ColumnInfo(name = "species_id")
     private Long speciesId;
 
-    public AlternateSpeciesName(Long id, String name, Long speciesId) {
-        this.id = id;
+    public AlternateSpeciesName(String name, Long speciesId) {
         this.name = name;
         this.speciesId = speciesId;
     }
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {

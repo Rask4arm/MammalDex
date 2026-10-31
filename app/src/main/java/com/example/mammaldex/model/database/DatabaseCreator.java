@@ -2,6 +2,7 @@ package com.example.mammaldex.model.database;
 
 import android.content.Context;
 
+import com.example.mammaldex.model.database.entities.AlternateSpeciesName;
 import com.example.mammaldex.model.database.entities.Species;
 import com.example.mammaldex.model.database.local.AppDatabase;
 
@@ -9,11 +10,16 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class DatabaseCreator {
     public static void readCsvToRoom(Context context, AppDatabase database) {
         List<Species> speciesList = new ArrayList<>();
+        List<AlternateSpeciesName> alternateSpeciesNameList = new ArrayList<>();
+
+        Map<String, Long> alternateNameToSpecies = new HashMap<>();
 
         try {
             InputStream is = context.getAssets().open("data.csv");
@@ -37,20 +43,29 @@ public class DatabaseCreator {
 
                     String wikiLink = "https://en.wikipedia.org/wiki/" + sciName;
                     String imagePath = sciName.toLowerCase();
+                    String[] alternateNameForSpecies = otherNames.split("\\|");
+
 
                     speciesList.add(new Species(Long.parseLong(id), name, sciName, genus, family, order, imagePath, wikiLink));
+                    for (String aName:alternateNameForSpecies) {
+                        alternateSpeciesNameList.add(new AlternateSpeciesName(aName,Long.parseLong(id)));
+                    }
 
                 }
             }
             reader.close();
 
-            List<Long> speciesIds = new ArrayList<>();
-
             // Insert data into Room if the list isn't empty
             if (!speciesList.isEmpty()) {
-                speciesIds = database.speciesDao().insertAll(speciesList);
+                database.speciesDao().insertAll(speciesList);
                 System.out.println("Species done inserting");
             }
+
+            if (!alternateSpeciesNameList.isEmpty()) {
+                database.alternateSpeciesNameDao().insertAll(alternateSpeciesNameList);
+                System.out.println("Alternate names done inserting");
+            }
+
             System.out.println("database generated");
 
         } catch (Exception e) {

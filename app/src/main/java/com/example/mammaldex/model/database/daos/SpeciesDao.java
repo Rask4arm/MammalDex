@@ -18,6 +18,13 @@ public interface SpeciesDao {
     @Query("SELECT * FROM species")
     LiveData<List<Species>> getAll();
 
+    @Query("SELECT * FROM species " +
+            "LEFT JOIN alternate_species_name ON species.id = alternate_species_name.species_id " +
+            "WHERE species.name LIKE '%' || :search || '%' " +
+            "OR species.sci_name LIKE '%' || :search || '%' " +
+            "OR alternate_species_name.name LIKE '%' || :search || '%'")
+    LiveData<List<Species>> getSpeciesWhereNamesContains(String search);
+
     @Query("SELECT * FROM species WHERE sci_name = :sciName")
     Species getBySciName(String sciName);
 
