@@ -18,18 +18,20 @@ public class HomeFragment extends Fragment {
         super(R.layout.fragment_home);
     }
 
+    /**
+     * TODO : Add Javadoc descriptinn
+     * @param view The View returned by onCreateView().
+     * @param savedInstanceState If non-null, this fragment is being re-constructed
+     * from a previous saved state as given here.
+     */
     @Override
-    public void onViewCreated(
-            @NonNull View view,
-            @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        // TODO : Add comment
         TextView homeMessage =
                 view.findViewById(R.id.homeMessage);
-
         Button btnNext =
                 view.findViewById(R.id.btnNext);
-
         btnNext.setOnClickListener(v ->
                 Navigation.findNavController(v)
                         .navigate(R.id.action_home_to_second)

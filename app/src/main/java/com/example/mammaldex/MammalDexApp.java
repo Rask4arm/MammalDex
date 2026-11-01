@@ -9,6 +9,9 @@ public class MammalDexApp extends Application {
     private AppDatabase database;
     private Repository repository;
 
+    /**
+     * TODO : Add Javadoc
+     */
     @Override
     public void onCreate() {
         super.onCreate();
@@ -17,11 +20,13 @@ public class MammalDexApp extends Application {
         repository = new Repository(database);
     }
 
+    // Getter methods
+
     public Repository getRepository() {
         return repository;
     }
-
     public AppDatabase getDatabase() {
         return database;
     }
+
 }

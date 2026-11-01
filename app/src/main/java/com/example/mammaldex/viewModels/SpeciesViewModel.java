@@ -20,4 +20,5 @@ public class SpeciesViewModel extends ViewModel {
     public LiveData<List<Species>> getSpecies() {
         return species;
     }
+
 }

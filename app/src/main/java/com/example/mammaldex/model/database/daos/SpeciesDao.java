@@ -37,7 +37,7 @@ public interface SpeciesDao {
             "WHERE species.name LIKE '%' || :search || '%' " +
             "OR species.sci_name LIKE '%' || :search || '%' " +
             "OR alternate_species_name.name LIKE '%' || :search || '%'")
-    LiveData<List<Species>> getSpeciesWhereNamesContains(String search);
+    LiveData<List<Species>> getSpeciesNamesWith(String search);
 
     /**
      * This method prototype selects the mammal by its scientific (Latin) name.
