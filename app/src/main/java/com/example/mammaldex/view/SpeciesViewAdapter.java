@@ -42,6 +42,7 @@ public class SpeciesViewAdapter extends RecyclerView.Adapter<SpeciesViewAdapter.
     public void onBindViewHolder(@NonNull SpeciesViewHolder holder, int position) {
         Species currentSpecies = species.get(position);
 
+        //Set the species name and scientific name
         holder.textViewName.setText(currentSpecies.getName());
         holder.textViewSciName.setText(currentSpecies.getSciName());
 
@@ -60,6 +61,9 @@ public class SpeciesViewAdapter extends RecyclerView.Adapter<SpeciesViewAdapter.
         return species.size();
     }
 
+    /**
+     * The Object that contains the species info on the Search Page
+     */
     static class SpeciesViewHolder extends RecyclerView.ViewHolder {
 
         ImageView imageViewSpecies;
@@ -74,6 +78,11 @@ public class SpeciesViewAdapter extends RecyclerView.Adapter<SpeciesViewAdapter.
         }
     }
 
+    /**
+     * Helper Function to capitalize a string
+     * @param input A string that is being capitalized
+     * @return The input capitalized
+     */
     public static String capitalize(String input) {
         if (input == null || input.isEmpty()) {
             return input;
