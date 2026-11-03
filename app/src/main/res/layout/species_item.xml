@@ -1,22 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="170dp"
-    android:layout_height="170dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_gravity="center"
     android:layout_marginBottom="10dp"
+    android:scaleType="centerCrop"
     app:layout_constraintTop_toTopOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintTop_toBottomOf="parent">
 
     <com.google.android.material.card.MaterialCardView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="170dp"
+        android:layout_height="170dp"
         app:cardCornerRadius="30dp"
         app:strokeColor="#000000"
-        app:strokeWidth="4dp">
+        app:strokeWidth="4dp"
+        android:layout_gravity="center"
+        android:scaleType="centerCrop"
+        >
+
 
         <ImageView
             android:id="@+id/mammalImageView"
@@ -25,42 +30,45 @@
             android:background="#FF0000"
             android:scaleType="centerCrop"
             />
+        <LinearLayout
+            android:id="@+id/mammalTextLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="parent"
+            android:layout_gravity="bottom|center_vertical">
+
+            <TextView
+                android:id="@+id/mammalName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="Mammal Name"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                style="@style/shadowText"/>
+
+            <TextView
+                android:id="@+id/mammalSciName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_vertical"
+                android:layout_marginStart= "10dp"
+                android:textSize="10sp"
+                android:textStyle="italic"
+                android:text="Sci Name"
+                android:textColor="@color/white"
+                style="@style/shadowText"/>
+        </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
 
-    <LinearLayout
-        android:id="@+id/mammalTextLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:orientation="vertical"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="parent"
-        android:layout_gravity="bottom|center_vertical">
 
-        <TextView
-            android:id="@+id/mammalName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:text="Mammal Name"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/mammalSciName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center_vertical"
-            android:layout_marginStart= "10dp"
-            android:textSize="14sp"
-            android:textStyle="italic"
-            android:text="Sci Name"
-            android:textColor="@color/white"/>
-    </LinearLayout>
 
 
 
