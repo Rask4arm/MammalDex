@@ -33,7 +33,7 @@ public class SecondFragment extends Fragment {
     private SpeciesViewModel viewModel;
     private SpeciesViewAdapter adapter;
 
-    public SecondFragment(Context context, AppDatabase db) {
+    public SecondFragment() {
         super(R.layout.fragment_second);
     }
 
