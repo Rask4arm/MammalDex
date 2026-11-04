@@ -1,38 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="150dp"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:padding="12dp"
+    android:layout_gravity="center"
+    android:layout_marginBottom="10dp"
+    android:scaleType="centerCrop"
     app:layout_constraintTop_toTopOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintTop_toBottomOf="parent">
 
-    <ImageView
-        android:id="@+id/mammalImageView"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:scaleType="centerCrop"/>
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/mammalCard"
+        android:layout_width="170dp"
+        android:layout_height="170dp"
+        app:cardCornerRadius="30dp"
+        app:strokeColor="#000000"
+        app:strokeWidth="4dp"
+        android:layout_gravity="center"
+        android:scaleType="centerCrop"
+        >
 
-    <TextView
-        android:id="@+id/mammalName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginStart="16dp"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:text="1"/>
+        <ImageView
+            android:id="@+id/mammalImageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FF0000"
+            android:scaleType="centerCrop"
+            />
 
-    <TextView
-        android:id="@+id/mammalSciName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginStart="16dp"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:text="2"/>
-</LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="top|center_horizontal"
+            android:layout_marginTop="10dp">
+
+            <ImageView
+                android:id="@+id/mammalWikiLink"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="10dp"
+                android:src="@drawable/icon_link"
+                android:contentDescription="Icon Link"
+                app:tint="@color/white"
+                android:clickable="true"
+                android:focusable="true"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/mammalSightAdd"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="10dp"
+                android:src="@drawable/icon_plus"
+                android:contentDescription="Icon Add"
+                app:tint="@color/white"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/mammalTextLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical"
+            android:layout_gravity="bottom|center_vertical">
+
+            <TextView
+                android:id="@+id/mammalName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="Mammal Name"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                style="@style/shadowText"/>
+
+            <TextView
+                android:id="@+id/mammalSciName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_vertical"
+                android:layout_marginStart= "10dp"
+                android:textSize="10sp"
+                android:textStyle="italic"
+                android:text="Sci Name"
+                android:textColor="@color/white"
+                style="@style/shadowText"/>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+
+
+
+
+
+</FrameLayout>
