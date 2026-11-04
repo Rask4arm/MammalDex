@@ -45,7 +45,7 @@ public class SecondFragment extends Fragment {
 
         adapter = new SpeciesViewAdapter();
 
-        //Create a
+        //Create a grid layout that sets the mammals cards to be in two columns.
         recyclerView.setLayoutManager(new GridLayoutManager(view.getContext(), 2));
 
         //Set the adapter to the recyclerView
