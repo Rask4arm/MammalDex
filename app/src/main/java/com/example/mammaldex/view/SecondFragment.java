@@ -1,5 +1,6 @@
 package com.example.mammaldex.view;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,6 +19,9 @@ import androidx.appcompat.widget.SearchView;
 import com.example.mammaldex.MammalDexApp;
 import com.example.mammaldex.R;
 import com.example.mammaldex.model.Repository;
+import com.example.mammaldex.model.database.daos.SpeciesDao;
+import com.example.mammaldex.model.database.entities.Species;
+import com.example.mammaldex.model.database.local.AppDatabase;
 import com.example.mammaldex.viewModels.SpeciesViewModelFactory;
 import com.example.mammaldex.viewModels.SpeciesViewModel;
 
@@ -29,7 +33,7 @@ public class SecondFragment extends Fragment {
     private SpeciesViewModel viewModel;
     private SpeciesViewAdapter adapter;
 
-    public SecondFragment() {
+    public SecondFragment(Context context, AppDatabase db) {
         super(R.layout.fragment_second);
     }
 
@@ -59,6 +63,7 @@ public class SecondFragment extends Fragment {
         viewModel.getSpecies().observe(getViewLifecycleOwner(),
                 species -> adapter.setSpecies(species)
         );
+
         // TODO : Add comment
         btnHome.setOnClickListener(v ->
                 Navigation.findNavController(v)
@@ -94,8 +99,6 @@ public class SecondFragment extends Fragment {
      * @param newText ???
      */
     public void searchSpecies(String newText) {
-        // TODO : Need to get access to the getSpeciesNamesWith(String search)
-//        LiveData<List<String>> species = new Repository().getSpeciesNamesWith(newText);
-
+        // TODO : Need to get access to SpeciesDao method here
     }
 }
