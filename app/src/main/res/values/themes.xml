@@ -6,4 +6,11 @@
     </style>
 
     <style name="Theme.MammalDex" parent="Base.Theme.MammalDex" />
+
+    <style name="shadowText">
+        <item name="android:shadowColor">#80000000</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">0</item>
+        <item name="android:shadowRadius">5</item>
+    </style>
 </resources>

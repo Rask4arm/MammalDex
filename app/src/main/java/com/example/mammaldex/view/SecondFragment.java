@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.SearchView;
@@ -56,6 +57,11 @@ public class SecondFragment extends Fragment {
         );
         // TODO : Add comment
         adapter = new SpeciesViewAdapter();
+
+        //Create a grid layout that sets the mammals cards to be in two columns.
+        recyclerView.setLayoutManager(new GridLayoutManager(view.getContext(), 2));
+
+        //Set the adapter to the recyclerView
         recyclerView.setAdapter(adapter);
         MammalDexApp app = (MammalDexApp) requireActivity().getApplication();
         // TODO : Add comment
