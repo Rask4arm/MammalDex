@@ -6,7 +6,9 @@ import androidx.room.ForeignKey;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-
+/**
+ * TODO : Add comments to clarify class
+ */
 @Entity(tableName = "alternate_species_name",
         foreignKeys = {
                 @ForeignKey(
@@ -27,24 +29,29 @@ public class AlternateSpeciesName {
     @ColumnInfo(name = "species_id")
     private Long speciesId;
 
+    /**
+     * TODO : Add Javadoc
+     * @param name
+     * @param speciesId
+     */
     public AlternateSpeciesName(String name, Long speciesId) {
         this.name = name;
         this.speciesId = speciesId;
     }
 
+    // Getter and setter methods
+
     public Long getId() {
         return id;
     }
-
+    public String getName() {
+        return name;
+    }
+    public Long getSpeciesId() {
+        return speciesId;
+    }
     public void setId(Long id) {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public Long getSpeciesId() {
-        return speciesId;
-    }
 }

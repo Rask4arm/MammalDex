@@ -19,16 +19,20 @@ import com.example.mammaldex.model.database.entities.Species;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * TODO : Add comments clarifying what this class does
+ */
 public class SpeciesViewAdapter extends RecyclerView.Adapter<SpeciesViewAdapter.SpeciesViewHolder> {
 
     private final List<Species> species = new ArrayList<>();
 
-    public void setSpecies(List<Species> newSpecies) {
-        species.clear();
-        species.addAll(newSpecies);
-        notifyDataSetChanged();
-    }
-
+    /**
+     * TODO : Add Javadoc
+     * @param parent   The ViewGroup into which the new View will be added after it is bound to
+     *                 an adapter position.
+     * @param viewType The view type of the new View.
+     * @return
+     */
     @NonNull
     @Override
     public SpeciesViewHolder onCreateViewHolder(
@@ -79,9 +83,21 @@ public class SpeciesViewAdapter extends RecyclerView.Adapter<SpeciesViewAdapter.
                 .into(holder.imageViewSpecies);
     }
 
+    // Getter and setter methods
+
     @Override
     public int getItemCount() {
         return species.size();
+    }
+
+    /**
+     * TODO : Add Javadoc
+     * @param newSpecies
+     */
+    public void setSpecies(List<Species> newSpecies) {
+        species.clear();
+        species.addAll(newSpecies);
+        notifyDataSetChanged();
     }
 
     /**
@@ -94,6 +110,10 @@ public class SpeciesViewAdapter extends RecyclerView.Adapter<SpeciesViewAdapter.
         TextView textViewSciName;
         ImageView wikiIconImg;
 
+        /**
+         * TODO : Add Javadoc
+         * @param itemView
+         */
         public SpeciesViewHolder(@NonNull View itemView) {
             super(itemView);
             imageViewSpecies = itemView.findViewById(R.id.mammalImageView);
@@ -114,4 +134,5 @@ public class SpeciesViewAdapter extends RecyclerView.Adapter<SpeciesViewAdapter.
         }
         return input.substring(0, 1).toUpperCase() + input.substring(1);
     }
+
 }

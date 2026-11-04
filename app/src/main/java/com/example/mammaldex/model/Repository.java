@@ -9,7 +9,6 @@ import com.example.mammaldex.model.database.local.AppDatabase;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.function.Consumer;
 
 public class Repository {
     private final SpeciesDao speciesDao;
@@ -22,7 +21,8 @@ public class Repository {
         return speciesDao.getAll();
     }
 
-    public LiveData<List<Species>> getSpeciesWhereNamesContains(String search) {
-        return speciesDao.getSpeciesWhereNamesContains(search);
+    public LiveData<List<Species>> getSpeciesNamesWith(String search) {
+        return speciesDao.getSpeciesNamesWith(search);
     }
+
 }

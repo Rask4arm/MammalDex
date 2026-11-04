@@ -11,9 +11,18 @@ import java.util.List;
 
 @Dao
 public interface SightingDao {
+
+    /**
+     * TODO : Add Javadoc
+     * @param sightings
+     */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(List<Sighting> sightings);
 
+    /**
+     * TODO : Add Javadoc
+     * @return
+     */
     @Query("SELECT * FROM sighting")
     List<Sighting> getAll();
 }
