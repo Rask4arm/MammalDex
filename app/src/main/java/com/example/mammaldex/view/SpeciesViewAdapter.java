@@ -45,7 +45,6 @@ public class SpeciesViewAdapter extends RecyclerView.Adapter<SpeciesViewAdapter.
         return new SpeciesViewHolder(view);
     }
 
-
     /**
      * Sets the species info to the species card
      * @param holder   The ViewHolder which should be updated to represent the contents of the
@@ -82,8 +81,6 @@ public class SpeciesViewAdapter extends RecyclerView.Adapter<SpeciesViewAdapter.
                 .load(imageUrl)
                 .into(holder.imageViewSpecies);
     }
-
-    // Getter and setter methods
 
     @Override
     public int getItemCount() {
