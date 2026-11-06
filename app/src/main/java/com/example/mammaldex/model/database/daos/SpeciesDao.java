@@ -32,7 +32,7 @@ public interface SpeciesDao {
      * @return a LiveData container that notifies the associated observer when the list of
      *         Species objects first loads or changes.
      */
-    @Query("SELECT * FROM species " +
+    @Query("SELECT DISTINCT species.* FROM species " +
             "LEFT JOIN alternate_species_name ON species.id = alternate_species_name.species_id " +
             "WHERE species.name LIKE '%' || :search || '%' " +
             "OR species.sci_name LIKE '%' || :search || '%' " +
