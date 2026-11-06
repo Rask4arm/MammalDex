@@ -18,7 +18,7 @@
 
     <fragment
         android:id="@+id/secondFragment"
-        android:name="com.example.mammaldex.view.SecondFragment"
+        android:name="com.example.mammaldex.view.SearchFragment"
         android:label="Second" />
 
 </navigation>
