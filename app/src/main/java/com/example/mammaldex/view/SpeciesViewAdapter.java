@@ -59,7 +59,7 @@ public class SpeciesViewAdapter extends RecyclerView.Adapter<SpeciesViewAdapter.
         holder.textViewName.setText(currentSpecies.getName());
         holder.textViewSciName.setText(currentSpecies.getSciName());
 
-        String endUrl = capitalize(currentSpecies.getSciName().replace("_", " "));
+        String endUrl = capitalize(currentSpecies.getSciName());
         // Define your Image URL or Resource
         String imageUrl = "file:///android_asset/downloaded_images/" + endUrl + ".jpg";
 

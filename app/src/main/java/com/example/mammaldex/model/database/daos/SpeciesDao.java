@@ -84,5 +84,8 @@ public interface SpeciesDao {
      */
     @Query("SELECT COUNT(*) FROM species")
     int size();
+
+    @Query("UPDATE species SET seen = :seenInt WHERE sci_name = :name")
+    void updateSeen(String name, int seenInt);
 }
 
