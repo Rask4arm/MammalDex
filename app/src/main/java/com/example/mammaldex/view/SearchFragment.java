@@ -1,15 +1,12 @@
 package com.example.mammaldex.view;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -19,23 +16,17 @@ import androidx.appcompat.widget.SearchView;
 
 import com.example.mammaldex.MammalDexApp;
 import com.example.mammaldex.R;
-import com.example.mammaldex.model.Repository;
-import com.example.mammaldex.model.database.daos.SpeciesDao;
-import com.example.mammaldex.model.database.entities.Species;
-import com.example.mammaldex.model.database.local.AppDatabase;
 import com.example.mammaldex.viewModels.SpeciesViewModelFactory;
 import com.example.mammaldex.viewModels.SpeciesViewModel;
 
-import java.util.List;
-
-public class SecondFragment extends Fragment {
+public class SearchFragment extends Fragment {
 
     private SearchView searchView;
     private SpeciesViewModel viewModel;
     private SpeciesViewAdapter adapter;
 
-    public SecondFragment() {
-        super(R.layout.fragment_second);
+    public SearchFragment() {
+        super(R.layout.fragment_search);
     }
 
     /**
