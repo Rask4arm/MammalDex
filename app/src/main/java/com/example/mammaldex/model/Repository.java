@@ -24,5 +24,9 @@ public class Repository {
     public LiveData<List<Species>> getSpeciesNamesWith(String search) {
         return speciesDao.getSpeciesNamesWith(search);
     }
+    
+    public LiveData<Species> getSpeciesBySciName(String name) {
+        return speciesDao.getBySciName(name);
+    }
 
 }

@@ -45,7 +45,7 @@ public interface SpeciesDao {
      * @return a Species object that corresponds to the scientific name
      */
     @Query("SELECT * FROM species WHERE sci_name = :sciName")
-    Species getBySciName(String sciName);
+    LiveData<Species> getBySciName(String sciName);
 
     /**
      * This method prototype selects the mammal by its scientific (Latin) name.

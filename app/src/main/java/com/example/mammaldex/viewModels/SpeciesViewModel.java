@@ -36,4 +36,8 @@ public class SpeciesViewModel extends ViewModel {
         return repository.getSpeciesNamesWith(pattern);
     }
 
+    public LiveData<Species> getSpeciesBySciName(String name) {
+        return repository.getSpeciesBySciName(name);
+    }
+
 }

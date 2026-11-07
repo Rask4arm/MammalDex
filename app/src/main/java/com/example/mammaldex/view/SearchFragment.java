@@ -34,7 +34,7 @@ public class SearchFragment extends Fragment {
     private SpeciesViewModel viewModel;
 
     public SearchFragment() {
-        super(R.layout.fragment_second);
+        super(R.layout.fragment_search);
     }
 
     /**
