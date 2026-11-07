@@ -32,7 +32,7 @@ public interface SpeciesDao {
      * @return a LiveData container that notifies the associated observer when the list of
      *         Species objects first loads or changes.
      */
-    @Query("SELECT * FROM species " +
+    @Query("SELECT DISTINCT species.* FROM species " +
             "LEFT JOIN alternate_species_name ON species.id = alternate_species_name.species_id " +
             "WHERE species.name LIKE '%' || :search || '%' " +
             "OR species.sci_name LIKE '%' || :search || '%' " +
@@ -45,7 +45,7 @@ public interface SpeciesDao {
      * @return a Species object that corresponds to the scientific name
      */
     @Query("SELECT * FROM species WHERE sci_name = :sciName")
-    Species getBySciName(String sciName);
+    LiveData<Species> getBySciName(String sciName);
 
     /**
      * This method prototype selects the mammal by its scientific (Latin) name.
@@ -84,5 +84,8 @@ public interface SpeciesDao {
      */
     @Query("SELECT COUNT(*) FROM species")
     int size();
+
+    @Query("UPDATE species SET seen = :seenInt WHERE sci_name = :name")
+    void updateSeen(String name, int seenInt);
 }
 
