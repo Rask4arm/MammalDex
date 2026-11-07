@@ -41,6 +41,8 @@ public class DatabaseCreator {
                     String family = tokens[14].trim();
                     String order = tokens[9].trim();
 
+                    sciName = sciName.replace("_", " ");
+
                     String wikiLink = "https://en.wikipedia.org/wiki/" + sciName;
                     String imagePath = sciName.toLowerCase();
                     String[] alternateNameForSpecies = otherNames.split("\\|");
