@@ -36,6 +36,7 @@ public class SearchFragment extends Fragment {
     private Button btnHome;
     private ImageView noResultsImage;
     private List<Species> allSpecies = new ArrayList<>();
+    private List<Species> searchResults = new ArrayList<>();
     private SpeciesViewAdapter adapter;
     private SearchView searchView;
     private SpeciesViewModel viewModel;
@@ -113,18 +114,19 @@ public class SearchFragment extends Fragment {
              * This method executes the included code when the user changes the
              * text input of the search bar; encompasses insertions, deletions,
              * and replacements.
-             * @param searchText the new content of the query text field.
-             * @return true
+             * @param searchText the new content of the query text field
+             * @return true to notify SearchView that the event was fully handled
              */
             @Override
             public boolean onQueryTextChange(String searchText) {
-                LiveData<List<Species>> filtered = viewModel.getSpeciesNamesWith("%" + searchText + "%");
+                LiveData<List<Species>> filtered = viewModel.getSortedSpeciesNamesWith("%" + searchText + "%");
                 // TODO : ISSUE -> Makes a new observer every keystroke, does not destroy previous observers
-                filtered.observe(getViewLifecycleOwner(), species -> {
-                   if (species != null) {
-                       adapter.setSpecies(species);
+                // Gets the matched species of type List<Species>
+                filtered.observe(getViewLifecycleOwner(), results -> {
+                   if (results != null) {
+                       adapter.setSpecies(results);
                        // Displays content when there are no search results; hides if there are
-                       if (species.isEmpty()) {
+                       if (results.isEmpty()) {
                            noResultsImage.setVisibility(View.VISIBLE);
                            noResultsText.setVisibility(View.VISIBLE);
                        } else {

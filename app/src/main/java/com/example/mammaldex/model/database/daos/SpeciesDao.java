@@ -28,16 +28,42 @@ public interface SpeciesDao {
      * This method prototype selects all species that include the user's inputted String
      * in the search bar, such that it may be an exact match or a substring for available
      * mammals.
-     * @param search the user's String input in the search bar
+     * @param pattern the user's String input in the search bar
      * @return a LiveData container that notifies the associated observer when the list of
      *         Species objects first loads or changes.
      */
     @Query("SELECT DISTINCT species.* FROM species " +
             "LEFT JOIN alternate_species_name ON species.id = alternate_species_name.species_id " +
-            "WHERE species.name LIKE '%' || :search || '%' " +
-            "OR species.sci_name LIKE '%' || :search || '%' " +
-            "OR alternate_species_name.name LIKE '%' || :search || '%'")
-    LiveData<List<Species>> getSpeciesNamesWith(String search);
+            "WHERE species.name LIKE '%' || :pattern || '%' " +
+            "OR species.sci_name LIKE '%' || :pattern || '%' " +
+            "OR alternate_species_name.name LIKE '%' || :pattern || '%'")
+    LiveData<List<Species>> getSpeciesNamesWith(String pattern);
+
+    /**
+     * This method prototype selects all species that include the user's inputted String
+     * in the search bar, such that it may be an exact match or a substring for available
+     * mammals. The rows are sorted alphabetically within name categories (tiers 0, 1, 2)
+     * and ordered by: name, sci_name, alternate_species_names.
+     * @param pattern the user's String input in the search bar
+     * @return a LiveData container that notifies the associated observer when the list of
+     *         Species objects first loads or changes.
+     */
+    @Query("SELECT DISTINCT species.* FROM species " +
+            "LEFT JOIN alternate_species_name ON species.id = alternate_species_name.species_id " +
+            "WHERE species.name LIKE '%' || :pattern || '%' " +
+            "OR species.sci_name LIKE '%' || :pattern || '%' " +
+            "OR alternate_species_name.name LIKE '%' || :pattern || '%' " +
+            "ORDER BY " +
+            "   CASE " +
+            "       WHEN species.name LIKE '%' || :pattern || '%' THEN 0 " +
+            "       WHEN species.sci_name LIKE '%' || :pattern || '%' THEN 1 " +
+            "       ELSE 2 " +
+            "   END, " +
+            "   CASE " +
+            "       WHEN species.name LIKE '%' || :pattern || '%' THEN species.name " +
+            "       WHEN species.sci_name LIKE '%' || :pattern || '%' THEN species.sci_name " +
+            "   END COLLATE NOCASE")
+    LiveData<List<Species>> getSortedSpeciesNamesWith(String pattern);
 
     /**
      * This method prototype selects the mammal by its scientific (Latin) name.

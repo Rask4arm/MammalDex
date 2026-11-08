@@ -21,8 +21,12 @@ public class Repository {
         return speciesDao.getAll();
     }
 
-    public LiveData<List<Species>> getSpeciesNamesWith(String search) {
-        return speciesDao.getSpeciesNamesWith(search);
+    public LiveData<List<Species>> getSpeciesNamesWith(String pattern) {
+        return speciesDao.getSpeciesNamesWith(pattern);
+    }
+
+    public LiveData<List<Species>> getSortedSpeciesNamesWith(String pattern) {
+        return speciesDao.getSortedSpeciesNamesWith(pattern);
     }
     
     public LiveData<Species> getSpeciesBySciName(String name) {
