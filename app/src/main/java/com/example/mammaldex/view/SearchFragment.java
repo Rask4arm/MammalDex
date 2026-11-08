@@ -27,6 +27,7 @@ import com.example.mammaldex.R;
 import com.example.mammaldex.model.database.entities.Species;
 import com.example.mammaldex.viewModels.SpeciesViewModelFactory;
 import com.example.mammaldex.viewModels.SpeciesViewModel;
+import com.google.android.material.card.MaterialCardView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,8 +36,6 @@ public class SearchFragment extends Fragment {
 
     private Button btnHome;
     private ImageView noResultsImage;
-    private List<Species> allSpecies = new ArrayList<>();
-    private List<Species> searchResults = new ArrayList<>();
     private SpeciesViewAdapter adapter;
     private SearchView searchView;
     private SpeciesViewModel viewModel;
@@ -61,7 +60,6 @@ public class SearchFragment extends Fragment {
         setSearchTextFilter(searchView);
         setUIListeners();
         setRecyclerViewConfigs(view);
-        observeAllSpecies();
     }
 
     /**
@@ -71,9 +69,9 @@ public class SearchFragment extends Fragment {
     private void setFields(View view) {
         adapter = new SpeciesViewAdapter();
         btnHome = view.findViewById(R.id.btnHome);
-        noResultsImage = view.findViewById(R.id.no_results_image);
-        noResultsText = view.findViewById(R.id.no_results_text);
-        searchView = view.findViewById(R.id.search_view);
+        noResultsImage = view.findViewById(R.id.noResultsImage);
+        noResultsText = view.findViewById(R.id.noResultsText);
+        searchView = view.findViewById(R.id.searchView);
         MammalDexApp app = (MammalDexApp) requireActivity().getApplication();
         viewModel = new ViewModelProvider(this, new SpeciesViewModelFactory(app.getRepository())).get(SpeciesViewModel.class);
     }
@@ -124,8 +122,7 @@ public class SearchFragment extends Fragment {
                 // Gets the matched species of type List<Species>
                 filtered.observe(getViewLifecycleOwner(), results -> {
                    if (results != null) {
-                       adapter.setSpecies(results);
-                       // Displays content when there are no search results; hides if there are
+                       // Displays content when there are no search results; hides if there are results
                        if (results.isEmpty()) {
                            noResultsImage.setVisibility(View.VISIBLE);
                            noResultsText.setVisibility(View.VISIBLE);
@@ -133,6 +130,11 @@ public class SearchFragment extends Fragment {
                            noResultsImage.setVisibility(View.GONE);
                            noResultsText.setVisibility(View.GONE);
                        }
+                       // Swaps in and highlights the alternative names of the mammal's to indicate
+                       // when those names produced matches
+                       // TODO : Need to find a way to change the contents of MaterialCardView objects instead of Species
+                       // results = swapSciAndAltName(results, searchText);
+                       adapter.setSpecies(results);
                    }
                 });
                 return true;
@@ -140,34 +142,44 @@ public class SearchFragment extends Fragment {
         });
     }
 
+    // TODO : Need to find a way to change the contents of MaterialCardView objects instead of Species
+//    private List<Species> swapSciAndAltNames(List<Species> results, String searchText) {
+//        int firstAltNameIndex = 0;
+//        searchText = searchText.toLowerCase();
+//        for (Species s : results) {
+//            // Breaks out of the loop once it find the first sorted alternative name
+//            // that contains the user's search text
+//            if (!s.getName().toLowerCase().contains(searchText)
+//                    && !s.getSciName().toLowerCase().contains(searchText)) {
+//                break;
+//            }
+//            firstAltNameIndex++;
+//        }
+//        // Applies a name swap and highlight for the matched alternative names
+//        for (int i = firstAltNameIndex; i < results.size(); i++) {
+//            Species species = results.get(i);
+//            long speciesID = species.getId();
+//            LiveData<String> altNames = viewModel.getSpeciesAltNames(speciesID, searchText);
+//            altNames.observe(getViewLifecycleOwner(), name -> {
+//
+//            });
+//        }
+//        return results;
+//    }
+
     /**
      * This method sets any configurations for the fragment's RecyclerView
      * during class instantiation.
      * @param view the root View of the fragment's layout
      */
     private void setRecyclerViewConfigs(View view) {
-        RecyclerView recyclerView = view.findViewById(R.id.species_list);
+        RecyclerView recyclerView = view.findViewById(R.id.speciesList);
         recyclerView.setLayoutManager(
                 new LinearLayoutManager(requireContext())
         );
         // Creates a grid layout so the mammal cards are in two columns
         recyclerView.setLayoutManager(new GridLayoutManager(view.getContext(), 2));
         recyclerView.setAdapter(adapter);
-    }
-
-    /**
-     * This method observes the data for all species in the MammalDex database during the
-     * fragment's initialization, updates the species in the SpeciesViewAdapter, and stores
-     * all Species objects in the "allSpecies" field of type List<Species>. This allows for
-     * multiple searches to be performed for the available species without reloading the
-     * data multiple times.
-     */
-    private void observeAllSpecies() {
-        viewModel.getAllSpecies().observe(getViewLifecycleOwner(), species -> {
-                    adapter.setSpecies(species);
-                    allSpecies = (species != null) ? species : new ArrayList<>();
-                }
-        );
     }
 
 }

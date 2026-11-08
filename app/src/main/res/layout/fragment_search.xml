@@ -19,7 +19,7 @@
             android:layout_height="wrap_content">
 
             <androidx.appcompat.widget.SearchView
-                android:id="@+id/search_view"
+                android:id="@+id/searchView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="Search for a mammal"
@@ -28,7 +28,7 @@
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/species_list"
+            android:id="@+id/speciesList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="6"
@@ -38,7 +38,7 @@
 
     <!-- Content for No Results -->
     <ImageView
-        android:id="@+id/no_results_image"
+        android:id="@+id/noResultsImage"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -48,7 +48,7 @@
         android:visibility="gone"/>
 
     <TextView
-        android:id="@+id/no_results_text"
+        android:id="@+id/noResultsText"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"

@@ -25,6 +25,10 @@ public class SpeciesViewModel extends ViewModel {
         return species;
     }
 
+    public LiveData<String> getSpeciesAltName(long speciesID, String searchText) {
+        return repository.getSpeciesAltName(speciesID, searchText);
+    }
+
     /**
      * This method gets the species in the MammalDex database that contain
      * the passed string pattern. It checks the available scientific (Latin),
