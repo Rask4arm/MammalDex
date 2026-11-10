@@ -27,7 +27,6 @@ import java.util.List;
 
 public class SearchFragment extends Fragment {
 
-    private Button btnHome;
     private List<Species> allSpecies = new ArrayList<>();
     private SpeciesViewAdapter adapter;
     private SearchView searchView;
@@ -59,7 +58,6 @@ public class SearchFragment extends Fragment {
      * @param view the root View of the fragment's layout
      */
     private void setFields(View view) {
-        btnHome = view.findViewById(R.id.btnHome);
         searchView = view.findViewById(R.id.search_view);
         adapter = new SpeciesViewAdapter();
         MammalDexApp app = (MammalDexApp) requireActivity().getApplication();
@@ -70,10 +68,6 @@ public class SearchFragment extends Fragment {
      * This method sets any needed UI listeners during class instantiation.
      */
     private void setUIListeners() {
-        btnHome.setOnClickListener(v ->
-                Navigation.findNavController(v)
-                        .popBackStack()
-        );
         // Listener for the search bar
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             /**
