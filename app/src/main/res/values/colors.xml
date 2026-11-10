@@ -2,4 +2,14 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!--App primaries colors-->
+    <color name="background">#EFEBD2</color>
+    <color name="primary_green">#355A31</color>
+    <color name="primary_brown">#613E23</color>
+
+    <!-- Navigation colors -->
+    <color name="nav_gray">#A6ACA6</color>
+    <color name="selected_green">#c2e8c1</color>
+
 </resources>

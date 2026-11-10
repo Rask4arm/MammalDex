@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:orientation="vertical"
-    app:layout_constraintTop_toTopOf="parent">
+    app:layout_constraintTop_toTopOf="parent"
+    android:background="@color/background">
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/nav_host_fragment"
@@ -21,8 +22,10 @@
         android:id="@+id/navigationBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        app:backgroundTint="@color/white"
+        android:background="@color/nav_gray"
+        app:itemIconTint="@color/nav_button_tint"
+        app:itemTextColor="@color/nav_button_tint"
+        app:itemActiveIndicatorStyle="@style/BottomNavActiveIndicator"
         app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/nav_menu"/>

@@ -54,11 +54,20 @@ public class MainActivity extends AppCompatActivity {
                 //Current selected Fragment
                 Fragment selectedFragment = null;
 
-                if(menuItem.getItemId() == R.id.nav_search){
+                //Get the menuItem's Id
+                int menuId = menuItem.getItemId();
+
+                //Selected the new fragment depending on ID.
+                if(menuId == R.id.nav_search){
                     selectedFragment = new SearchFragment();
                 }
+                else if(menuId == R.id.nav_map){
+                    selectedFragment = new MapFragment();
+                }
+                else if(menuId == R.id.nav_profile){
+                    selectedFragment = new ProfileFragment();
+                }
                 else
-                    //If an invalid button is pressed, go to default home fragment
                     selectedFragment = new HomeFragment();
 
                 //Switch the fragment page
