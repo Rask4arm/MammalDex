@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">MammalDex</string>
     <string name="no_search_results">No mammals found!\n</string>
-    <string name="profile_header">Profile</string>
+    <string name="header_about_us">About Us</string>
+    <string name="header_profile">Profile</string>
     <string name="btn_about_us">About Us</string>
     <string name="btn_acknowledgements">Acknowledgements</string>
     <string name="btn_logout">Logout</string>

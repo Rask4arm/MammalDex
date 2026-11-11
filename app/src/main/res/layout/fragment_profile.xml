@@ -11,7 +11,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/profile_header"
+        android:text="@string/header_profile"
         android:textAlignment="center"
         android:textSize="30sp"
         android:textColor="@color/black"
@@ -20,7 +20,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="<Display Username Programmatically>"
+        android:text="Display Username Programmatically"
         android:textAlignment="center"
         android:textSize="32sp"
         android:textColor="@color/black"
