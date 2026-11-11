@@ -127,7 +127,6 @@ public class SearchFragment extends Fragment {
     private void observeAllSpecies() {
         viewModel.getAllSpecies().observe(getViewLifecycleOwner(), species -> {
                     adapter.setSpecies(species);
-                    allSpecies = (species != null) ? species : new ArrayList<>();
                 }
         );
     }
