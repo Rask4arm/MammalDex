@@ -60,6 +60,7 @@ public class SearchFragment extends Fragment {
         setSearchTextFilter(searchView);
         setUIListeners();
         setRecyclerViewConfigs(view);
+        observeAllSpecies();
     }
 
     /**
@@ -180,6 +181,20 @@ public class SearchFragment extends Fragment {
         // Creates a grid layout so the mammal cards are in two columns
         recyclerView.setLayoutManager(new GridLayoutManager(view.getContext(), 2));
         recyclerView.setAdapter(adapter);
+    }
+
+    /**
+     * This method observes the data for all species in the MammalDex database during the
+     * fragment's initialization, updates the species in the SpeciesViewAdapter, and stores
+     * all Species objects in the "allSpecies" field of type List<Species>. This allows for
+     * multiple searches to be performed for the available species without reloading the
+     * data multiple times.
+     */
+    private void observeAllSpecies() {
+        viewModel.getAllSpecies().observe(getViewLifecycleOwner(), species -> {
+                    adapter.setSpecies(species);
+                }
+        );
     }
 
 }
