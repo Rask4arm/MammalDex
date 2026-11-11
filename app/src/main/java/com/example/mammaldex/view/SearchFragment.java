@@ -93,10 +93,6 @@ public class SearchFragment extends Fragment {
      * This method sets any needed UI listeners during class instantiation.
      */
     private void setUIListeners() {
-        btnHome.setOnClickListener(v ->
-                Navigation.findNavController(v)
-                        .popBackStack()
-        );
         // Listener for the search bar
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             /**

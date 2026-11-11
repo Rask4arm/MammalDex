@@ -27,14 +27,6 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        // TODO : Add comment
-        TextView homeMessage =
-                view.findViewById(R.id.homeMessage);
-        Button btnNext =
-                view.findViewById(R.id.btnNext);
-        btnNext.setOnClickListener(v ->
-                Navigation.findNavController(v)
-                        .navigate(R.id.action_home_to_second)
-        );
+
     }
 }
