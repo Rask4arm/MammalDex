@@ -25,6 +25,10 @@ public class SpeciesViewModel extends ViewModel {
         return species;
     }
 
+    public LiveData<String> getSpeciesAltName(long speciesID, String searchText) {
+        return repository.getSpeciesAltName(speciesID, searchText);
+    }
+
     /**
      * This method gets the species in the MammalDex database that contain
      * the passed string pattern. It checks the available scientific (Latin),
@@ -36,8 +40,25 @@ public class SpeciesViewModel extends ViewModel {
         return repository.getSpeciesNamesWith(pattern);
     }
 
-    public LiveData<Species> getSpeciesBySciName(String name) {
-        return repository.getSpeciesBySciName(name);
+    /**
+     * This method gets LiveData sorted list of species with common, scientific, and alternative names
+     * that include the passed string pattern. The species are alphabetically sorted within name
+     * categories, and are displayed in the order: common, scientific, alternative.
+     * @param pattern the substring being searched for
+     * @return a LiveData object with a sorted list of Species that have names that match the pattern
+     */
+    public LiveData<List<Species>> getSortedSpeciesNamesWith(String pattern) {
+        return repository.getSortedSpeciesNamesWith(pattern);
+    }
+
+    /**
+     * This method gets a LiveData list of species with common, scientific, and alternative names
+     * that include the passed string pattern.
+     * @param pattern the substring being searched for
+     * @return a LiveData object with a list of Species that have names that match the pattern
+     */
+    public LiveData<Species> getSpeciesBySciName(String pattern) {
+        return repository.getSpeciesBySciName(pattern);
     }
 
 }

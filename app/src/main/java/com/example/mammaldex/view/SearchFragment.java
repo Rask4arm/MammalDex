@@ -1,9 +1,15 @@
 package com.example.mammaldex.view;
 
 import android.os.Bundle;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,6 +27,7 @@ import com.example.mammaldex.R;
 import com.example.mammaldex.model.database.entities.Species;
 import com.example.mammaldex.viewModels.SpeciesViewModelFactory;
 import com.example.mammaldex.viewModels.SpeciesViewModel;
+import com.google.android.material.card.MaterialCardView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,10 +35,11 @@ import java.util.List;
 public class SearchFragment extends Fragment {
 
     private Button btnHome;
-    private List<Species> allSpecies = new ArrayList<>();
+    private ImageView noResultsImage;
     private SpeciesViewAdapter adapter;
     private SearchView searchView;
     private SpeciesViewModel viewModel;
+    private TextView noResultsText;
 
     public SearchFragment() {
         super(R.layout.fragment_search);
@@ -49,6 +57,7 @@ public class SearchFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setFields(view);
+        setSearchTextFilter(searchView);
         setUIListeners();
         setRecyclerViewConfigs(view);
         observeAllSpecies();
@@ -59,11 +68,25 @@ public class SearchFragment extends Fragment {
      * @param view the root View of the fragment's layout
      */
     private void setFields(View view) {
-        btnHome = view.findViewById(R.id.btnHome);
-        searchView = view.findViewById(R.id.search_view);
         adapter = new SpeciesViewAdapter();
+        btnHome = view.findViewById(R.id.btnHome);
+        noResultsImage = view.findViewById(R.id.noResultsImage);
+        noResultsText = view.findViewById(R.id.noResultsText);
+        searchView = view.findViewById(R.id.searchView);
         MammalDexApp app = (MammalDexApp) requireActivity().getApplication();
         viewModel = new ViewModelProvider(this, new SpeciesViewModelFactory(app.getRepository())).get(SpeciesViewModel.class);
+    }
+
+    /**
+     * This method attaches text filters to the search bar.
+     * @param searchView the search bar's SearchView object
+     */
+    private void setSearchTextFilter(SearchView searchView) {
+        // Gets the internal EditText object of the SearchView
+        EditText searchEditText = searchView.findViewById(androidx.appcompat.R.id.search_src_text);
+        searchEditText.setFilters(new InputFilter[] {
+                new InputFilter.LengthFilter(45)
+        });
     }
 
     /**
@@ -90,17 +113,29 @@ public class SearchFragment extends Fragment {
              * This method executes the included code when the user changes the
              * text input of the search bar; encompasses insertions, deletions,
              * and replacements.
-             * @param searchText the new content of the query text field.
-             * @return true
+             * @param searchText the new content of the query text field
+             * @return true to notify SearchView that the event was fully handled
              */
             @Override
             public boolean onQueryTextChange(String searchText) {
-                LiveData<List<Species>> filtered = viewModel.getSpeciesNamesWith("%" + searchText + "%");
+                LiveData<List<Species>> filtered = viewModel.getSortedSpeciesNamesWith("%" + searchText + "%");
                 // TODO : ISSUE -> Makes a new observer every keystroke, does not destroy previous observers
-                filtered.observe(getViewLifecycleOwner(), species -> {
-                   if (species != null && !species.isEmpty()) {
-                       Log.d("INFO", "Species = " + species.get(0).getName());
-                       adapter.setSpecies(species);
+                // Gets the matched species of type List<Species>
+                filtered.observe(getViewLifecycleOwner(), results -> {
+                   if (results != null) {
+                       // Displays content when there are no search results; hides if there are results
+                       if (results.isEmpty()) {
+                           noResultsImage.setVisibility(View.VISIBLE);
+                           noResultsText.setVisibility(View.VISIBLE);
+                       } else {
+                           noResultsImage.setVisibility(View.GONE);
+                           noResultsText.setVisibility(View.GONE);
+                       }
+                       // Swaps in and highlights the alternative names of the mammal's to indicate
+                       // when those names produced matches
+                       // TODO : Need to find a way to change the contents of MaterialCardView objects instead of Species
+                       // results = swapSciAndAltName(results, searchText);
+                       adapter.setSpecies(results);
                    }
                 });
                 return true;
@@ -108,13 +143,38 @@ public class SearchFragment extends Fragment {
         });
     }
 
+    // TODO : Need to find a way to change the contents of MaterialCardView objects instead of Species
+//    private List<Species> swapSciAndAltNames(List<Species> results, String searchText) {
+//        int firstAltNameIndex = 0;
+//        searchText = searchText.toLowerCase();
+//        for (Species s : results) {
+//            // Breaks out of the loop once it find the first sorted alternative name
+//            // that contains the user's search text
+//            if (!s.getName().toLowerCase().contains(searchText)
+//                    && !s.getSciName().toLowerCase().contains(searchText)) {
+//                break;
+//            }
+//            firstAltNameIndex++;
+//        }
+//        // Applies a name swap and highlight for the matched alternative names
+//        for (int i = firstAltNameIndex; i < results.size(); i++) {
+//            Species species = results.get(i);
+//            long speciesID = species.getId();
+//            LiveData<String> altNames = viewModel.getSpeciesAltNames(speciesID, searchText);
+//            altNames.observe(getViewLifecycleOwner(), name -> {
+//
+//            });
+//        }
+//        return results;
+//    }
+
     /**
      * This method sets any configurations for the fragment's RecyclerView
      * during class instantiation.
      * @param view the root View of the fragment's layout
      */
     private void setRecyclerViewConfigs(View view) {
-        RecyclerView recyclerView = view.findViewById(R.id.species_list);
+        RecyclerView recyclerView = view.findViewById(R.id.speciesList);
         recyclerView.setLayoutManager(
                 new LinearLayoutManager(requireContext())
         );
@@ -133,7 +193,6 @@ public class SearchFragment extends Fragment {
     private void observeAllSpecies() {
         viewModel.getAllSpecies().observe(getViewLifecycleOwner(), species -> {
                     adapter.setSpecies(species);
-                    allSpecies = (species != null) ? species : new ArrayList<>();
                 }
         );
     }
