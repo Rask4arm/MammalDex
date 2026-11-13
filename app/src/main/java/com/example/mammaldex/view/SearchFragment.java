@@ -130,7 +130,6 @@ public class SearchFragment extends Fragment {
                        // Swaps in and highlights the alternative names of the mammal's to indicate
                        // when those names produced matches
                        // TODO : Need to find a way to change the contents of MaterialCardView objects instead of Species
-                       // results = swapSciAndAltName(results, searchText);
                        adapter.setSpecies(results);
                    }
                 });
@@ -138,31 +137,6 @@ public class SearchFragment extends Fragment {
             }
         });
     }
-
-    // TODO : Need to find a way to change the contents of MaterialCardView objects instead of Species
-//    private List<Species> swapSciAndAltNames(List<Species> results, String searchText) {
-//        int firstAltNameIndex = 0;
-//        searchText = searchText.toLowerCase();
-//        for (Species s : results) {
-//            // Breaks out of the loop once it find the first sorted alternative name
-//            // that contains the user's search text
-//            if (!s.getName().toLowerCase().contains(searchText)
-//                    && !s.getSciName().toLowerCase().contains(searchText)) {
-//                break;
-//            }
-//            firstAltNameIndex++;
-//        }
-//        // Applies a name swap and highlight for the matched alternative names
-//        for (int i = firstAltNameIndex; i < results.size(); i++) {
-//            Species species = results.get(i);
-//            long speciesID = species.getId();
-//            LiveData<String> altNames = viewModel.getSpeciesAltNames(speciesID, searchText);
-//            altNames.observe(getViewLifecycleOwner(), name -> {
-//
-//            });
-//        }
-//        return results;
-//    }
 
     /**
      * This method sets any configurations for the fragment's RecyclerView
