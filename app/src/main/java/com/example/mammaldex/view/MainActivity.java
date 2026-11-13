@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
         DatabaseInitializer initializer = new DatabaseInitializer(this, app.getDatabase());
 
-        initializer.initialize(() -> {},
+        initializer.initialize(() -> {System.out.println("Initializer worked");},
                 error -> {System.out.println("Initializer didn't work");}
         );
 
@@ -39,13 +39,13 @@ public class MainActivity extends AppCompatActivity {
                     .replace(R.id.nav_host_fragment, new HomeFragment()).commit();
         }
 
-        //Adds a select listener to the each item in the navigation par.
+        //Adds a select listener to each item in the navigation par.
         navigationBar.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
 
             /**
              * Whenever a button on the nav bar is clicked, it will switch the fragment page
              * to the corresponding button
-             * @param menuItem The button thats being selected
+             * @param menuItem The button that's being selected
              * @return true for having the button highlights but also switches the fragment page
              */
             @Override

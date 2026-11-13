@@ -30,6 +30,13 @@ public class DatabaseInitializer {
         this.database = database;
     }
 
+    /**
+     * Checks if the database has already been created and if not it
+     * initializes it
+     * @param onComplete log that runs if the database has already been created
+     *                   or if the creation was successfull.
+     * @param onError log that runs if something went wrong
+     */
     public void initialize(Runnable onComplete,
                            Consumer<Exception> onError) {
         executor.execute(() -> {
@@ -50,7 +57,6 @@ public class DatabaseInitializer {
             try {
                 DatabaseCreator.readCsvToRoom(context, database);
 
-                // Save the flag only after a successful import.
                 prefs.edit()
                         .putBoolean("csv_import_complete", true)
                         .commit();
