@@ -17,6 +17,12 @@ public class DatabaseInitializer {
     private final ExecutorService executor =
             Executors.newSingleThreadExecutor();
 
+    /**
+     * Constructs the databaseInitializer
+     *
+     * @param context context of App
+     * @param database database that belongs the App
+     */
     public DatabaseInitializer(
             Context context,
             AppDatabase database) {
@@ -24,6 +30,13 @@ public class DatabaseInitializer {
         this.database = database;
     }
 
+    /**
+     * Checks if the database has already been created and if not it
+     * initializes it
+     * @param onComplete log that runs if the database has already been created
+     *                   or if the creation was successfull.
+     * @param onError log that runs if something went wrong
+     */
     public void initialize(Runnable onComplete,
                            Consumer<Exception> onError) {
         executor.execute(() -> {
@@ -42,10 +55,8 @@ public class DatabaseInitializer {
             }
 
             try {
-                // Replace CsvImporter with your actual class.
                 DatabaseCreator.readCsvToRoom(context, database);
 
-                // Save the flag only after a successful import.
                 prefs.edit()
                         .putBoolean("csv_import_complete", true)
                         .commit();

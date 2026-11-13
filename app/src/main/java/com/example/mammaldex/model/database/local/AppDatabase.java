@@ -14,6 +14,11 @@ import com.example.mammaldex.model.database.entities.AlternateSpeciesName;
 import com.example.mammaldex.model.database.entities.Sighting;
 import com.example.mammaldex.model.database.entities.Species;
 
+/**
+ * Abstract Database class that extends RoomDatabase
+ * Contains all the DAOs so that the app can get a
+ * single instance of the database.
+ */
 @Database(entities = {Species.class, AlternateSpeciesName.class, Sighting.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract SpeciesDao speciesDao();

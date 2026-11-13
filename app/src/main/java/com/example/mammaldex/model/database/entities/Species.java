@@ -7,6 +7,9 @@ import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 
+/**
+ * This is the table in the database for species
+ */
 @Entity(
         tableName = "species",
         indices = {@Index(value = {"id"}, unique = true)}
@@ -32,6 +35,10 @@ public class Species {
     private String imagePath;
     @ColumnInfo(name = "seen")
     private int seen;
+    @ColumnInfo(name = "updated_at")
+    private Long updatedAt;
+    @ColumnInfo(name = "sync_status")
+    private String syncStatus;
 
     public Species(Long id, String name, String sciName, String taxonomicGenus, String taxonomicFamily, String taxonomicOrder, String imagePath, String wikiLink){
         this.id = id;
@@ -45,6 +52,8 @@ public class Species {
         this.seen = 0;
     }
 
+
+    //Getter and Setters
     public Long getId() {
         return id;
     }
@@ -85,7 +94,23 @@ public class Species {
         this.seen = seen;
     }
 
+    public Long getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public String getSyncStatus() {
+        return syncStatus;
+    }
+
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
+    }
+
+    public void setUpdatedAt(Long updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public void setSyncStatus(String syncStatus) {
+        this.syncStatus = syncStatus;
     }
 }

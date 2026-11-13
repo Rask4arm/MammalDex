@@ -6,6 +6,9 @@ import androidx.room.ForeignKey;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
+/**
+ * This is the table in the database for sightings
+ */
 @Entity(
         tableName = "sighting",
         foreignKeys = {
@@ -18,6 +21,8 @@ import androidx.room.PrimaryKey;
         },
         indices = {@Index("species_id")}
 )
+
+
 public class Sighting {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
@@ -29,12 +34,29 @@ public class Sighting {
     @ColumnInfo(name = "longitude")
     public double longitude;
 
+    @ColumnInfo(name = "updated_at")
+    private Long updatedAt;
+    @ColumnInfo(name = "sync_status")
+    private String syncStatus;
+
+    @ColumnInfo(name = "deleted")
+    private Boolean deleted;
+
+    /**
+     * Constructs the Sighting
+     *
+     * @param speciesId Long speciesId
+     * @param latitude double latitude where sighting was
+     * @param longitude double longitude where sighting was
+     */
     public Sighting(Long speciesId, double latitude, double longitude) {
         this.speciesId = speciesId;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.deleted = false;
     }
 
+    //Getters and Setters
     public Long getId() {
         return id;
     }
@@ -49,6 +71,30 @@ public class Sighting {
 
     public double getLongitude() {
         return longitude;
+    }
+
+    public Long getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public String getSyncStatus() {
+        return syncStatus;
+    }
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setUpdatedAt(Long updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public void setSyncStatus(String syncStatus) {
+        this.syncStatus = syncStatus;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
     }
 }
 
