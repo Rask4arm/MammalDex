@@ -7,7 +7,7 @@ import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 /**
- * TODO : Add comments to clarify class
+ * This is the table in the database for the alternate names for the different species
  */
 @Entity(tableName = "alternate_species_name",
         foreignKeys = {
@@ -31,8 +31,8 @@ public class AlternateSpeciesName {
 
     /**
      * TODO : Add Javadoc
-     * @param name
-     * @param speciesId
+     * @param name This should be a String of the alternate name for the species that is specified in the speciesId
+     * @param speciesId Long speciesId
      */
     public AlternateSpeciesName(String name, Long speciesId) {
         this.name = name;

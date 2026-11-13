@@ -17,6 +17,12 @@ public class DatabaseInitializer {
     private final ExecutorService executor =
             Executors.newSingleThreadExecutor();
 
+    /**
+     * Constructs the databaseInitializer
+     *
+     * @param context context of App
+     * @param database database that belongs the App
+     */
     public DatabaseInitializer(
             Context context,
             AppDatabase database) {
@@ -42,7 +48,6 @@ public class DatabaseInitializer {
             }
 
             try {
-                // Replace CsvImporter with your actual class.
                 DatabaseCreator.readCsvToRoom(context, database);
 
                 // Save the flag only after a successful import.

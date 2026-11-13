@@ -10,6 +10,10 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * Repository is the middleman between the viewModel and the Dao.
+ * Gets LiveData from the DAOs that is dynamically updated whenever the user changes the data
+ */
 public class Repository {
     private final SpeciesDao speciesDao;
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
@@ -17,6 +21,7 @@ public class Repository {
         this.speciesDao = db.speciesDao();
     }
 
+    //Getters and setters
     public LiveData<List<Species>> getAllSpecies() {
         return speciesDao.getAll();
     }

@@ -10,18 +10,16 @@ public class MammalDexApp extends Application {
     private Repository repository;
 
     /**
-     * TODO : Add Javadoc
+     * Sets up the App
      */
     @Override
     public void onCreate() {
         super.onCreate();
-
         database = AppDatabase.getInstance(this);
         repository = new Repository(database);
     }
 
     // Getter methods
-
     public Repository getRepository() {
         return repository;
     }
