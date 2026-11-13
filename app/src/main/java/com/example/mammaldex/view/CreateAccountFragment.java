@@ -70,15 +70,12 @@ public class CreateAccountFragment extends AppCompatActivity {
         user.put(Constants.KEY_EMAIL, binding.inputEmail.getText().toString());
         user.put(Constants.KEY_PASSWORD, binding.inputPassword.getText().toString());
 
-        user.put(Constants.KEY_IMAGE, encodeImage);
-
         database.collection(Constants.KEY_COLLECTION_USERS)
                 .add(user)
                 .addOnSuccessListener(
                         documentReference -> {
                             preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_IN, true);
                             preferenceManager.putString(Constants.KEY_NAME, binding.inputName.getText().toString());
-                            preferenceManager.putString(Constants.KEY_IMAGE, encodeImage);
 
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
