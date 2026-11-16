@@ -22,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="Create New Account"
+            android:text="@string/label_create_account"
             android:textSize="30sp"
             android:textStyle="bold"/>
 
@@ -32,7 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="60dp"
-            android:hint="Name"
+            android:hint="@string/hint_name"
             android:imeOptions="actionNext"
             android:importantForAutofill="no"
             android:inputType="text"
@@ -45,7 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="20dp"
-            android:hint="Email"
+            android:hint="@string/hint_email"
             android:imeOptions="actionNext"
             android:importantForAutofill="no"
             android:inputType="textEmailAddress"
@@ -58,7 +58,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="20dp"
-            android:hint="Password"
+            android:hint="@string/hint_password"
             android:imeOptions="actionNext"
             android:importantForAutofill="no"
             android:inputType="textPassword"
@@ -72,7 +72,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="20dp"
-            android:hint="Confirm Password"
+            android:hint="@string/hint_confirm_password"
             android:imeOptions="actionNext"
             android:importantForAutofill="no"
             android:inputType="textPassword"
@@ -92,11 +92,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="20dp"
-                android:text="Sign Up"
+                android:text="@string/btn_sign_up"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                app:cornerRadius="8sp"/>
+                app:cornerRadius="8sp"
+                android:stateListAnimator="@animator/squish"/>
 
             <ProgressBar
                 android:id="@+id/progressBar"
@@ -108,13 +109,14 @@
         </FrameLayout>
 
         <TextView
-            android:id="@+id/textSignIn"
+            android:id="@+id/textLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="Log in"
+            android:text="@string/text_login"
             android:textSize="18sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:stateListAnimator="@animator/squish"/>
 
 
 

@@ -22,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="60dp"
-            android:text="Welcome to Mammal Dex"
+            android:text="@string/label_welcome"
             android:textSize="24sp"
             android:textStyle="bold"/>
 
@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
-            android:text="Login to continue"
+            android:text="@string/label_login"
             android:textSize="17sp"
             android:textStyle="bold"/>
 
@@ -39,7 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="60dp"
-            android:hint="Email"
+            android:hint="@string/hint_email"
             android:imeOptions="actionNext"
             android:importantForAutofill="no"
             android:inputType="textEmailAddress"
@@ -52,7 +52,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="20dp"
-            android:hint="Password"
+            android:hint="@string/hint_password"
             android:imeOptions="actionNext"
             android:importantForAutofill="no"
             android:inputType="textPassword"
@@ -68,14 +68,15 @@
             android:animateLayoutChanges="true">
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/buttonSignIn"
+                android:id="@+id/buttonLogin"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginTop="20dp"
-                android:text="Login"
+                android:text="@string/btn_login"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold"
+                android:stateListAnimator="@animator/squish"
                 app:cornerRadius="8sp"/>
 
             <ProgressBar
@@ -92,9 +93,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
-            android:text="Create New Account"
+            android:text="@string/create_account"
             android:textSize="18sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:stateListAnimator="@animator/squish"/>
 
 
 

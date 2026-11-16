@@ -28,13 +28,13 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     /**
-     * Sets listeners for both the sign in button and the create account text
+     * Sets listeners for both the Login button and the create account text
      */
     private void setListeners() {
         binding.textCreateNewAccount.setOnClickListener(v ->
                 startActivity(new Intent(getApplicationContext(), CreateAccountActivity.class)));
 
-        binding.buttonSignIn.setOnClickListener(v -> {
+        binding.buttonLogin.setOnClickListener(v -> {
             if(isValidSignInDetails()){
                 signIn();
             }
@@ -97,16 +97,16 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     /**
-     * Changes the view between the sign in button and a loading bar
+     * Changes the view between the login button and a loading bar
      * @param isLoading if the view is loading
      */
     private void loading(Boolean isLoading){
         if(isLoading){
-            binding.buttonSignIn.setVisibility(View.INVISIBLE);
+            binding.buttonLogin.setVisibility(View.INVISIBLE);
             binding.progressBar.setVisibility(View.VISIBLE);
         } else {
             binding.progressBar.setVisibility(View.INVISIBLE);
-            binding.buttonSignIn.setVisibility(View.VISIBLE);
+            binding.buttonLogin.setVisibility(View.VISIBLE);
         }
     }
 }

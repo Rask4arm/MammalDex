@@ -42,7 +42,8 @@
             android:layout_weight="0.75"
             android:text="@string/btn_about_us"
             android:textStyle="bold"
-            android:textSize="26sp"/>
+            android:textSize="26sp"
+            android:stateListAnimator="@animator/squish"/>
 
     </LinearLayout>
 
@@ -61,7 +62,8 @@
             android:layout_weight="0.75"
             android:text="@string/btn_acknowledgements"
             android:textStyle="bold"
-            android:textSize="26sp"/>
+            android:textSize="26sp"
+            android:stateListAnimator="@animator/squish"/>
 
     </LinearLayout>
 
@@ -105,7 +107,8 @@
             android:layout_weight="0.75"
             android:text="@string/btn_resync"
             android:textStyle="bold"
-            android:textSize="26sp"/>
+            android:textSize="26sp"
+            android:stateListAnimator="@animator/squish"/>
 
     </LinearLayout>
 
@@ -124,7 +127,8 @@
             android:layout_weight="0.75"
             android:text="@string/btn_logout"
             android:textStyle="bold"
-            android:textSize="26sp"/>
+            android:textSize="26sp"
+            android:stateListAnimator="@animator/squish"/>
 
     </LinearLayout>
 

@@ -28,16 +28,14 @@ public class CreateAccountActivity extends AppCompatActivity {
         binding = ActivityCreateAccountBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         preferenceManager = new PreferenceManager(getApplicationContext());
-
         setListeners();
     }
 
     /**
-     * Sets listeners for both the sign up button, the sign in text, and the image view
+     * Sets listeners for both the Sign Up button, the sign in text, and the image view
      */
     private void setListeners() {
-        binding.textSignIn.setOnClickListener(v -> onBackPressed());
-
+        binding.textLogin.setOnClickListener(v -> onBackPressed());
         binding.buttonSignUp.setOnClickListener(v ->{
             if(isValidSignUpDetails()){
                 SignUp();
@@ -45,7 +43,6 @@ public class CreateAccountActivity extends AppCompatActivity {
         });
 
     }
-
 
     /**
      * Creates and shows a toast message based on the message given
@@ -165,8 +162,8 @@ public class CreateAccountActivity extends AppCompatActivity {
             binding.buttonSignUp.setVisibility(View.INVISIBLE);
             binding.progressBar.setVisibility(View.VISIBLE);
         } else {
-            binding.progressBar.setVisibility(View.INVISIBLE);
             binding.buttonSignUp.setVisibility(View.VISIBLE);
+            binding.progressBar.setVisibility(View.INVISIBLE);
         }
     }
 }
