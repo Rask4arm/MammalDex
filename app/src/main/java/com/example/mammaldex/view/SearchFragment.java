@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.text.InputFilter;
 import android.text.Spanned;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -24,6 +26,9 @@ import androidx.appcompat.widget.SearchView;
 
 import com.example.mammaldex.MammalDexApp;
 import com.example.mammaldex.R;
+import com.example.mammaldex.databinding.ActivityMainBinding;
+import com.example.mammaldex.databinding.FragmentHomeBinding;
+import com.example.mammaldex.databinding.FragmentSearchBinding;
 import com.example.mammaldex.model.database.entities.Species;
 import com.example.mammaldex.viewModels.SpeciesViewModelFactory;
 import com.example.mammaldex.viewModels.SpeciesViewModel;
@@ -34,15 +39,34 @@ import java.util.List;
 
 public class SearchFragment extends Fragment {
 
-    private Button btnHome;
-    private ImageView noResultsImage;
+    private FragmentSearchBinding binding;
     private SpeciesViewAdapter adapter;
-    private SearchView searchView;
     private SpeciesViewModel viewModel;
-    private TextView noResultsText;
+
 
     public SearchFragment() {
         super(R.layout.fragment_search);
+    }
+
+    /**
+     * This method handles all operations needed for when the fragment is being
+     * creating, including initializing the binding variable for UI references.
+     * @param inflater The LayoutInflater object that can be used to inflate
+     * any views in the fragment,
+     * @param container If non-null, this is the parent view that the fragment's
+     * UI should be attached to.  The fragment should not add the view itself,
+     * but this can be used to generate the LayoutParams of the view.
+     * @param savedInstanceState If non-null, this fragment is being re-constructed
+     * from a previous saved state as given here.
+     *
+     * @return the top-layer View of the inflated layout (the outermost element of the
+     * associated XML file).
+     */
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                         ViewGroup container,
+                         Bundle savedInstanceState) {
+        binding = FragmentSearchBinding.inflate(inflater, container, false);
+        return binding.getRoot();
     }
 
     /**
@@ -51,13 +75,13 @@ public class SearchFragment extends Fragment {
      * view's RecyclerView, and observing all species data in the local database.
      * @param view The View returned by onCreateView().
      * @param savedInstanceState If non-null, this fragment is being re-constructed
-     *                           from a previous saved state as given here.
+     * from a previous saved state as given here.
      */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setFields(view);
-        setSearchTextFilter(searchView);
+        setSearchTextFilter(binding.searchView);
         setUIListeners();
         setRecyclerViewConfigs(view);
         observeAllSpecies();
@@ -69,10 +93,6 @@ public class SearchFragment extends Fragment {
      */
     private void setFields(View view) {
         adapter = new SpeciesViewAdapter();
-        btnHome = view.findViewById(R.id.btnHome);
-        noResultsImage = view.findViewById(R.id.noResultsImage);
-        noResultsText = view.findViewById(R.id.noResultsText);
-        searchView = view.findViewById(R.id.searchView);
         MammalDexApp app = (MammalDexApp) requireActivity().getApplication();
         viewModel = new ViewModelProvider(this, new SpeciesViewModelFactory(app.getRepository())).get(SpeciesViewModel.class);
     }
@@ -94,7 +114,7 @@ public class SearchFragment extends Fragment {
      */
     private void setUIListeners() {
         // Listener for the search bar
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        binding.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             /**
              * This method executes the included code when the Enter button is pressed,
              * which includes closing the on-screen keyboard
@@ -121,11 +141,11 @@ public class SearchFragment extends Fragment {
                    if (results != null) {
                        // Displays content when there are no search results; hides if there are results
                        if (results.isEmpty()) {
-                           noResultsImage.setVisibility(View.VISIBLE);
-                           noResultsText.setVisibility(View.VISIBLE);
+                           binding.noResultsImage.setVisibility(View.VISIBLE);
+                           binding.noResultsText.setVisibility(View.VISIBLE);
                        } else {
-                           noResultsImage.setVisibility(View.GONE);
-                           noResultsText.setVisibility(View.GONE);
+                           binding.noResultsImage.setVisibility(View.GONE);
+                           binding.noResultsText.setVisibility(View.GONE);
                        }
                        // Swaps in and highlights the alternative names of the mammal's to indicate
                        // when those names produced matches

@@ -1,7 +1,6 @@
 package com.example.mammaldex.view;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -9,15 +8,15 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.mammaldex.databinding.FragmentCreateAccountBinding;
+import com.example.mammaldex.databinding.ActivityCreateAccountBinding;
 import com.example.mammaldex.viewModels.Constants;
 import com.example.mammaldex.viewModels.PreferenceManager;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 
-public class CreateAccountFragment extends AppCompatActivity {
-    private FragmentCreateAccountBinding binding;
+public class CreateAccountActivity extends AppCompatActivity {
+    private ActivityCreateAccountBinding binding;
     private PreferenceManager preferenceManager;
 
     private String encodeImage;
@@ -26,7 +25,7 @@ public class CreateAccountFragment extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = FragmentCreateAccountBinding.inflate(getLayoutInflater());
+        binding = ActivityCreateAccountBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         preferenceManager = new PreferenceManager(getApplicationContext());
 
