@@ -1,6 +1,7 @@
 package com.example.mammaldex.view;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.mammaldex.R;
 import com.example.mammaldex.model.database.entities.Species;
+import com.google.android.material.card.MaterialCardView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +61,12 @@ public class SpeciesViewAdapter extends RecyclerView.Adapter<SpeciesViewAdapter.
         holder.textViewName.setText(currentSpecies.getName());
         holder.textViewSciName.setText(currentSpecies.getSciName());
 
+        if (species.get(position).getSeen() == 1) {
+            holder.mammalCard.setStrokeColor(Color.parseColor("#008000"));
+            holder.imageViewSightAdd.setVisibility(View.INVISIBLE);
+            holder.imageViewSightRemove.setVisibility(View.VISIBLE);
+        }
+
         String endUrl = capitalize(currentSpecies.getSciName());
         // Define your Image URL or Resource
         String imageUrl = "file:///android_asset/downloaded_images/" + endUrl + ".jpg";
@@ -102,7 +110,10 @@ public class SpeciesViewAdapter extends RecyclerView.Adapter<SpeciesViewAdapter.
      */
     static class SpeciesViewHolder extends RecyclerView.ViewHolder {
 
+        MaterialCardView mammalCard;
         ImageView imageViewSpecies;
+        ImageView imageViewSightAdd;
+        ImageView imageViewSightRemove;
         TextView textViewName;
         TextView textViewSciName;
         ImageView wikiIconImg;
@@ -113,7 +124,10 @@ public class SpeciesViewAdapter extends RecyclerView.Adapter<SpeciesViewAdapter.
          */
         public SpeciesViewHolder(@NonNull View itemView) {
             super(itemView);
+            mammalCard = itemView.findViewById(R.id.mammalCard);
             imageViewSpecies = itemView.findViewById(R.id.mammalImageView);
+            imageViewSightAdd = itemView.findViewById(R.id.mammalSightAdd);
+            imageViewSightRemove = itemView.findViewById(R.id.mammalSightRemove);
             textViewName = itemView.findViewById(R.id.mammalName);
             textViewSciName = itemView.findViewById(R.id.mammalSciName);
             wikiIconImg = itemView.findViewById(R.id.mammalWikiLink);

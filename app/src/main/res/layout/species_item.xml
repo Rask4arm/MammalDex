@@ -66,6 +66,17 @@
                 app:tint="@color/white"
                 />
 
+            <ImageView
+                android:id="@+id/mammalSightRemove"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="10dp"
+                android:src="@drawable/icon_minus"
+                android:contentDescription="Icon Remove"
+                app:tint="@color/white"
+                android:visibility="invisible"
+                />
+
         </LinearLayout>
 
         <LinearLayout
