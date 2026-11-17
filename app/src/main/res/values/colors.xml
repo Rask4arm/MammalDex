@@ -12,4 +12,8 @@
     <color name="nav_gray">#A6ACA6</color>
     <color name="selected_green">#c2e8c1</color>
 
+    <!-- Search Bar Colors -->
+    <color name="input_background">#ECE6F0</color>
+    <color name="input_border">#424642</color>
+
 </resources>

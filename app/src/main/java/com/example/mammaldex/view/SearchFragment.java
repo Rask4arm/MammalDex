@@ -29,7 +29,6 @@ import java.util.Objects;
 
 public class SearchFragment extends Fragment {
 
-    private Button btnHome;
     private ImageView noResultsImage;
     private SearchViewAdapter adapter;
     private SearchView searchView;
@@ -66,7 +65,6 @@ public class SearchFragment extends Fragment {
         adapter = new SearchViewAdapter(item ->
                 goToSpeciesFragment(item.getSciName())
                 );
-        btnHome = view.findViewById(R.id.btnHome);
         noResultsImage = view.findViewById(R.id.noResultsImage);
         noResultsText = view.findViewById(R.id.noResultsText);
         searchView = view.findViewById(R.id.searchView);

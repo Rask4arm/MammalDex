@@ -1,23 +1,23 @@
 package com.example.mammaldex.view;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.bumptech.glide.Glide;
 import com.example.mammaldex.MammalDexApp;
 import com.example.mammaldex.R;
+import com.example.mammaldex.databinding.FragmentSpeciesBinding;
 import com.example.mammaldex.model.database.entities.Species;
 import com.example.mammaldex.viewModels.SpeciesViewModel;
 import com.example.mammaldex.viewModels.SpeciesViewModelFactory;
-
-import java.util.Objects;
 
 public class SpeciesFragment extends Fragment {
 
@@ -26,6 +26,9 @@ public class SpeciesFragment extends Fragment {
 
     //The ID of the Species that is selected, also known as the Species Sci Name.
     private String speciesID;
+
+    //Set the binding to the fragment XML elements.
+    private FragmentSpeciesBinding binding;
 
 
     /**
@@ -46,20 +49,19 @@ public class SpeciesFragment extends Fragment {
      */
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        binding = FragmentSpeciesBinding.bind(view);
         MammalDexApp app = (MammalDexApp) requireActivity().getApplication();
         viewModel = new ViewModelProvider(this, new SpeciesViewModelFactory(app.getRepository())).get(SpeciesViewModel.class);
-        setSpeciesInfo(view, speciesID);
+        setSpeciesInfo(speciesID);
     }
 
     /**
      * A setter method that sets up the species name
      * @param speciesID The ID that is used to find the Species info from the database
      */
-    public void setSpeciesInfo(View view ,String speciesID){
+    public void setSpeciesInfo(String speciesID){
         try{
-            viewModel.getSpeciesBySciName(speciesID).observe(getViewLifecycleOwner(), speciesData ->{
-                setSpeciesPage(view, speciesData);
-            });
+            viewModel.getSpeciesBySciName(speciesID).observe(getViewLifecycleOwner(), this::setSpeciesPage);
         } catch (Exception e) {
             Toast.makeText(getActivity(), "Cannot find Species in Database " + speciesID, Toast.LENGTH_SHORT).show();
 
@@ -73,19 +75,63 @@ public class SpeciesFragment extends Fragment {
 
     /**
      * Sets the UI elements to show the data of the species.
-     * @param view The Current view of the application
      * @param speciesData The object that contains the data of the species from the database
      */
-    private void setSpeciesPage(View view, Species speciesData) {
+    private void setSpeciesPage(Species speciesData) {
 
-        TextView nameView = view.findViewById(R.id.mammalName);
+        //Set the species data onto the view.
+        binding.mammalName.setText(speciesData.getName());
+        binding.mammalSciName.setText(speciesData.getSciName());
 
-        try{
-            nameView.setText(speciesData.getName());
-        } catch (Exception e) {
-            Toast.makeText(getActivity(), "getName didnt work " + speciesData, Toast.LENGTH_SHORT).show();
-        }
+        //Set alternate names of the species
+        viewModel.getSpeciesAltName(speciesData.getId()).observe(getViewLifecycleOwner(), alternateNames -> {
 
+            //Remove layout if species has no alternate names
+            if(alternateNames.isEmpty()){
+                binding.mammalOtherNames.setVisibility(View.INVISIBLE);
+                binding.knownAsText.setVisibility(View.INVISIBLE);
+            }
+            else{
+                StringBuilder listOfAlt = new StringBuilder();
+
+                //Format the Alternate Species names
+                for(int i = 0; i < alternateNames.size(); i++){
+                    listOfAlt.append(alternateNames.get(i));
+
+                    //If last object, add no comma
+                    if(i != (alternateNames.size() - 1)){
+                        listOfAlt.append(", ");
+                    }
+                }
+
+                //Insert list of Alternate names into View
+                binding.mammalOtherNames.setText(listOfAlt);
+            }
+        });
+
+        //Set the species wiki link
+        binding.mammalWikiLink.setText(speciesData.getWikiLink());
+        binding.mammalWikiLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    Intent wikiIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(speciesData.getWikiLink()));
+                    view.getContext().startActivity(wikiIntent);
+                } catch (Exception e) {
+                    Toast.makeText(view.getContext(), "Failed to load link", Toast.LENGTH_SHORT).show();
+                }
+            };
+        });
+
+        //Set the image of the species
+        String endUrl = capitalize(speciesData.getSciName());
+        // Define your Image URL or Resource
+        String imageUrl = "file:///android_asset/downloaded_images/" + endUrl + ".jpg";
+
+        // Load the image with Glide
+        Glide.with(binding.getRoot().getContext())
+                .load(imageUrl)
+                .into(binding.mammalImageView);
 
     }
 
@@ -95,6 +141,18 @@ public class SpeciesFragment extends Fragment {
      */
     private void setSpeciesID(String species){
         speciesID = species;
+    }
+
+    /**
+     * Helper Function to capitalize a string
+     * @param input A string that is being capitalized
+     * @return The input capitalized
+     */
+    public static String capitalize(String input) {
+        if (input == null || input.isEmpty()) {
+            return input;
+        }
+        return input.substring(0, 1).toUpperCase() + input.substring(1);
     }
 
 

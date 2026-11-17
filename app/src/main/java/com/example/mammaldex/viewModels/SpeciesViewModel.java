@@ -25,8 +25,24 @@ public class SpeciesViewModel extends ViewModel {
         return species;
     }
 
+    /**
+     * TODO: Java doc this function, Ethan's Function
+     * @param speciesID
+     * @param searchText
+     * @return
+     */
     public LiveData<String> getSpeciesAltName(long speciesID, String searchText) {
         return repository.getSpeciesAltName(speciesID, searchText);
+    }
+
+
+    /**
+     * This method gets all Alternate species names in the database by ID
+     * @param speciesID the long variable to use to search for all names with the ID
+     * @return A LiveData string list of alternate names of the species.
+     */
+    public LiveData<List<String>> getSpeciesAltName(long speciesID) {
+        return repository.getSpeciesAltName(speciesID);
     }
 
     /**
