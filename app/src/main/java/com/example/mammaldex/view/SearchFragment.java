@@ -2,13 +2,10 @@ package com.example.mammaldex.view;
 
 import android.os.Bundle;
 import android.text.InputFilter;
-import android.text.Spanned;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,7 +13,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,16 +23,15 @@ import com.example.mammaldex.R;
 import com.example.mammaldex.model.database.entities.Species;
 import com.example.mammaldex.viewModels.SpeciesViewModelFactory;
 import com.example.mammaldex.viewModels.SpeciesViewModel;
-import com.google.android.material.card.MaterialCardView;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class SearchFragment extends Fragment {
 
     private Button btnHome;
     private ImageView noResultsImage;
-    private SpeciesViewAdapter adapter;
+    private SearchViewAdapter adapter;
     private SearchView searchView;
     private SpeciesViewModel viewModel;
     private TextView noResultsText;
@@ -68,7 +63,9 @@ public class SearchFragment extends Fragment {
      * @param view the root View of the fragment's layout
      */
     private void setFields(View view) {
-        adapter = new SpeciesViewAdapter();
+        adapter = new SearchViewAdapter(item ->
+                goToSpeciesFragment(item.getSciName())
+                );
         btnHome = view.findViewById(R.id.btnHome);
         noResultsImage = view.findViewById(R.id.noResultsImage);
         noResultsText = view.findViewById(R.id.noResultsText);
@@ -191,6 +188,22 @@ public class SearchFragment extends Fragment {
                     adapter.setSpecies(species);
                 }
         );
+    }
+
+    /**
+     * Navigates to the Species page depending on selected species.
+     * @param speciesId
+     */
+    protected void goToSpeciesFragment(String speciesId){
+
+        try {
+            requireActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.nav_host_fragment, new SpeciesFragment(speciesId)).commit();
+        } catch (Exception e) {
+            System.out.println("Nope" + e);
+            throw new RuntimeException(e);
+        }
+
     }
 
 }

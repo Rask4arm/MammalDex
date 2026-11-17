@@ -37,6 +37,10 @@ public class Repository {
         return speciesDao.getBySciName(name);
     }
 
+    public Species getSpeciesById(int id){
+        return speciesDao.getById(id);
+    }
+
     public void setSeenTrue(String name) {
         speciesDao.updateSeen(name, 1);
     }

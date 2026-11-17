@@ -60,5 +60,4 @@ public class SpeciesViewModel extends ViewModel {
     public LiveData<Species> getSpeciesBySciName(String pattern) {
         return repository.getSpeciesBySciName(pattern);
     }
-
 }
