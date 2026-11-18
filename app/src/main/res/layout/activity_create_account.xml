@@ -9,7 +9,8 @@
     android:overScrollMode="never"
     android:padding="24dp"
     android:scrollbars="none"
-    tools:context=".view.CreateAccountFragment">
+    android:animateLayoutChanges="true"
+    tools:context=".view.CreateAccountActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,64 +22,81 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="Create New Account"
+            android:text="@string/label_create_account"
             android:textSize="30sp"
             android:textStyle="bold"/>
 
-
+        <!-- Name Field -->
         <EditText
             android:id="@+id/inputName"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
             android:layout_marginTop="60dp"
-            android:hint="Name"
+            android:hint="@string/hint_name"
             android:imeOptions="actionNext"
             android:importantForAutofill="no"
             android:inputType="text"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
-            android:textSize="18sp"/>
+            android:textSize="18sp"
+            style="@style/input_field"/>
 
+        <!-- Email Field -->
         <EditText
             android:id="@+id/inputEmail"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="20dp"
-            android:hint="Email"
+            android:hint="@string/hint_email"
             android:imeOptions="actionNext"
             android:importantForAutofill="no"
             android:inputType="textEmailAddress"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
-            android:textSize="18sp"/>
+            android:textSize="18sp"
+            style="@style/input_field"/>
 
-        <EditText
-            android:id="@+id/inputPassword"
+        <!-- Password Field w/ See Password Toggle -->
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:hint="Password"
-            android:imeOptions="actionNext"
-            android:importantForAutofill="no"
-            android:inputType="textPassword"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:textAlignment="gravity"
-            android:textSize="18sp"/>
+            app:endIconMode="password_toggle"
+            app:endIconTint="@color/show_password_icon"
+            app:hintEnabled="false"
+            app:boxBackgroundMode="none">
 
-        <EditText
-            android:id="@+id/inputConfirmPassword"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputPassword"
+                android:fontFamily="@font/chicle"
+                android:hint="@string/hint_password"
+                android:inputType="textPassword"
+                android:importantForAutofill="no"
+                android:paddingTop="0dp"
+                android:paddingBottom="0dp"
+                style="@style/input_field"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Confirm Password Field w/ See Password Toggle -->
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:hint="Confirm Password"
-            android:imeOptions="actionNext"
-            android:importantForAutofill="no"
-            android:inputType="textPassword"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:textAlignment="gravity"
-            android:textSize="18sp"/>
+            app:endIconMode="password_toggle"
+            app:endIconTint="@color/show_password_icon"
+            app:hintEnabled="false"
+            app:boxBackgroundMode="none">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputConfirmPassword"
+                android:fontFamily="@font/chicle"
+                android:hint="@string/hint_confirm_password"
+                android:inputType="textPassword"
+                android:importantForAutofill="no"
+                android:paddingTop="0dp"
+                android:paddingBottom="0dp"
+                style="@style/input_field"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -91,11 +109,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="20dp"
-                android:text="Sign Up"
+                android:text="@string/btn_sign_up"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                app:cornerRadius="8sp"/>
+                app:cornerRadius="8sp"
+                android:stateListAnimator="@animator/squish"/>
 
             <ProgressBar
                 android:id="@+id/progressBar"
@@ -107,13 +126,14 @@
         </FrameLayout>
 
         <TextView
-            android:id="@+id/textSignIn"
+            android:id="@+id/textLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="Log in"
+            android:text="@string/text_login"
             android:textSize="18sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:stateListAnimator="@animator/squish"/>
 
 
 

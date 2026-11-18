@@ -23,7 +23,8 @@
         app:strokeWidth="4dp"
         android:layout_gravity="center"
         android:scaleType="centerCrop"
-        >
+        android:clickable="true"
+        android:stateListAnimator="@animator/squish">
 
         <ImageView
             android:id="@+id/mammalImageView"

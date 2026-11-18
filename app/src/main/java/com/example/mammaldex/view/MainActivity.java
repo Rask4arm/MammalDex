@@ -1,6 +1,7 @@
 package com.example.mammaldex.view;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.activity.EdgeToEdge;
@@ -8,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.example.mammaldex.databinding.ActivityMainBinding;
 import com.example.mammaldex.model.database.DatabaseInitializer;
 import com.example.mammaldex.MammalDexApp;
 import com.example.mammaldex.R;
@@ -15,6 +17,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
 public class MainActivity extends AppCompatActivity {
+
+    private ActivityMainBinding binding;
 
     /**
      * TODO Add userid field that gets saved on login, and null on logout
@@ -26,15 +30,18 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Initializes view binding
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        //
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-
         MammalDexApp app = (MammalDexApp) getApplication();
-
         DatabaseInitializer initializer = new DatabaseInitializer(this, app.getDatabase());
 
-        initializer.initialize(() -> {System.out.println("Initializer worked");},
-                error -> {System.out.println("Initializer didn't work");}
+        initializer.initialize(() -> {
+            Log.d("INFO", "Initializer worked");},
+                error -> {Log.d("INFO", "Initializer didn't work");}
         );
 
         //Get the navigation bar by id on activity view

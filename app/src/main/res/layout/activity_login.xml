@@ -9,7 +9,8 @@
     android:overScrollMode="never"
     android:padding="24dp"
     android:scrollbars="none"
-    tools:context=".view.LoginFragment">
+    android:animateLayoutChanges="true"
+    tools:context=".view.LoginActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="60dp"
-            android:text="Welcome to Mammal Dex"
+            android:text="@string/label_welcome"
             android:textSize="24sp"
             android:textStyle="bold"/>
 
@@ -29,36 +30,41 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
-            android:text="Login to continue"
+            android:text="@string/label_login"
             android:textSize="17sp"
             android:textStyle="bold"/>
 
+        <!-- Email Field -->
         <EditText
             android:id="@+id/inputEmail"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
             android:layout_marginTop="60dp"
-            android:hint="Email"
-            android:imeOptions="actionNext"
+            android:hint="@string/hint_email"
             android:importantForAutofill="no"
             android:inputType="textEmailAddress"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:textSize="18sp"/>
+            style="@style/input_field"/>
 
-        <EditText
-            android:id="@+id/inputPassword"
+        <!-- Password Field w/ See Password Toggle -->
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:hint="Password"
-            android:imeOptions="actionNext"
-            android:importantForAutofill="no"
-            android:inputType="textPassword"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:textAlignment="gravity"
-            android:textSize="18sp"/>
+            app:endIconMode="password_toggle"
+            app:endIconTint="@color/show_password_icon"
+            app:hintEnabled="false"
+            app:boxBackgroundMode="none">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputPassword"
+                android:fontFamily="@font/chicle"
+                android:hint="@string/hint_password"
+                android:inputType="textPassword"
+                android:importantForAutofill="no"
+                android:paddingTop="0dp"
+                android:paddingBottom="0dp"
+                style="@style/input_field"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -67,14 +73,15 @@
             android:animateLayoutChanges="true">
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/buttonSignIn"
+                android:id="@+id/buttonLogin"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginTop="20dp"
-                android:text="Login"
+                android:text="@string/btn_login"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold"
+                android:stateListAnimator="@animator/squish"
                 app:cornerRadius="8sp"/>
 
             <ProgressBar
@@ -91,9 +98,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
-            android:text="Create New Account"
+            android:text="@string/create_account"
             android:textSize="18sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:stateListAnimator="@animator/squish"/>
 
 
 

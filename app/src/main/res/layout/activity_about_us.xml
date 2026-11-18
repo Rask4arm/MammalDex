@@ -3,19 +3,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="top|center">
+    android:gravity="top|center"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:animateLayoutChanges="true"
+    tools:context=".view.AboutUsActivity">
 
     <!-- About Us Header and Back Button -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
         android:orientation="horizontal"
         android:weightSum="1">
 
         <ImageButton
             android:id="@+id/backBtn"
             android:layout_width="50dp"
-            android:layout_height="50dp"/>
+            android:layout_height="50dp"
+            android:stateListAnimator="@animator/squish"
+            android:src="@drawable/ic_back"/>
 
         <TextView
             android:layout_width="0dp"
@@ -36,8 +42,6 @@
         android:layout_height="wrap_content">
 
 
-
     </ScrollView>
-
 
 </LinearLayout>

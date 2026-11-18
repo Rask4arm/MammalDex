@@ -1,7 +1,6 @@
 package com.example.mammaldex.view;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -9,15 +8,15 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.mammaldex.databinding.FragmentCreateAccountBinding;
+import com.example.mammaldex.databinding.ActivityCreateAccountBinding;
 import com.example.mammaldex.viewModels.Constants;
 import com.example.mammaldex.viewModels.PreferenceManager;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 
-public class CreateAccountFragment extends AppCompatActivity {
-    private FragmentCreateAccountBinding binding;
+public class CreateAccountActivity extends AppCompatActivity {
+    private ActivityCreateAccountBinding binding;
     private PreferenceManager preferenceManager;
 
     private String encodeImage;
@@ -26,19 +25,17 @@ public class CreateAccountFragment extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = FragmentCreateAccountBinding.inflate(getLayoutInflater());
+        binding = ActivityCreateAccountBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         preferenceManager = new PreferenceManager(getApplicationContext());
-
         setListeners();
     }
 
     /**
-     * Sets listeners for both the sign up button, the sign in text, and the image view
+     * Sets listeners for both the Sign Up button, the sign in text, and the image view
      */
     private void setListeners() {
-        binding.textSignIn.setOnClickListener(v -> onBackPressed());
-
+        binding.textLogin.setOnClickListener(v -> onBackPressed());
         binding.buttonSignUp.setOnClickListener(v ->{
             if(isValidSignUpDetails()){
                 SignUp();
@@ -46,7 +43,6 @@ public class CreateAccountFragment extends AppCompatActivity {
         });
 
     }
-
 
     /**
      * Creates and shows a toast message based on the message given
@@ -166,8 +162,8 @@ public class CreateAccountFragment extends AppCompatActivity {
             binding.buttonSignUp.setVisibility(View.INVISIBLE);
             binding.progressBar.setVisibility(View.VISIBLE);
         } else {
-            binding.progressBar.setVisibility(View.INVISIBLE);
             binding.buttonSignUp.setVisibility(View.VISIBLE);
+            binding.progressBar.setVisibility(View.INVISIBLE);
         }
     }
 }

@@ -11,6 +11,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
         android:text="@string/header_profile"
         android:textAlignment="center"
         android:textSize="30sp"
@@ -41,7 +42,8 @@
             android:layout_weight="0.75"
             android:text="@string/btn_about_us"
             android:textStyle="bold"
-            android:textSize="26sp"/>
+            android:textSize="26sp"
+            android:stateListAnimator="@animator/squish"/>
 
     </LinearLayout>
 
@@ -60,7 +62,8 @@
             android:layout_weight="0.75"
             android:text="@string/btn_acknowledgements"
             android:textStyle="bold"
-            android:textSize="26sp"/>
+            android:textSize="26sp"
+            android:stateListAnimator="@animator/squish"/>
 
     </LinearLayout>
 
@@ -104,7 +107,8 @@
             android:layout_weight="0.75"
             android:text="@string/btn_resync"
             android:textStyle="bold"
-            android:textSize="26sp"/>
+            android:textSize="26sp"
+            android:stateListAnimator="@animator/squish"/>
 
     </LinearLayout>
 
@@ -123,7 +127,8 @@
             android:layout_weight="0.75"
             android:text="@string/btn_logout"
             android:textStyle="bold"
-            android:textSize="26sp"/>
+            android:textSize="26sp"
+            android:stateListAnimator="@animator/squish"/>
 
     </LinearLayout>
 

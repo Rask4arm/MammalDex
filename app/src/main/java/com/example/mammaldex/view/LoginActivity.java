@@ -1,7 +1,5 @@
 package com.example.mammaldex.view;
 
-import static androidx.core.content.ContextCompat.startActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
@@ -10,37 +8,35 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.mammaldex.databinding.FragmentLoginBinding;
+import com.example.mammaldex.databinding.ActivityLoginBinding;
 import com.example.mammaldex.viewModels.Constants;
 import com.example.mammaldex.viewModels.PreferenceManager;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class LoginFragment extends AppCompatActivity {
-    private FragmentLoginBinding binding;
+public class LoginActivity extends AppCompatActivity {
+    private ActivityLoginBinding binding;
     private PreferenceManager preferenceManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        binding = FragmentLoginBinding.inflate(getLayoutInflater());
+        binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         preferenceManager = new PreferenceManager(getApplicationContext());
-
         setListeners();
     }
 
     /**
-     * Sets listeners for both the sign in button and the create account text
+     * Sets listeners for both the Login button and the create account text
      */
     private void setListeners() {
         binding.textCreateNewAccount.setOnClickListener(v ->
-                startActivity(new Intent(getApplicationContext(), CreateAccountFragment.class)));
+                startActivity(new Intent(getApplicationContext(), CreateAccountActivity.class)));
 
-        binding.buttonSignIn.setOnClickListener(v -> {
+        binding.buttonLogin.setOnClickListener(v -> {
             if(isValidSignInDetails()){
-                SignIn();
+                signIn();
             }
         });
     }
@@ -56,7 +52,7 @@ public class LoginFragment extends AppCompatActivity {
     /**
      * creates the firebase instance connection and attempts to log in the user
      */
-    private void SignIn() {
+    private void signIn() {
         loading(true);
 
         FirebaseFirestore database = FirebaseFirestore.getInstance();
@@ -101,16 +97,16 @@ public class LoginFragment extends AppCompatActivity {
     }
 
     /**
-     * Changes the view between the sign in button and a loading bar
+     * Changes the view between the login button and a loading bar
      * @param isLoading if the view is loading
      */
     private void loading(Boolean isLoading){
         if(isLoading){
-            binding.buttonSignIn.setVisibility(View.INVISIBLE);
+            binding.buttonLogin.setVisibility(View.INVISIBLE);
             binding.progressBar.setVisibility(View.VISIBLE);
         } else {
             binding.progressBar.setVisibility(View.INVISIBLE);
-            binding.buttonSignIn.setVisibility(View.VISIBLE);
+            binding.buttonLogin.setVisibility(View.VISIBLE);
         }
     }
 }
