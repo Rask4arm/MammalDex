@@ -86,10 +86,20 @@ public class SpeciesFragment extends Fragment {
         //Set alternate names of the species
         viewModel.getSpeciesAltName(speciesData.getId()).observe(getViewLifecycleOwner(), alternateNames -> {
 
+            //Boolean to check if List is truly empty
+            boolean trulyEmpty = false;
+
+            //if statement to fix a bug where isEmpty will always be false
+            if(alternateNames.size() == 1){
+                if(alternateNames.get(0).equals("")){
+                    trulyEmpty = true;
+                }
+            }
+
             //Remove layout if species has no alternate names
-            if(alternateNames.isEmpty()){
-                binding.mammalOtherNames.setVisibility(View.INVISIBLE);
-                binding.knownAsText.setVisibility(View.INVISIBLE);
+            if(trulyEmpty){
+                binding.mammalOtherNames.setVisibility(View.GONE);
+                binding.knownAsText.setVisibility(View.GONE);
             }
             else{
                 StringBuilder listOfAlt = new StringBuilder();
