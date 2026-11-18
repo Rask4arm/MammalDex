@@ -60,8 +60,8 @@ public class UserAuthenticator extends Activity{
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w("emailPassword", "signInWithEmail:failure", task.getException());
-                            //Toast.makeText(EmailPasswordActivity.this, "Authentication failed.",
-                            //        Toast.LENGTH_SHORT).show();
+                            Toast.makeText(UserAuthenticator.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
                             updateUI(null);
                         }
                     }

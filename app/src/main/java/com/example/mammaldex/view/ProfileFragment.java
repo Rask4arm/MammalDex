@@ -1,5 +1,7 @@
 package com.example.mammaldex.view;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
@@ -19,7 +21,19 @@ public class ProfileFragment extends Fragment {
     private TextView dateSynced;
 
     public ProfileFragment(){
+
         super(R.layout.fragment_profile);
+
+//        logoutBtn = getView().findViewById(R.id.logoutBtn);
+//        logoutBtn.setOnClickListener(v -> logout());
+    }
+
+    /**
+     * TODO: create a logout function that terminates the firebase connection and returns to the login page
+     */
+    private void logout(){
+
+
     }
 
 }

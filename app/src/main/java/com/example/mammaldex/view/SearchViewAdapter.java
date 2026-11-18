@@ -1,6 +1,7 @@
 package com.example.mammaldex.view;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.mammaldex.R;
 import com.example.mammaldex.model.database.entities.Species;
+import com.google.android.material.card.MaterialCardView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,13 +29,17 @@ public class SearchViewAdapter extends RecyclerView.Adapter<SearchViewAdapter.Sp
 
     private final List<Species> species = new ArrayList<>();
     private final OnItemClickListener listener;
+    private final OnAddButtonClickListener addListener;
+    private final OnRemoveButtonClickListener removeListener;
 
     /**
      * Add a listener to the view adapter to allow fragment switch
      * @param listener The function to activate a Click Listener
      */
-    public SearchViewAdapter(OnItemClickListener listener) {
+    public SearchViewAdapter(OnItemClickListener listener, OnAddButtonClickListener addListener, OnRemoveButtonClickListener removeListener) {
         this.listener = listener;
+        this.addListener = addListener;
+        this.removeListener = removeListener;
     }
 
     /**
@@ -42,6 +48,15 @@ public class SearchViewAdapter extends RecyclerView.Adapter<SearchViewAdapter.Sp
     public interface OnItemClickListener {
         void onItemClick(Species species);
     }
+
+    public interface OnAddButtonClickListener {
+        void onButtonClick(Species species);
+    }
+
+    public interface OnRemoveButtonClickListener {
+        void onButtonClick(Species species);
+    }
+
 
     /**
      * TODO : Add Javadoc
@@ -52,9 +67,7 @@ public class SearchViewAdapter extends RecyclerView.Adapter<SearchViewAdapter.Sp
      */
     @NonNull
     @Override
-    public SpeciesViewHolder onCreateViewHolder(
-            @NonNull ViewGroup parent,
-            int viewType) {
+    public SpeciesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.species_item, parent, false);
@@ -71,10 +84,24 @@ public class SearchViewAdapter extends RecyclerView.Adapter<SearchViewAdapter.Sp
     @Override
     public void onBindViewHolder(@NonNull SpeciesViewHolder holder, int position) {
         Species currentSpecies = species.get(position);
+        holder.bind(currentSpecies, addListener);
+        holder.bind(currentSpecies, removeListener);
 
         //Set the species name and scientific name
         holder.textViewName.setText(currentSpecies.getName());
         holder.textViewSciName.setText(currentSpecies.getSciName());
+
+        if (species.get(position).getSeen() == 1) {
+
+            //sets outline to green and wider
+            holder.mammalCard.setStrokeColor(Color.parseColor("#008000"));
+            int currentStrokeWidth = holder.mammalCard.getStrokeWidth();
+            holder.mammalCard.setStrokeWidth(currentStrokeWidth * 2);
+
+            //replaces plus-button with minus-button
+            holder.imageViewSightAdd.setVisibility(View.INVISIBLE);
+            holder.imageViewSightRemove.setVisibility(View.VISIBLE);
+        }
 
         String endUrl = capitalize(currentSpecies.getSciName());
         // Define your Image URL or Resource
@@ -132,7 +159,10 @@ public class SearchViewAdapter extends RecyclerView.Adapter<SearchViewAdapter.Sp
      */
     static class SpeciesViewHolder extends RecyclerView.ViewHolder {
 
+        MaterialCardView mammalCard;
         ImageView imageViewSpecies;
+        ImageView imageViewSightAdd;
+        ImageView imageViewSightRemove;
         TextView textViewName;
         TextView textViewSciName;
         ImageView wikiIconImg;
@@ -143,10 +173,31 @@ public class SearchViewAdapter extends RecyclerView.Adapter<SearchViewAdapter.Sp
          */
         public SpeciesViewHolder(@NonNull View itemView) {
             super(itemView);
+            mammalCard = itemView.findViewById(R.id.mammalCard);
             imageViewSpecies = itemView.findViewById(R.id.mammalImageView);
+            imageViewSightAdd = itemView.findViewById(R.id.mammalSightAdd);
+            imageViewSightRemove = itemView.findViewById(R.id.mammalSightRemove);
             textViewName = itemView.findViewById(R.id.mammalName);
             textViewSciName = itemView.findViewById(R.id.mammalSciName);
             wikiIconImg = itemView.findViewById(R.id.mammalWikiLink);
+        }
+
+        public void bind(Species species, OnAddButtonClickListener listener) {
+
+            imageViewSightAdd.setOnClickListener(v -> {
+                if (listener != null) {
+                    listener.onButtonClick(species);
+                }
+            });
+        }
+
+        public void bind(Species species, OnRemoveButtonClickListener listener) {
+
+            imageViewSightRemove.setOnClickListener(v -> {
+                if (listener != null) {
+                    listener.onButtonClick(species);
+                }
+            });
         }
     }
 
@@ -161,5 +212,4 @@ public class SearchViewAdapter extends RecyclerView.Adapter<SearchViewAdapter.Sp
         }
         return input.substring(0, 1).toUpperCase() + input.substring(1);
     }
-
 }

@@ -14,6 +14,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Takes the csv file of all the mammals and puts it into the
+ * database that it gets from the database initializer.
+ */
 public class DatabaseCreator {
     public static void readCsvToRoom(Context context, AppDatabase database) {
         List<Species> speciesList = new ArrayList<>();

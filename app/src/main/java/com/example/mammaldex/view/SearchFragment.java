@@ -14,7 +14,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.SearchView;
 
@@ -62,9 +61,13 @@ public class SearchFragment extends Fragment {
      * @param view the root View of the fragment's layout
      */
     private void setFields(View view) {
-        adapter = new SearchViewAdapter(item ->
-                goToSpeciesFragment(item.getSciName())
-                );
+        adapter = new SearchViewAdapter(item -> {
+            goToSpeciesFragment(item.getSciName());
+        }, species -> {
+            viewModel.setSpeciesAsSeen(species.getSciName());
+        }, species -> {
+            viewModel.setSpeciesAsNotSeen(species.getSciName());
+        });
         noResultsImage = view.findViewById(R.id.noResultsImage);
         noResultsText = view.findViewById(R.id.noResultsText);
         searchView = view.findViewById(R.id.searchView);
@@ -125,7 +128,6 @@ public class SearchFragment extends Fragment {
                        // Swaps in and highlights the alternative names of the mammal's to indicate
                        // when those names produced matches
                        // TODO : Need to find a way to change the contents of MaterialCardView objects instead of Species
-                       // results = swapSciAndAltName(results, searchText);
                        adapter.setSpecies(results);
                    }
                 });
@@ -134,31 +136,6 @@ public class SearchFragment extends Fragment {
         });
     }
 
-    // TODO : Need to find a way to change the contents of MaterialCardView objects instead of Species
-//    private List<Species> swapSciAndAltNames(List<Species> results, String searchText) {
-//        int firstAltNameIndex = 0;
-//        searchText = searchText.toLowerCase();
-//        for (Species s : results) {
-//            // Breaks out of the loop once it find the first sorted alternative name
-//            // that contains the user's search text
-//            if (!s.getName().toLowerCase().contains(searchText)
-//                    && !s.getSciName().toLowerCase().contains(searchText)) {
-//                break;
-//            }
-//            firstAltNameIndex++;
-//        }
-//        // Applies a name swap and highlight for the matched alternative names
-//        for (int i = firstAltNameIndex; i < results.size(); i++) {
-//            Species species = results.get(i);
-//            long speciesID = species.getId();
-//            LiveData<String> altNames = viewModel.getSpeciesAltNames(speciesID, searchText);
-//            altNames.observe(getViewLifecycleOwner(), name -> {
-//
-//            });
-//        }
-//        return results;
-//    }
-
     /**
      * This method sets any configurations for the fragment's RecyclerView
      * during class instantiation.
@@ -166,9 +143,7 @@ public class SearchFragment extends Fragment {
      */
     private void setRecyclerViewConfigs(View view) {
         RecyclerView recyclerView = view.findViewById(R.id.speciesList);
-        recyclerView.setLayoutManager(
-                new LinearLayoutManager(requireContext())
-        );
+
         // Creates a grid layout so the mammal cards are in two columns
         recyclerView.setLayoutManager(new GridLayoutManager(view.getContext(), 2));
         recyclerView.setAdapter(adapter);

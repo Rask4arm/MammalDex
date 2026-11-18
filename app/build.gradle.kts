@@ -47,6 +47,7 @@ dependencies {
     implementation(libs.credentials.play.services.auth)
     implementation(libs.firebase.auth)
     implementation(libs.firebase.database)
+    implementation(libs.firebase.firestore)
     implementation(libs.googleid)
     implementation(libs.material)
     implementation(libs.navigation.fragment)
@@ -57,4 +58,5 @@ dependencies {
     annotationProcessor(libs.room.compiler)
     implementation("com.github.bumptech.glide:glide:4.16.0")
     annotationProcessor("com.github.bumptech.glide:compiler:4.16.0")
+    implementation("com.google.android.gms:play-services-location:21.4.0")
 }
