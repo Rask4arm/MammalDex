@@ -19,4 +19,10 @@
     <string name="label_welcome">Welcome to MammalDex!</string>
     <string name="no_search_results">No mammals found!\n</string>
     <string name="text_login">Login</string>
+    <string name="hint_search_bar">Search for a mammal</string>
+    <string name="description_no_results">No mammals found. The monkey is sad.</string>
+    <string name="description_search_filter">Search filter button</string>
+    <string name="filter_common">Common Name</string>
+    <string name="filter_scientific">Scientific Name</string>
+    <string name="filter_other">Other Names</string>
 </resources>
