@@ -43,11 +43,11 @@ public class Repository {
     }
 
     public void setSeenTrue(String name) {
-        speciesDao.updateSeen(name, 1);
+        executorService.execute(() -> speciesDao.updateSeen(name, 1));
     }
 
     public void setSeenFalse(String name) {
-        speciesDao.updateSeen(name, 0);
+        executorService.execute(() -> speciesDao.updateSeen(name, 0));
     }
 
 }

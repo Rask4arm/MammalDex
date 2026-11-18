@@ -26,7 +26,21 @@ import java.util.List;
  */
 public class SpeciesViewAdapter extends RecyclerView.Adapter<SpeciesViewAdapter.SpeciesViewHolder> {
 
+    public interface OnAddButtonClickListener {
+        void onButtonClick(Species species);
+    }
+
+    public interface OnRemoveButtonClickListener {
+        void onButtonClick(Species species);
+    }
     private final List<Species> species = new ArrayList<>();
+    private final OnAddButtonClickListener addListener;
+    private final OnRemoveButtonClickListener removeListener;
+
+    public SpeciesViewAdapter(OnAddButtonClickListener addListener, OnRemoveButtonClickListener removeListener) {
+        this.addListener = addListener;
+        this.removeListener = removeListener;
+    }
 
     /**
      * TODO : Add Javadoc
@@ -37,9 +51,7 @@ public class SpeciesViewAdapter extends RecyclerView.Adapter<SpeciesViewAdapter.
      */
     @NonNull
     @Override
-    public SpeciesViewHolder onCreateViewHolder(
-            @NonNull ViewGroup parent,
-            int viewType) {
+    public SpeciesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.species_item, parent, false);
@@ -56,13 +68,21 @@ public class SpeciesViewAdapter extends RecyclerView.Adapter<SpeciesViewAdapter.
     @Override
     public void onBindViewHolder(@NonNull SpeciesViewHolder holder, int position) {
         Species currentSpecies = species.get(position);
+        holder.bind(currentSpecies, addListener);
+        holder.bind(currentSpecies, removeListener);
 
         //Set the species name and scientific name
         holder.textViewName.setText(currentSpecies.getName());
         holder.textViewSciName.setText(currentSpecies.getSciName());
 
         if (species.get(position).getSeen() == 1) {
+
+            //sets outline to green and wider
             holder.mammalCard.setStrokeColor(Color.parseColor("#008000"));
+            int currentStrokeWidth = holder.mammalCard.getStrokeWidth();
+            holder.mammalCard.setStrokeWidth(currentStrokeWidth * 2);
+
+            //replaces plus-button with minus-button
             holder.imageViewSightAdd.setVisibility(View.INVISIBLE);
             holder.imageViewSightRemove.setVisibility(View.VISIBLE);
         }
@@ -132,6 +152,24 @@ public class SpeciesViewAdapter extends RecyclerView.Adapter<SpeciesViewAdapter.
             textViewSciName = itemView.findViewById(R.id.mammalSciName);
             wikiIconImg = itemView.findViewById(R.id.mammalWikiLink);
         }
+
+        public void bind(Species species, OnAddButtonClickListener listener) {
+
+            imageViewSightAdd.setOnClickListener(v -> {
+                if (listener != null) {
+                    listener.onButtonClick(species);
+                }
+            });
+        }
+
+        public void bind(Species species, OnRemoveButtonClickListener listener) {
+
+            imageViewSightRemove.setOnClickListener(v -> {
+                if (listener != null) {
+                    listener.onButtonClick(species);
+                }
+            });
+        }
     }
 
     /**
@@ -145,5 +183,4 @@ public class SpeciesViewAdapter extends RecyclerView.Adapter<SpeciesViewAdapter.
         }
         return input.substring(0, 1).toUpperCase() + input.substring(1);
     }
-
 }

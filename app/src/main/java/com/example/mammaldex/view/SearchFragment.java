@@ -2,13 +2,10 @@ package com.example.mammaldex.view;
 
 import android.os.Bundle;
 import android.text.InputFilter;
-import android.text.Spanned;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,9 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.SearchView;
 
@@ -27,9 +22,7 @@ import com.example.mammaldex.R;
 import com.example.mammaldex.model.database.entities.Species;
 import com.example.mammaldex.viewModels.SpeciesViewModelFactory;
 import com.example.mammaldex.viewModels.SpeciesViewModel;
-import com.google.android.material.card.MaterialCardView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SearchFragment extends Fragment {
@@ -68,7 +61,12 @@ public class SearchFragment extends Fragment {
      * @param view the root View of the fragment's layout
      */
     private void setFields(View view) {
-        adapter = new SpeciesViewAdapter();
+        adapter = new SpeciesViewAdapter(species -> {
+            viewModel.setSpeciesAsSeen(species.getSciName());
+        }, species -> {
+            viewModel.setSpeciesAsNotSeen(species.getSciName());
+        });
+
         btnHome = view.findViewById(R.id.btnHome);
         noResultsImage = view.findViewById(R.id.noResultsImage);
         noResultsText = view.findViewById(R.id.noResultsText);
@@ -145,9 +143,7 @@ public class SearchFragment extends Fragment {
      */
     private void setRecyclerViewConfigs(View view) {
         RecyclerView recyclerView = view.findViewById(R.id.speciesList);
-        recyclerView.setLayoutManager(
-                new LinearLayoutManager(requireContext())
-        );
+
         // Creates a grid layout so the mammal cards are in two columns
         recyclerView.setLayoutManager(new GridLayoutManager(view.getContext(), 2));
         recyclerView.setAdapter(adapter);
