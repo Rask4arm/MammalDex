@@ -61,4 +61,12 @@ public class SpeciesViewModel extends ViewModel {
         return repository.getSpeciesBySciName(pattern);
     }
 
+    public void setSpeciesAsSeen(String sci_name) {
+        repository.setSeenTrue(sci_name);
+    }
+
+    public void setSpeciesAsNotSeen(String sci_name) {
+        repository.setSeenFalse(sci_name);
+    }
+
 }
