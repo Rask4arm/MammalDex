@@ -56,27 +56,30 @@
                 android:layout_height="1dp"
                 android:layout_weight="1" />
 
-            <ImageView
-                android:id="@+id/mammalSightAdd"
+            <FrameLayout
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_marginEnd="10dp"
-                android:src="@drawable/icon_plus"
-                android:contentDescription="Icon Add"
-                app:tint="@color/white"
-                />
+                android:layout_marginEnd="10dp">
 
-            <ImageView
-                android:id="@+id/mammalSightRemove"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginEnd="10dp"
-                android:src="@drawable/icon_minus"
-                android:contentDescription="Icon Remove"
-                app:tint="@color/white"
-                android:visibility="invisible"
-                />
+                <ImageView
+                    android:id="@+id/mammalSightAdd"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/icon_plus"
+                    android:contentDescription="Icon Add"
+                    app:tint="@color/white"
+                    />
 
+                <ImageView
+                    android:id="@+id/mammalSightRemove"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/icon_minus"
+                    android:contentDescription="Icon Remove"
+                    app:tint="@color/white"
+                    android:visibility="invisible"
+                    />
+            </FrameLayout>
         </LinearLayout>
 
         <LinearLayout
