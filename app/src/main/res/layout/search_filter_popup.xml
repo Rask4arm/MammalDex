@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="8dp">
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="5dp"
+        android:paddingEnd="15dp"
+        android:orientation="vertical">
+
+        <RadioButton
+            android:id="@+id/radioCommonName"
+            android:text="@string/filter_common"
+            style="@style/filter_options"/>
+
+        <RadioButton
+            android:id="@+id/radioSciName"
+            android:text="@string/filter_scientific"
+            style="@style/filter_options"/>
+
+        <RadioButton
+            android:id="@+id/radioAltNames"
+            android:text="@string/filter_other"
+            style="@style/filter_options"/>
+
+    </RadioGroup>
+
+
+
+</com.google.android.material.card.MaterialCardView>

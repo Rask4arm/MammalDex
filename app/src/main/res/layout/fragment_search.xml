@@ -19,12 +19,34 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp">
 
-            <androidx.appcompat.widget.SearchView
-                android:id="@+id/searchView"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="Search for a mammal"
-                app:iconifiedByDefault="false" />
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.SearchView
+                    android:id="@+id/searchView"
+                    android:layout_width="0dp"
+                    app:layout_constraintWidth_percent="0.85"
+                    android:layout_height="match_parent"
+                    android:hint="@string/hint_search_bar"
+                    app:iconifiedByDefault="false"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <ImageButton
+                    android:id="@+id/btnFilter"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@color/background_filter_btn"
+                    android:contentDescription="@string/description_search_filter"
+                    app:layout_constraintStart_toEndOf="@id/searchView"
+                    app:tint="@color/primary_brown"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:src="@drawable/ic_filter"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -46,7 +68,8 @@
         android:scaleX="0.6"
         android:scaleY="0.6"
         android:src="@drawable/sad_monkey"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        android:contentDescription="@string/description_no_results"/>
 
     <TextView
         android:id="@+id/noResultsText"

@@ -2,23 +2,18 @@ package com.example.mammaldex.view;
 
 import android.os.Bundle;
 import android.text.InputFilter;
-import android.text.Spanned;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.PopupWindow;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,20 +21,19 @@ import androidx.appcompat.widget.SearchView;
 
 import com.example.mammaldex.MammalDexApp;
 import com.example.mammaldex.R;
-import com.example.mammaldex.databinding.ActivityMainBinding;
-import com.example.mammaldex.databinding.FragmentHomeBinding;
 import com.example.mammaldex.databinding.FragmentSearchBinding;
+import com.example.mammaldex.databinding.SearchFilterPopupBinding;
 import com.example.mammaldex.model.database.entities.Species;
 import com.example.mammaldex.viewModels.SpeciesViewModelFactory;
 import com.example.mammaldex.viewModels.SpeciesViewModel;
-import com.google.android.material.card.MaterialCardView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SearchFragment extends Fragment {
 
-    private FragmentSearchBinding binding;
+    private PopupWindow filterWindow;
+    private FragmentSearchBinding searchBinding;
+    private SearchFilterPopupBinding filterBinding;
     private SpeciesViewAdapter adapter;
     private SpeciesViewModel viewModel;
 
@@ -65,8 +59,8 @@ public class SearchFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                          ViewGroup container,
                          Bundle savedInstanceState) {
-        binding = FragmentSearchBinding.inflate(inflater, container, false);
-        return binding.getRoot();
+        searchBinding = FragmentSearchBinding.inflate(inflater, container, false);
+        return searchBinding.getRoot();
     }
 
     /**
@@ -81,8 +75,9 @@ public class SearchFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setFields(view);
-        setSearchTextFilter(binding.searchView);
-        setUIListeners();
+        setSearchTextFilter(searchBinding.searchView);
+        setSearchListeners();
+        setFilterListeners();
         setRecyclerViewConfigs(view);
         observeAllSpecies();
     }
@@ -112,9 +107,9 @@ public class SearchFragment extends Fragment {
     /**
      * This method sets any needed UI listeners during class instantiation.
      */
-    private void setUIListeners() {
+    private void setSearchListeners() {
         // Listener for the search bar
-        binding.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        searchBinding.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             /**
              * This method executes the included code when the Enter button is pressed,
              * which includes closing the on-screen keyboard
@@ -141,11 +136,11 @@ public class SearchFragment extends Fragment {
                    if (results != null) {
                        // Displays content when there are no search results; hides if there are results
                        if (results.isEmpty()) {
-                           binding.noResultsImage.setVisibility(View.VISIBLE);
-                           binding.noResultsText.setVisibility(View.VISIBLE);
+                           searchBinding.noResultsImage.setVisibility(View.VISIBLE);
+                           searchBinding.noResultsText.setVisibility(View.VISIBLE);
                        } else {
-                           binding.noResultsImage.setVisibility(View.GONE);
-                           binding.noResultsText.setVisibility(View.GONE);
+                           searchBinding.noResultsImage.setVisibility(View.GONE);
+                           searchBinding.noResultsText.setVisibility(View.GONE);
                        }
                        // Swaps in and highlights the alternative names of the mammal's to indicate
                        // when those names produced matches
@@ -156,6 +151,24 @@ public class SearchFragment extends Fragment {
                 return true;
             }
         });
+    }
+
+    /**
+     * This method sets listeners for the filter button and its radio buttons in
+     * the search bar.
+     */
+    private void setFilterListeners() {
+        searchBinding.btnFilter.setOnClickListener(this::showFilterPopup);
+    }
+
+    /**
+     * This method sets listeners for the radio buttons in the filter popup window
+     * for the search bar.
+     */
+    private void setRadioListeners() {
+        filterBinding.radioCommonName.setOnClickListener(this::filterCommonNames);
+        filterBinding.radioSciName.setOnClickListener(this::filterSciNames);
+        filterBinding.radioAltNames.setOnClickListener(this::filterAltNames);
     }
 
     /**
@@ -173,6 +186,27 @@ public class SearchFragment extends Fragment {
         recyclerView.setAdapter(adapter);
     }
 
+    // TODO
+    private void filterAltNames(View view) {
+        // TODO : Logic
+
+        // TODO : dismiss the filter popup after logic executes
+    }
+
+    // TODO
+    private void filterCommonNames(View view) {
+        // TODO : Logic
+
+        // TODO : dismiss the filter popup after logic executes
+    }
+
+    // TODO
+    private void filterSciNames(View view) {
+        // TODO : Logic
+
+        // TODO : dismiss the filter popup after logic executes
+    }
+
     /**
      * This method observes the data for all species in the MammalDex database during the
      * fragment's initialization, updates the species in the SpeciesViewAdapter, and stores
@@ -185,6 +219,24 @@ public class SearchFragment extends Fragment {
                     adapter.setSpecies(species);
                 }
         );
+    }
+
+    /**
+     * This method shows the filter popup window for the search bar
+     * @param anchor the View (filter button) that owns the filter popup window
+     */
+    private void showFilterPopup(View anchor) {
+        filterBinding = SearchFilterPopupBinding.inflate(LayoutInflater.from(anchor.getContext()));
+        // Initializes filter popup window
+        filterWindow = new PopupWindow(
+                filterBinding.getRoot(),
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                true
+        );
+        // Sets method calls for radio options and displays filter window afterward
+        setRadioListeners();
+        filterWindow.showAsDropDown(anchor);
     }
 
 }
