@@ -16,5 +16,8 @@
     <color name="background_input_field">#6EC34A</color>
     <color name="hint_text">#8A8A8A</color>
     <color name="show_password_icon">#613E23</color>
+    <!-- Search Bar Colors -->
+    <color name="input_background">#ECE6F0</color>
+    <color name="input_border">#424642</color>
 
 </resources>

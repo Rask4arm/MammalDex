@@ -38,6 +38,18 @@ public interface SpeciesDao {
     LiveData<String> getSpeciesAltName(long speciesID, String searchText);
 
     /**
+     * This method gets the alternative names for a specific species that matches
+     * the passed ID.
+     * @param speciesID the unique identification number that corresponds to the
+     *                  targeted species
+     * @return a String representing a delimited set of alternative names for the
+     *         targeted species.
+     */
+    @Query("SELECT name FROM alternate_species_name " +
+            "WHERE species_id = :speciesID ")
+    LiveData<List<String>> getSpeciesAltName(long speciesID);
+
+    /**
      * This method prototype selects all species that include the user's inputted String
      * in the search bar, such that it may be an exact match or a substring for available
      * mammals.

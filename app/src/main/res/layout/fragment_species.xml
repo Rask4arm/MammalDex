@@ -7,88 +7,109 @@
     android:orientation="vertical"
     android:padding="24dp">
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/mammalCard"
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        app:strokeColor="#000000"
-        app:strokeWidth="4dp"
-        android:layout_gravity="center"
-        android:scaleType="centerCrop">
-
-        <ImageView
-            android:id="@+id/mammalImageView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#FF0000"/>
-
-    </com.google.android.material.card.MaterialCardView>
-
-    <TextView
-        android:id="@+id/mammalName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Mammal Name"
-        android:textSize="40sp"/>
-    <TextView
-        android:id="@+id/mammalSciName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Scientfic Name"
-        android:textSize="25sp"
-        android:textStyle="italic"/>
-
-    <LinearLayout
-        android:id="@+id/otherNameLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="10dp">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Also Known As:"
-            android:textSize="20sp"
-            android:textStyle="bold"/>
-
-        <TextView
-            android:id="@+id/mammalOtherNames"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="(Name, Name, Name)"
-            android:textSize="16sp"/>
-
-    </LinearLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Wikipedia:"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:layout_marginTop="10dp"
-        />
-    <TextView
-        android:id="@+id/mammalWikiLink"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Link-----------------------------"
-        android:textSize="16sp"
-        />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Description:"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:layout_marginTop="10dp"
-        />
-
-    <View
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                app:strokeColor="#000000"
+                app:strokeWidth="4dp"
+                android:layout_gravity="center"
+                android:scaleType="centerCrop">
+
+                <ImageView
+                    android:id="@+id/mammalImageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#FF0000"/>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:id="@+id/mammalName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Mammal Name"
+                android:textSize="40sp"/>
+            <TextView
+                android:id="@+id/mammalSciName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Scientific Name"
+                android:textSize="25sp"
+                android:textStyle="italic"/>
+
+            <LinearLayout
+                android:id="@+id/otherNameLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:id="@+id/knownAsText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Also Known As:"
+                    android:textSize="20sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/mammalOtherNames"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="(Name, Name, Name)"
+                    android:textSize="16sp"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Wikipedia:"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                />
+            <TextView
+                android:id="@+id/mammalWikiLink"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Link-----------------------------"
+                android:textSize="16sp"
+                android:textColor="@color/primary_green"
+                android:clickable="true"
+                android:focusable="true"
+                android:textColorHighlight="#400066CC"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Description:"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                />
+            <TextView
+                android:id="@+id/mammalDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="16sp"
+                />
+
+        </LinearLayout>
+
+    </ScrollView>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -115,7 +136,7 @@
             android:layout_height="70dp"
             android:layout_margin="5dp"
             android:text="Add Sighting"
-            android:textSize="20dp"/>
+            android:textSize="20sp"/>
 
     </LinearLayout>
 

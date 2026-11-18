@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,9 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.SearchView;
 
@@ -32,15 +29,14 @@ import com.example.mammaldex.databinding.FragmentSearchBinding;
 import com.example.mammaldex.model.database.entities.Species;
 import com.example.mammaldex.viewModels.SpeciesViewModelFactory;
 import com.example.mammaldex.viewModels.SpeciesViewModel;
-import com.google.android.material.card.MaterialCardView;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class SearchFragment extends Fragment {
 
     private FragmentSearchBinding binding;
-    private SpeciesViewAdapter adapter;
+    private SearchViewAdapter adapter;
     private SpeciesViewModel viewModel;
 
 
@@ -92,7 +88,16 @@ public class SearchFragment extends Fragment {
      * @param view the root View of the fragment's layout
      */
     private void setFields(View view) {
-        adapter = new SpeciesViewAdapter();
+        adapter = new SearchViewAdapter(item -> {
+            goToSpeciesFragment(item.getSciName());
+        }, species -> {
+            viewModel.setSpeciesAsSeen(species.getSciName());
+        }, species -> {
+            viewModel.setSpeciesAsNotSeen(species.getSciName());
+        });
+        noResultsImage = view.findViewById(R.id.noResultsImage);
+        noResultsText = view.findViewById(R.id.noResultsText);
+        searchView = view.findViewById(R.id.searchView);
         MammalDexApp app = (MammalDexApp) requireActivity().getApplication();
         viewModel = new ViewModelProvider(this, new SpeciesViewModelFactory(app.getRepository())).get(SpeciesViewModel.class);
     }
@@ -165,9 +170,7 @@ public class SearchFragment extends Fragment {
      */
     private void setRecyclerViewConfigs(View view) {
         RecyclerView recyclerView = view.findViewById(R.id.speciesList);
-        recyclerView.setLayoutManager(
-                new LinearLayoutManager(requireContext())
-        );
+
         // Creates a grid layout so the mammal cards are in two columns
         recyclerView.setLayoutManager(new GridLayoutManager(view.getContext(), 2));
         recyclerView.setAdapter(adapter);
@@ -185,6 +188,22 @@ public class SearchFragment extends Fragment {
                     adapter.setSpecies(species);
                 }
         );
+    }
+
+    /**
+     * Navigates to the Species page depending on selected species.
+     * @param speciesId
+     */
+    protected void goToSpeciesFragment(String speciesId){
+
+        try {
+            requireActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.nav_host_fragment, new SpeciesFragment(speciesId)).commit();
+        } catch (Exception e) {
+            System.out.println("Nope" + e);
+            throw new RuntimeException(e);
+        }
+
     }
 
 }
