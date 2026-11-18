@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,7 +25,29 @@ import java.util.List;
 /**
  * TODO : Add comments clarifying what this class does
  */
-public class SpeciesViewAdapter extends RecyclerView.Adapter<SpeciesViewAdapter.SpeciesViewHolder> {
+public class SearchViewAdapter extends RecyclerView.Adapter<SearchViewAdapter.SpeciesViewHolder> {
+
+    private final List<Species> species = new ArrayList<>();
+    private final OnItemClickListener listener;
+    private final OnAddButtonClickListener addListener;
+    private final OnRemoveButtonClickListener removeListener;
+
+    /**
+     * Add a listener to the view adapter to allow fragment switch
+     * @param listener The function to activate a Click Listener
+     */
+    public SearchViewAdapter(OnItemClickListener listener, OnAddButtonClickListener addListener, OnRemoveButtonClickListener removeListener) {
+        this.listener = listener;
+        this.addListener = addListener;
+        this.removeListener = removeListener;
+    }
+
+    /**
+     * Listener interface for handling clicks on species items.
+     */
+    public interface OnItemClickListener {
+        void onItemClick(Species species);
+    }
 
     public interface OnAddButtonClickListener {
         void onButtonClick(Species species);
@@ -33,14 +56,7 @@ public class SpeciesViewAdapter extends RecyclerView.Adapter<SpeciesViewAdapter.
     public interface OnRemoveButtonClickListener {
         void onButtonClick(Species species);
     }
-    private final List<Species> species = new ArrayList<>();
-    private final OnAddButtonClickListener addListener;
-    private final OnRemoveButtonClickListener removeListener;
 
-    public SpeciesViewAdapter(OnAddButtonClickListener addListener, OnRemoveButtonClickListener removeListener) {
-        this.addListener = addListener;
-        this.removeListener = removeListener;
-    }
 
     /**
      * TODO : Add Javadoc
@@ -108,6 +124,19 @@ public class SpeciesViewAdapter extends RecyclerView.Adapter<SpeciesViewAdapter.
         Glide.with(holder.itemView.getContext())
                 .load(imageUrl)
                 .into(holder.imageViewSpecies);
+
+        //Add a Click Listener to the species Image view to open Species Page
+        holder.imageViewSpecies.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try{
+                    listener.onItemClick(currentSpecies);
+
+                } catch (Exception e) {
+                    Toast.makeText(view.getContext(), "Failed to load species page", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     @Override

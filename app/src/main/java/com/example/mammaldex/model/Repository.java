@@ -30,6 +30,11 @@ public class Repository {
         return speciesDao.getSpeciesAltName(speciesID, searchText);
     }
 
+    public LiveData<List<String>> getSpeciesAltName(long speciesID) {
+        return speciesDao.getSpeciesAltName(speciesID);
+    }
+    
+
     public LiveData<List<Species>> getSpeciesNamesWith(String pattern) {
         return speciesDao.getSpeciesNamesWith(pattern);
     }
@@ -40,6 +45,10 @@ public class Repository {
     
     public LiveData<Species> getSpeciesBySciName(String name) {
         return speciesDao.getBySciName(name);
+    }
+
+    public Species getSpeciesById(int id){
+        return speciesDao.getById(id);
     }
 
     public void setSeenTrue(String name) {

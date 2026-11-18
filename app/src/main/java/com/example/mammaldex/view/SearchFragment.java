@@ -24,12 +24,12 @@ import com.example.mammaldex.viewModels.SpeciesViewModelFactory;
 import com.example.mammaldex.viewModels.SpeciesViewModel;
 
 import java.util.List;
+import java.util.Objects;
 
 public class SearchFragment extends Fragment {
 
-    private Button btnHome;
     private ImageView noResultsImage;
-    private SpeciesViewAdapter adapter;
+    private SearchViewAdapter adapter;
     private SearchView searchView;
     private SpeciesViewModel viewModel;
     private TextView noResultsText;
@@ -61,13 +61,13 @@ public class SearchFragment extends Fragment {
      * @param view the root View of the fragment's layout
      */
     private void setFields(View view) {
-        adapter = new SpeciesViewAdapter(species -> {
+        adapter = new SearchViewAdapter(item -> {
+            goToSpeciesFragment(item.getSciName());
+        }, species -> {
             viewModel.setSpeciesAsSeen(species.getSciName());
         }, species -> {
             viewModel.setSpeciesAsNotSeen(species.getSciName());
         });
-
-        btnHome = view.findViewById(R.id.btnHome);
         noResultsImage = view.findViewById(R.id.noResultsImage);
         noResultsText = view.findViewById(R.id.noResultsText);
         searchView = view.findViewById(R.id.searchView);
@@ -161,6 +161,22 @@ public class SearchFragment extends Fragment {
                     adapter.setSpecies(species);
                 }
         );
+    }
+
+    /**
+     * Navigates to the Species page depending on selected species.
+     * @param speciesId
+     */
+    protected void goToSpeciesFragment(String speciesId){
+
+        try {
+            requireActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.nav_host_fragment, new SpeciesFragment(speciesId)).commit();
+        } catch (Exception e) {
+            System.out.println("Nope" + e);
+            throw new RuntimeException(e);
+        }
+
     }
 
 }
