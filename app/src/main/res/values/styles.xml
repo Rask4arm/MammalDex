@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <style name="BottomNavActiveIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
         <item name="android:color">@color/selected_green</item>
     </style>
-
+    <style name="input_field">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:fontFamily">@font/chicle</item>
+        <item name="android:background">@drawable/background_input_field</item>
+        <item name="android:imeOptions">actionNext</item>
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingEnd">16dp</item>
+        <item name="android:textColor">@color/primary_brown</item>
+        <item name="android:textColorHint">@color/hint_text</item>
+        <item name="android:textSize">20sp</item>
+    </style>
 </resources>

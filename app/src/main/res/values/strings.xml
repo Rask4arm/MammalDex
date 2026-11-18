@@ -1,22 +1,22 @@
 <resources>
     <string name="app_name">MammalDex</string>
-    <string name="no_search_results">No mammals found!\n</string>
-    <string name="header_about_us">About Us</string>
-    <string name="header_profile">Profile</string>
     <string name="btn_about_us">About Us</string>
     <string name="btn_acknowledgements">Acknowledgements</string>
+    <string name="btn_login">Login</string>
     <string name="btn_logout">Logout</string>
     <string name="btn_resync">Resync Data</string>
-    <string name="header_acknowledgements">Acknowledgements</string>
-    <string name="btn_login">Login</string>
+    <string name="btn_sign_up">Sign Up</string>
     <string name="create_account">Create New Account</string>
-    <string name="hint_password">Password</string>
+    <string name="header_about_us">About Us</string>
+    <string name="header_profile">Profile</string>
+    <string name="header_acknowledgements">Acknowledgements</string>
+    <string name="hint_confirm_password">Confirm Password</string>
     <string name="hint_email">Email</string>
+    <string name="hint_name">Name</string>
+    <string name="hint_password">Password</string>
+    <string name="label_create_account">Create New Account</string>
     <string name="label_login">Login</string>
     <string name="label_welcome">Welcome to MammalDex!</string>
-    <string name="label_create_account">Create New Account</string>
-    <string name="hint_name">Name</string>
-    <string name="hint_confirm_password">Confirm Password</string>
-    <string name="btn_sign_up">Sign Up</string>
+    <string name="no_search_results">No mammals found!\n</string>
     <string name="text_login">Login</string>
 </resources>
