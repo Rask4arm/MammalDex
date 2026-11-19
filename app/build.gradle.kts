@@ -5,6 +5,10 @@ plugins {
 
 android {
     namespace = "com.example.mammaldex"
+
+    buildFeatures {
+        viewBinding = true
+    }
     compileSdk {
         version = release(36) {
             minorApiLevel = 1

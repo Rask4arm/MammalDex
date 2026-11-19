@@ -96,9 +96,6 @@ public class SearchFragment extends Fragment {
         }, species -> {
             viewModel.setSpeciesAsNotSeen(species.getSciName());
         });
-        noResultsImage = view.findViewById(R.id.noResultsImage);
-        noResultsText = view.findViewById(R.id.noResultsText);
-        searchView = view.findViewById(R.id.searchView);
         MammalDexApp app = (MammalDexApp) requireActivity().getApplication();
         viewModel = new ViewModelProvider(this, new SpeciesViewModelFactory(app.getRepository())).get(SpeciesViewModel.class);
     }
