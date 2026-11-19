@@ -32,9 +32,9 @@ public class SpeciesViewModel extends ViewModel {
                 search,
                 s -> {
                     if (s == null || s.trim().isEmpty()) {
-                        return repository.getAllSpecies();
+                        return repository.getSortedSpeciesNamesWith("");
                     } else {
-                        return repository.getSpeciesNamesWith(s);
+                        return repository.getSortedSpeciesNamesWith(s);
                     }
                 }
         );
