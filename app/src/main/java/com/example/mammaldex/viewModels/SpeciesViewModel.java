@@ -1,6 +1,8 @@
 package com.example.mammaldex.viewModels;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 
 import com.example.mammaldex.model.Repository;
@@ -12,29 +14,48 @@ public class SpeciesViewModel extends ViewModel {
     private final Repository repository;
     private final LiveData<List<Species>> species;
 
+    private final MutableLiveData<String> search = new MutableLiveData<>("");
+
+
+    /**
+     * This constructor sets the repository and creates an observer
+     * that checks for changes in the search. If it finds a search it
+     * gets the species in the MammalDex database that contain
+     * the passed string pattern. It checks the available scientific (Latin),
+     * common, and other names to ensure a complete search.
+     * @param repository The repository for the app
+     */
     public SpeciesViewModel(Repository repository){
         this.repository = repository;
-        this.species = repository.getAllSpecies();
+        //observer that triggers when the search text changes
+        this.species = Transformations.switchMap(
+                search,
+                s -> {
+                    if (s == null || s.trim().isEmpty()) {
+                        return repository.getAllSpecies();
+                    } else {
+                        return repository.getSpeciesNamesWith(s);
+                    }
+                }
+        );
     }
 
     /**
-     * This method gets all species in the MammalDex database.
+     * Changes the string in the search mutable data so
+     * @param searchText the text that you want to search for
+     */
+    public void setSearchText(String searchText) {
+        search.setValue(searchText);
+    }
+
+    /**
+     * This method gets the species that should be displayed from
+     * the MammalDex database.
      * @return a LiveData list of all the species in the database
      */
-    public LiveData<List<Species>> getAllSpecies() {
+    public LiveData<List<Species>> getDisplayedSpecies() {
         return species;
     }
-
-    /**
-     * TODO: Java doc this function, Ethan's Function
-     * @param speciesID
-     * @param searchText
-     * @return
-     */
-    public LiveData<String> getSpeciesAltName(long speciesID, String searchText) {
-        return repository.getSpeciesAltName(speciesID, searchText);
-    }
-
 
     /**
      * This method gets all Alternate species names in the database by ID
@@ -43,17 +64,6 @@ public class SpeciesViewModel extends ViewModel {
      */
     public LiveData<List<String>> getSpeciesAltName(long speciesID) {
         return repository.getSpeciesAltName(speciesID);
-    }
-
-    /**
-     * This method gets the species in the MammalDex database that contain
-     * the passed string pattern. It checks the available scientific (Latin),
-     * common, and other names to ensure a complete search.
-     * @param pattern the substring to search for in the database's species names.
-     * @return a LiveData list of all species with names that contain the pattern
-     */
-    public LiveData<List<Species>> getSpeciesNamesWith(String pattern) {
-        return repository.getSpeciesNamesWith(pattern);
     }
 
     /**

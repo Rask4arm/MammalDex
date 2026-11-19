@@ -2,19 +2,15 @@ package com.example.mammaldex.view;
 
 import android.os.Bundle;
 import android.text.InputFilter;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.PopupWindow;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,12 +20,8 @@ import com.example.mammaldex.MammalDexApp;
 import com.example.mammaldex.R;
 import com.example.mammaldex.databinding.FragmentSearchBinding;
 import com.example.mammaldex.databinding.SearchFilterPopupBinding;
-import com.example.mammaldex.model.database.entities.Species;
 import com.example.mammaldex.viewModels.SpeciesViewModelFactory;
 import com.example.mammaldex.viewModels.SpeciesViewModel;
-
-import java.util.List;
-import java.util.Objects;
 
 public class SearchFragment extends Fragment {
 
@@ -81,7 +73,19 @@ public class SearchFragment extends Fragment {
         setSearchListeners();
         setFilterListeners();
         setRecyclerViewConfigs(view);
-        observeAllSpecies();
+
+        viewModel.getDisplayedSpecies().observe(getViewLifecycleOwner(), results -> {
+            if (results != null) {
+                if (results.isEmpty()) {
+                    searchBinding.noResultsImage.setVisibility(View.VISIBLE);
+                    searchBinding.noResultsText.setVisibility(View.VISIBLE);
+                } else {
+                    searchBinding.noResultsImage.setVisibility(View.GONE);
+                    searchBinding.noResultsText.setVisibility(View.GONE);
+                }
+                adapter.setSpecies(results);
+            }
+        });
     }
 
     /**
@@ -137,25 +141,7 @@ public class SearchFragment extends Fragment {
              */
             @Override
             public boolean onQueryTextChange(String searchText) {
-                LiveData<List<Species>> filtered = viewModel.getSortedSpeciesNamesWith("%" + searchText + "%");
-                // TODO : ISSUE -> Makes a new observer every keystroke, does not destroy previous observers
-                // Gets the matched species of type List<Species>
-                filtered.observe(getViewLifecycleOwner(), results -> {
-                   if (results != null) {
-                       // Displays content when there are no search results; hides if there are results
-                       if (results.isEmpty()) {
-                           searchBinding.noResultsImage.setVisibility(View.VISIBLE);
-                           searchBinding.noResultsText.setVisibility(View.VISIBLE);
-                       } else {
-                           searchBinding.noResultsImage.setVisibility(View.GONE);
-                           searchBinding.noResultsText.setVisibility(View.GONE);
-                       }
-                       // Swaps in and highlights the alternative names of the mammal's to indicate
-                       // when those names produced matches
-                       // TODO : Need to find a way to change the contents of MaterialCardView objects instead of Species
-                       adapter.setSpecies(results);
-                   }
-                });
+                viewModel.setSearchText(searchText);
                 return true;
             }
         });
@@ -211,20 +197,6 @@ public class SearchFragment extends Fragment {
         // TODO : Logic
 
         // TODO : dismiss the filter popup after logic executes
-    }
-
-    /**
-     * This method observes the data for all species in the MammalDex database during the
-     * fragment's initialization, updates the species in the SpeciesViewAdapter, and stores
-     * all Species objects in the "allSpecies" field of type List<Species>. This allows for
-     * multiple searches to be performed for the available species without reloading the
-     * data multiple times.
-     */
-    private void observeAllSpecies() {
-        viewModel.getAllSpecies().observe(getViewLifecycleOwner(), species -> {
-                    adapter.setSpecies(species);
-                }
-        );
     }
 
     /**
