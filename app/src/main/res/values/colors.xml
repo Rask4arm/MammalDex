@@ -17,11 +17,13 @@
     <color name="input_border">#424642</color>
 
     <!-- Filter Button and Popup -->
-    <color name="background_filter_btn">#A2FF96</color>
-    <color name="background_filter_popup">#D7CFA7</color>
+    <color name="background_filter_btn">#355A31</color>
+    <color name="background_filter_popup">#A6ACA6</color>
+    <color name="background_filter_border">#535B53</color>
     <color name="radio_button">#613E23</color>
     <color name="radio_checked">#6EC34A</color>
     <color name="radio_text">#613E23</color>
+    <color name="exit_button">#C51E1E</color>
 
     <!-- Navigation colors -->
     <color name="nav_gray">#A6ACA6</color>
