@@ -8,5 +8,9 @@ public class Constants {
     public static final String KEY_USER_ID = "userid";
     public static final String KEY_IS_SIGNED_IN = "isSignedIn";
     public static final String KEY_PREFERENCE_NAME = "chatAppPreference";
-    public static final String KEY_IMAGE = "image";
+    public static final String KEY_COLLECTION_SIGHTINGS = "Sighting";
+    public static final String KEY_SPECIES_NAME = "species";
+    public static final String KEY_LONGITUDE = "longitude";
+    public static final String KEY_LATITUDE = "latitude";
+    public static final String KEY_DATE = "date";
 }
