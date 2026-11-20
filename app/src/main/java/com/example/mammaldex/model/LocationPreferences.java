@@ -25,17 +25,6 @@ public class LocationPreferences {
     }
 
     /**
-     * Updates the user's location preference
-     * @param context application context used to access SharedPreferences
-     * @param enabled whether the location retrieval is enabled or disabled
-     */
-    public static void setKeyLocationEnabled(Context context, boolean enabled){
-        SharedPreferences preferences =
-                context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
-        preferences.edit().putBoolean(KEY_LOCATION_ENABLED, enabled).apply();
-    }
-
-    /**
      * Updates the location preference.
      *
      * @param context application context
