@@ -21,8 +21,63 @@ public interface SpeciesDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     List<Long> insertAll(List<Species> species);
 
+    /**
+     * This method gets all species in the local database from the species table.
+     * @return a LiveData object with a list of all species.
+     */
     @Query("SELECT * FROM species")
     LiveData<List<Species>> getAll();
+
+    /**
+     * This method gets all species in the local database from the species table
+     * with the given string as their "family" attribute value.
+     * @param family a String representing the target family
+     * @return a LiveData object with a list of all species in the given family.
+     */
+    @Query("SELECT * FROM species WHERE taxonomic_family = :family")
+    LiveData<List<Species>> getAllSpeciesByFamily(String family);
+
+    /**
+     * This method gets all species in the local database from the species table
+     * with the given string as their "genus" attribute value.
+     * @param genus a String representing the target genus
+     * @return a LiveData object with a list of all species in the given genus.
+     */
+    @Query("SELECT * FROM species WHERE taxonomic_genus = :genus")
+    LiveData<List<Species>> getAllSpeciesByGenus(String genus);
+
+    /**
+     * This method gets all species in the local database from the species table
+     * with the given string as their "order" attribute value.
+     * @param order a String representing the target order
+     * @return a LiveData object with a list of all species in the given order.
+     */
+    @Query("SELECT * FROM species WHERE taxonomic_order = :order")
+    LiveData<List<Species>> getAllSpeciesByOrder(String order);
+
+    /**
+     * This method gets all the unique family names in the local database from the
+     * species table.
+     * @return a LiveData object with a list of all unique family names as strings.
+     */
+    @Query("SELECT DISTINCT taxonomic_family FROM species")
+    LiveData<List<String>> getDistinctFamilies();
+
+    /**
+     * This method gets all the unique genera names in the local database from the
+     * species table.
+     * @return a LiveData object with a list of all unique genera names as strings.
+     */
+    @Query("SELECT DISTINCT taxonomic_genus FROM species")
+    LiveData<List<String>> getDistinctGenera();
+
+    /**
+     * This method gets all the unique order names in the local database from the
+     * species table.
+     * @return a LiveData object with a list of all unique order names as strings.
+     */
+    @Query("SELECT DISTINCT taxonomic_order FROM species")
+    LiveData<List<String>> getDistinctOrders();
 
     /**
      * This method gets the alternative names for a specific species that matches

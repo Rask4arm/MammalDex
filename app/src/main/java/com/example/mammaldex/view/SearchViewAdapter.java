@@ -36,7 +36,9 @@ public class SearchViewAdapter extends RecyclerView.Adapter<SearchViewAdapter.Sp
      * Add a listener to the view adapter to allow fragment switch
      * @param listener The function to activate a Click Listener
      */
-    public SearchViewAdapter(OnItemClickListener listener, OnAddButtonClickListener addListener, OnRemoveButtonClickListener removeListener) {
+    public SearchViewAdapter(OnItemClickListener listener,
+                             OnAddButtonClickListener addListener,
+                             OnRemoveButtonClickListener removeListener) {
         this.listener = listener;
         this.addListener = addListener;
         this.removeListener = removeListener;

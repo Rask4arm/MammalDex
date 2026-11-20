@@ -26,11 +26,9 @@ import com.example.mammaldex.viewModels.SpeciesViewModel;
 public class SearchFragment extends Fragment {
 
     private PopupWindow filterWindow;
-    private FragmentSearchBinding searchBinding;
-    private SearchFilterPopupBinding filterBinding;
+    private FragmentSearchBinding binding;
     private SearchViewAdapter adapter;
     private SpeciesViewModel viewModel;
-
 
     public SearchFragment() {
         super(R.layout.fragment_search);
@@ -53,8 +51,8 @@ public class SearchFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                          ViewGroup container,
                          Bundle savedInstanceState) {
-        searchBinding = FragmentSearchBinding.inflate(inflater, container, false);
-        return searchBinding.getRoot();
+        binding = FragmentSearchBinding.inflate(inflater, container, false);
+        return binding.getRoot();
     }
 
     /**
@@ -68,31 +66,17 @@ public class SearchFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setFields(view);
-        setSearchTextFilter(searchBinding.searchView);
-        setSearchListeners();
-        setFilterListeners();
+        setFields();
+        setSearchTextFilter(binding.searchView);
+        setListeners();
         setRecyclerViewConfigs(view);
-
-        viewModel.getDisplayedSpecies().observe(getViewLifecycleOwner(), results -> {
-            if (results != null) {
-                if (results.isEmpty()) {
-                    searchBinding.noResultsImage.setVisibility(View.VISIBLE);
-                    searchBinding.noResultsText.setVisibility(View.VISIBLE);
-                } else {
-                    searchBinding.noResultsImage.setVisibility(View.GONE);
-                    searchBinding.noResultsText.setVisibility(View.GONE);
-                }
-                adapter.setSpecies(results);
-            }
-        });
+        setViewModelConfigs();
     }
 
     /**
      * This method sets any uninstantiated class fields during class instantiation.
-     * @param view the root View of the fragment's layout
      */
-    private void setFields(View view) {
+    private void setFields() {
         adapter = new SearchViewAdapter(item -> {
             goToSpeciesFragment(item.getSciName());
         }, species -> {
@@ -119,9 +103,9 @@ public class SearchFragment extends Fragment {
     /**
      * This method sets any needed UI listeners during class instantiation.
      */
-    private void setSearchListeners() {
+    private void setListeners() {
         // Listener for the search bar
-        searchBinding.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        binding.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             /**
              * This method executes the included code when the Enter button is pressed,
              * which includes closing the on-screen keyboard
@@ -148,55 +132,33 @@ public class SearchFragment extends Fragment {
     }
 
     /**
-     * This method sets listeners for the filter button and its radio buttons in
-     * the search bar.
-     */
-    private void setFilterListeners() {
-        searchBinding.btnFilter.setOnClickListener(this::showFilterPopup);
-    }
-
-    /**
-     * This method sets listeners for the radio buttons in the filter popup window
-     * for the search bar.
-     */
-    private void setRadioListeners() {
-        filterBinding.radioCommonName.setOnClickListener(this::filterCommonNames);
-        filterBinding.radioSciName.setOnClickListener(this::filterSciNames);
-        filterBinding.radioAltNames.setOnClickListener(this::filterAltNames);
-    }
-
-    /**
-     * This method sets any configurations for the fragment's RecyclerView
+     * This method sets any configurations needed for the fragment's RecyclerView
      * during class instantiation.
      * @param view the root View of the fragment's layout
      */
     private void setRecyclerViewConfigs(View view) {
-        RecyclerView recyclerView = view.findViewById(R.id.speciesList);
-
         // Creates a grid layout so the mammal cards are in two columns
-        recyclerView.setLayoutManager(new GridLayoutManager(view.getContext(), 2));
-        recyclerView.setAdapter(adapter);
+        binding.speciesList.setLayoutManager(new GridLayoutManager(view.getContext(), 2));
+        binding.speciesList.setAdapter(adapter);
     }
 
-    // TODO
-    private void filterAltNames(View view) {
-        // TODO : Logic
-
-        // TODO : dismiss the filter popup after logic executes
-    }
-
-    // TODO
-    private void filterCommonNames(View view) {
-        // TODO : Logic
-
-        // TODO : dismiss the filter popup after logic executes
-    }
-
-    // TODO
-    private void filterSciNames(View view) {
-        // TODO : Logic
-
-        // TODO : dismiss the filter popup after logic executes
+    /**
+     *  This method sets any configurations needed for the viewModel during
+     *  class instantiation.
+     */
+    private void setViewModelConfigs() {
+        viewModel.getDisplayedSpecies().observe(getViewLifecycleOwner(), results -> {
+            if (results != null) {
+                if (results.isEmpty()) {
+                    binding.noResultsImage.setVisibility(View.VISIBLE);
+                    binding.noResultsText.setVisibility(View.VISIBLE);
+                } else {
+                    binding.noResultsImage.setVisibility(View.GONE);
+                    binding.noResultsText.setVisibility(View.GONE);
+                }
+                adapter.setSpecies(results);
+            }
+        });
     }
 
     /**
@@ -204,16 +166,13 @@ public class SearchFragment extends Fragment {
      * @param anchor the View (filter button) that owns the filter popup window
      */
     private void showFilterPopup(View anchor) {
-        filterBinding = SearchFilterPopupBinding.inflate(LayoutInflater.from(anchor.getContext()));
         // Initializes filter popup window
         filterWindow = new PopupWindow(
-                filterBinding.getRoot(),
+                SearchFilterPopupBinding.inflate(LayoutInflater.from(anchor.getContext())).getRoot(),
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 true
         );
-        // Sets method calls for radio options and displays filter window afterward
-        setRadioListeners();
         filterWindow.showAsDropDown(anchor);
     } 
     
