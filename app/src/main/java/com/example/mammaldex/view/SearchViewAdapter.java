@@ -91,16 +91,23 @@ public class SearchViewAdapter extends RecyclerView.Adapter<SearchViewAdapter.Sp
         holder.textViewName.setText(currentSpecies.getName());
         holder.textViewSciName.setText(currentSpecies.getSciName());
 
-        if (species.get(position).getSeen() == 1) {
+        holder.imageViewSightAdd.setVisibility(View.VISIBLE);
+        holder.imageViewSightRemove.setVisibility(View.INVISIBLE);
+        holder.mammalCard.setStrokeColor(Color.parseColor("#000000"));
+        holder.mammalCard.setStrokeWidth(16);
 
+        if (currentSpecies.getSeen() == 1) {
+
+            System.out.println(currentSpecies.getName());
             //sets outline to green and wider
             holder.mammalCard.setStrokeColor(Color.parseColor("#008000"));
             int currentStrokeWidth = holder.mammalCard.getStrokeWidth();
-            holder.mammalCard.setStrokeWidth(currentStrokeWidth * 2);
+            holder.mammalCard.setStrokeWidth(32);
 
             //replaces plus-button with minus-button
             holder.imageViewSightAdd.setVisibility(View.INVISIBLE);
             holder.imageViewSightRemove.setVisibility(View.VISIBLE);
+            System.out.println(" ");
         }
 
         String endUrl = capitalize(currentSpecies.getSciName());
