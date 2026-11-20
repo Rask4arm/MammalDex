@@ -14,6 +14,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Takes the csv file of all the mammals and puts it into the
+ * database that it gets from the database initializer.
+ */
 public class DatabaseCreator {
     public static void readCsvToRoom(Context context, AppDatabase database) {
         List<Species> speciesList = new ArrayList<>();
@@ -40,6 +44,8 @@ public class DatabaseCreator {
                     String genus = tokens[18].trim();
                     String family = tokens[14].trim();
                     String order = tokens[9].trim();
+
+                    sciName = sciName.replace("_", " ");
 
                     String wikiLink = "https://en.wikipedia.org/wiki/" + sciName;
                     String imagePath = sciName.toLowerCase();

@@ -13,4 +13,9 @@
         <item name="android:shadowDy">0</item>
         <item name="android:shadowRadius">5</item>
     </style>
+
+    <!---Added a circular border for images-->
+    <style name="CircularImageView">
+      <item name="cornerSize">50%</item>
+    </style>
 </resources>

@@ -16,13 +16,29 @@
         android:theme="@style/Theme.MammalDex" >
         <activity
             android:name=".view.MainActivity"
-            android:exported="true" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:exported="true" />
+        <activity android:name=".view.LoginActivity"
+            android:exported="true">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
         </activity>
+        <activity
+            android:name=".view.CreateAccountActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".view.AboutUsActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".view.AcknowledgementsActivity"
+            android:exported="false"/>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+
     </application>
 
 </manifest>

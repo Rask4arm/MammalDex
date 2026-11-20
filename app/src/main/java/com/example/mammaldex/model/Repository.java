@@ -10,6 +10,10 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * Repository is the middleman between the viewModel and the Dao.
+ * Gets LiveData from the DAOs that is dynamically updated whenever the user changes the data
+ */
 public class Repository {
     private final SpeciesDao speciesDao;
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
@@ -17,12 +21,42 @@ public class Repository {
         this.speciesDao = db.speciesDao();
     }
 
+    //Getters and setters
     public LiveData<List<Species>> getAllSpecies() {
         return speciesDao.getAll();
     }
 
-    public LiveData<List<Species>> getSpeciesNamesWith(String search) {
-        return speciesDao.getSpeciesNamesWith(search);
+    public LiveData<String> getSpeciesAltName(long speciesID, String searchText) {
+        return speciesDao.getSpeciesAltName(speciesID, searchText);
+    }
+
+    public LiveData<List<String>> getSpeciesAltName(long speciesID) {
+        return speciesDao.getSpeciesAltName(speciesID);
+    }
+    
+
+    public LiveData<List<Species>> getSpeciesNamesWith(String pattern) {
+        return speciesDao.getSpeciesNamesWith(pattern);
+    }
+
+    public LiveData<List<Species>> getSortedSpeciesNamesWith(String pattern) {
+        return speciesDao.getSortedSpeciesNamesWith(pattern);
+    }
+    
+    public LiveData<Species> getSpeciesBySciName(String name) {
+        return speciesDao.getBySciName(name);
+    }
+
+    public Species getSpeciesById(int id){
+        return speciesDao.getById(id);
+    }
+
+    public void setSeenTrue(String name) {
+        executorService.execute(() -> speciesDao.updateSeen(name, 1));
+    }
+
+    public void setSeenFalse(String name) {
+        executorService.execute(() -> speciesDao.updateSeen(name, 0));
     }
 
 }
