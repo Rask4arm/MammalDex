@@ -13,9 +13,8 @@ import java.util.List;
 public class SpeciesViewModel extends ViewModel {
     private final Repository repository;
     private final LiveData<List<Species>> species;
-
+    private final MutableLiveData<String> filter = new MutableLiveData<>("");
     private final MutableLiveData<String> search = new MutableLiveData<>("");
-
 
     /**
      * This constructor sets the repository and creates an observer
@@ -41,11 +40,60 @@ public class SpeciesViewModel extends ViewModel {
     }
 
     /**
-     * Changes the string in the search mutable data so
-     * @param searchText the text that you want to search for
+     * This method gets all species of a given family from the local database through
+     * the application's data repository.
+     * @param family a String representing the target family
+     * @return a LiveData object with a list of species of the given family.
      */
-    public void setSearchText(String searchText) {
-        search.setValue(searchText);
+    public LiveData<List<Species>> getAllSpeciesByFamily(String family) {
+        return repository.getAllSpeciesByFamily(family);
+    }
+
+    /**
+     * This method gets all species of a given genus from the local database through
+     * the application's data repository.
+     * @param genus a String representing the target genus
+     * @return a LiveData object with a list of species of the given genus.
+     */
+    public LiveData<List<Species>> getAllSpeciesByGenus(String genus) {
+        return repository.getAllSpeciesByGenus(genus);
+    }
+
+    /**
+     * This method gets all species of a given order from the local database through
+     * the application's data repository.
+     * @param order a String representing the target order
+     * @return a LiveData object with a list of species of the given order.
+     */
+    public LiveData<List<Species>> getAllSpeciesByOrder(String order) {
+        return repository.getAllSpeciesByOrder(order);
+    }
+
+    /**
+     * This method gets all unique families for the species from the local database
+     * through the application's data repository.
+     * @return a LiveData object with a list of family names as strings.
+     */
+    public LiveData<List<String>> getDistinctFamilies() {
+        return repository.getDistinctFamilies();
+    }
+
+    /**
+     * This method gets all unique genera for the species from the local database
+     * through the application's data repository.
+     * @return a LiveData object with a list of genera names as strings.
+     */
+    public LiveData<List<String>> getDistinctGenera() {
+        return repository.getDistinctGenera();
+    }
+
+    /**
+     * This method gets all unique orders for the species from the local database
+     * through the application's data repository.
+     * @return a LiveData object with a list of orders names as strings.
+     */
+    public LiveData<List<String>> getDistinctOrders() {
+        return repository.getDistinctOrders();
     }
 
     /**
@@ -85,6 +133,14 @@ public class SpeciesViewModel extends ViewModel {
      */
     public LiveData<Species> getSpeciesBySciName(String pattern) {
         return repository.getSpeciesBySciName(pattern);
+    }
+
+    /**
+     * Changes the string in the search mutable data so
+     * @param searchText the text that you want to search for
+     */
+    public void setSearchText(String searchText) {
+        search.setValue(searchText);
     }
 
     public void setSpeciesAsSeen(String sci_name) {

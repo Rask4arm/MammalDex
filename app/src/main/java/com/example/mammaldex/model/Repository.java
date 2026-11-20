@@ -1,6 +1,7 @@
 package com.example.mammaldex.model;
 
 import androidx.lifecycle.LiveData;
+import androidx.room.Query;
 
 import com.example.mammaldex.model.database.daos.SpeciesDao;
 import com.example.mammaldex.model.database.entities.Species;
@@ -24,6 +25,30 @@ public class Repository {
     //Getters and setters
     public LiveData<List<Species>> getAllSpecies() {
         return speciesDao.getAll();
+    }
+
+    public LiveData<List<Species>> getAllSpeciesByFamily(String family) {
+        return speciesDao.getAllSpeciesByFamily(family);
+    }
+
+    public LiveData<List<Species>> getAllSpeciesByGenus(String genus) {
+        return speciesDao.getAllSpeciesByGenus(genus);
+    }
+
+    public LiveData<List<Species>> getAllSpeciesByOrder(String order) {
+        return speciesDao.getAllSpeciesByOrder(order);
+    }
+
+    public LiveData<List<String>> getDistinctFamilies() {
+        return speciesDao.getDistinctFamilies();
+    }
+
+    public LiveData<List<String>> getDistinctGenera() {
+        return speciesDao.getDistinctGenera();
+    }
+
+    public LiveData<List<String>> getDistinctOrders() {
+        return speciesDao.getDistinctOrders();
     }
 
     public LiveData<String> getSpeciesAltName(long speciesID, String searchText) {
