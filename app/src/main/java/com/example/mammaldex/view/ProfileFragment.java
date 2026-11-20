@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import com.example.mammaldex.R;
 
 import com.example.mammaldex.databinding.FragmentProfileBinding;
+import com.example.mammaldex.viewModels.PreferenceManager;
 
 /**
  * This class handles the logic needed for the Profile page.
@@ -51,15 +53,15 @@ public class ProfileFragment extends Fragment {
        binding.ackBtn.setOnClickListener(v -> openActivity(AcknowledgementsActivity.class));
        binding.aboutUsBtn.setOnClickListener(v -> openActivity(AboutUsActivity.class));
        binding.resyncBtn.setOnClickListener(v -> resyncData());
-       binding.logoutBtn.setOnClickListener(v -> logout());
+       binding.logoutBtn.setOnClickListener(v -> {
+           PreferenceManager preferenceManager = new PreferenceManager(getContext().getApplicationContext());
+           preferenceManager.clear();
+           Log.d("INFO", "User Logout");
+           Toast.makeText(getContext().getApplicationContext(), "Goodbye", Toast.LENGTH_SHORT).show();
+           openActivity(LoginActivity.class);
+       });
     }
 
-    /**
-     * TODO: create a logout function that terminates the firebase connection and returns to the login page
-     */
-    private void logout(){
-        Log.d("INFO", "Logout Button Pressed");
-    }
 
     /**
      *
