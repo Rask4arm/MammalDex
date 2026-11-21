@@ -63,7 +63,7 @@ public interface SpeciesDao {
      * with the specified order.
      */
     @Query("SELECT DISTINCT taxonomic_family FROM species WHERE taxonomic_order = :order")
-    LiveData<List<String>> getDistinctFamilies(String order);
+    LiveData<List<String>> getDistinctFamiliesByOrder(String order);
 
     /**
      * This method gets all the unique genera names in the local database from the
@@ -72,8 +72,8 @@ public interface SpeciesDao {
      * @return a LiveData object with a list of all unique family names as strings
      * with the specified family.
      */
-    @Query("SELECT DISTINCT taxonomic_genus FROM species")
-    LiveData<List<String>> getDistinctGenera(String family);
+    @Query("SELECT DISTINCT taxonomic_genus FROM species WHERE taxonomic_family = :family")
+    LiveData<List<String>> getDistinctGeneraByFamily(String family);
 
     /**
      * This method gets all the unique order names in the local database from the
