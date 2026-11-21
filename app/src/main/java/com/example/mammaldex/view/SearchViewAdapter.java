@@ -132,6 +132,8 @@ public class SearchViewAdapter extends RecyclerView.Adapter<SearchViewAdapter.Sp
         // Load the image with Glide
         Glide.with(holder.itemView.getContext())
                 .load(imageUrl)
+                .fallback(R.drawable.sad_monkey)
+                .placeholder(R.drawable.sad_monkey)
                 .into(holder.imageViewSpecies);
 
         //Add a Click Listener to the species Image view to open Species Page
