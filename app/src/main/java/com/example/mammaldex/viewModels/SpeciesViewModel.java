@@ -70,21 +70,25 @@ public class SpeciesViewModel extends ViewModel {
     }
 
     /**
-     * This method gets all unique families for the species from the local database
-     * through the application's data repository.
-     * @return a LiveData object with a list of family names as strings.
+     * This method gets all the unique family names in the local database from the
+     * species table with the given order.
+     * @param order the target order for families to belong to.
+     * @return a LiveData object with a list of all unique family names as strings
+     * with the specified order.
      */
-    public LiveData<List<String>> getDistinctFamilies() {
-        return repository.getDistinctFamilies();
+    public LiveData<List<String>> getDistinctFamilies(String order) {
+        return repository.getDistinctFamilies(order);
     }
 
     /**
-     * This method gets all unique genera for the species from the local database
-     * through the application's data repository.
-     * @return a LiveData object with a list of genera names as strings.
+     * This method gets all the unique genera names in the local database from the
+     * species table with the given family.
+     * @param family the target order for families to belong to.
+     * @return a LiveData object with a list of all unique family names as strings
+     * with the specified family.
      */
-    public LiveData<List<String>> getDistinctGenera() {
-        return repository.getDistinctGenera();
+    public LiveData<List<String>> getDistinctGenera(String family) {
+        return repository.getDistinctGenera(family);
     }
 
     /**
@@ -123,6 +127,48 @@ public class SpeciesViewModel extends ViewModel {
      */
     public LiveData<List<Species>> getSortedSpeciesNamesWith(String pattern) {
         return repository.getSortedSpeciesNamesWith(pattern);
+    }
+
+    /**
+     * This method prototype filters all species that include the user's inputted String
+     * in the search bar, such that it may be an exact match or a substring for available
+     * mammals. The rows are sorted alphabetically within name categories (tiers 0, 1, 2)
+     * and ordered by name, sci_name, alternate_species_names, with all results having
+     * the specified family.
+     * @param pattern the user's String input in the search bar
+     * @param family the selected family as a search filter
+     * @return a LiveData container with the results of the search
+     */
+    public LiveData<List<Species>> getSortedSpeciesNamesByFamilyWhere(String pattern, String family) {
+        return repository.getSortedSpeciesNamesByGenusWhere(pattern, family);
+    }
+
+    /**
+     * This method prototype filters all species that include the user's inputted String
+     * in the search bar, such that it may be an exact match or a substring for available
+     * mammals. The rows are sorted alphabetically within name categories (tiers 0, 1, 2)
+     * and ordered by name, sci_name, alternate_species_names, with all results having
+     * the specified genus.
+     * @param pattern the user's String input in the search bar
+     * @param genus the selected genus as a search filter
+     * @return a LiveData container with the results of the search
+     */
+    public LiveData<List<Species>> getSortedSpeciesNamesByGenusWhere(String pattern, String genus) {
+        return repository.getSortedSpeciesNamesByGenusWhere(pattern, genus);
+    }
+
+    /**
+     * This method prototype filters all species that include the user's inputted String
+     * in the search bar, such that it may be an exact match or a substring for available
+     * mammals. The rows are sorted alphabetically within name categories (tiers 0, 1, 2)
+     * and ordered by name, sci_name, alternate_species_names, with all results having
+     * the specified order.
+     * @param pattern the user's String input in the search bar
+     * @param order the selected order as a search filter
+     * @return a LiveData container with the results of the search
+     */
+    public LiveData<List<Species>> getSortedSpeciesNamesByOrderWhere(String pattern, String order) {
+        return repository.getSortedSpeciesNamesByGenusWhere(pattern, order);
     }
 
     /**
