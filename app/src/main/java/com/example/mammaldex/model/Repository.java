@@ -40,11 +40,11 @@ public class Repository {
     }
 
     public LiveData<List<String>> getDistinctFamilies(String order) {
-        return speciesDao.getDistinctFamilies(order);
+        return speciesDao.getDistinctFamiliesByOrder(order);
     }
 
     public LiveData<List<String>> getDistinctGenera(String family) {
-        return speciesDao.getDistinctGenera(family);
+        return speciesDao.getDistinctGeneraByFamily(family);
     }
 
     public LiveData<List<String>> getDistinctOrders() {
@@ -69,7 +69,7 @@ public class Repository {
     }
 
     public LiveData<List<Species>> getSortedSpeciesNamesByFamilyWhere(String pattern, String family) {
-        return speciesDao.getSortedSpeciesNamesByGenusWhere(pattern, family);
+        return speciesDao.getSortedSpeciesNamesByFamilyWhere(pattern, family);
     }
 
     public LiveData<List<Species>> getSortedSpeciesNamesByGenusWhere(String pattern, String genus) {
@@ -77,7 +77,7 @@ public class Repository {
     }
 
     public LiveData<List<Species>> getSortedSpeciesNamesByOrderWhere(String pattern, String order) {
-        return speciesDao.getSortedSpeciesNamesByGenusWhere(pattern, order);
+        return speciesDao.getSortedSpeciesNamesByOrderWhere(pattern, order);
     }
     
     public LiveData<Species> getSpeciesBySciName(String name) {
