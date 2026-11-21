@@ -30,7 +30,7 @@
             android:id="@+id/mammalImageView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#FF0000"
+            android:src="@drawable/sad_monkey"
             android:scaleType="centerCrop"
             />
 
