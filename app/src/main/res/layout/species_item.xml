@@ -30,7 +30,7 @@
             android:id="@+id/mammalImageView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/sad_monkey"
+            android:src="@drawable/image_no_mammal"
             android:scaleType="centerCrop"
             />
 
@@ -39,7 +39,9 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_gravity="top|center_horizontal"
-            android:layout_marginTop="10dp">
+            android:paddingTop="10dp"
+            android:paddingBottom="5dp"
+            android:background="@drawable/bg_top_gradiant">
 
             <ImageView
                 android:id="@+id/mammalWikiLink"
@@ -89,7 +91,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_gravity="bottom|center_vertical"
-            android:background="@drawable/text_background">
+            android:background="@drawable/bg_bottom_gradiant">
 
             <TextView
                 android:id="@+id/mammalName"
