@@ -16,7 +16,7 @@ public class MammalDexApp extends Application {
     public void onCreate() {
         super.onCreate();
         database = AppDatabase.getInstance(this);
-        repository = new Repository(database);
+        repository = new Repository(database, this);
     }
 
     // Getter methods
