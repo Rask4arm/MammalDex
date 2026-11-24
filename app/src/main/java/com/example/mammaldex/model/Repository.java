@@ -1,6 +1,7 @@
 package com.example.mammaldex.model;
 
 import androidx.lifecycle.LiveData;
+import androidx.room.Query;
 
 import com.example.mammaldex.model.database.daos.SpeciesDao;
 import com.example.mammaldex.model.database.entities.Species;
@@ -26,6 +27,30 @@ public class Repository {
         return speciesDao.getAll();
     }
 
+    public LiveData<List<Species>> getAllSpeciesByFamily(String family) {
+        return speciesDao.getAllSpeciesByFamily(family);
+    }
+
+    public LiveData<List<Species>> getAllSpeciesByGenus(String genus) {
+        return speciesDao.getAllSpeciesByGenus(genus);
+    }
+
+    public LiveData<List<Species>> getAllSpeciesByOrder(String order) {
+        return speciesDao.getAllSpeciesByOrder(order);
+    }
+
+    public LiveData<List<String>> getDistinctFamilies(String order) {
+        return speciesDao.getDistinctFamiliesByOrder(order);
+    }
+
+    public LiveData<List<String>> getDistinctGenera(String family) {
+        return speciesDao.getDistinctGeneraByFamily(family);
+    }
+
+    public LiveData<List<String>> getDistinctOrders() {
+        return speciesDao.getDistinctOrders();
+    }
+
     public LiveData<String> getSpeciesAltName(long speciesID, String searchText) {
         return speciesDao.getSpeciesAltName(speciesID, searchText);
     }
@@ -41,6 +66,18 @@ public class Repository {
 
     public LiveData<List<Species>> getSortedSpeciesNamesWith(String pattern) {
         return speciesDao.getSortedSpeciesNamesWith(pattern);
+    }
+
+    public LiveData<List<Species>> getSortedSpeciesNamesByFamilyWhere(String pattern, String family) {
+        return speciesDao.getSortedSpeciesNamesByFamilyWhere(pattern, family);
+    }
+
+    public LiveData<List<Species>> getSortedSpeciesNamesByGenusWhere(String pattern, String genus) {
+        return speciesDao.getSortedSpeciesNamesByGenusWhere(pattern, genus);
+    }
+
+    public LiveData<List<Species>> getSortedSpeciesNamesByOrderWhere(String pattern, String order) {
+        return speciesDao.getSortedSpeciesNamesByOrderWhere(pattern, order);
     }
     
     public LiveData<Species> getSpeciesBySciName(String name) {

@@ -13,9 +13,8 @@ import java.util.List;
 public class SpeciesViewModel extends ViewModel {
     private final Repository repository;
     private final LiveData<List<Species>> species;
-
+    private final MutableLiveData<String> filter = new MutableLiveData<>("");
     private final MutableLiveData<String> search = new MutableLiveData<>("");
-
 
     /**
      * This constructor sets the repository and creates an observer
@@ -41,11 +40,64 @@ public class SpeciesViewModel extends ViewModel {
     }
 
     /**
-     * Changes the string in the search mutable data so
-     * @param searchText the text that you want to search for
+     * This method gets all species of a given family from the local database through
+     * the application's data repository.
+     * @param family a String representing the target family
+     * @return a LiveData object with a list of species of the given family.
      */
-    public void setSearchText(String searchText) {
-        search.setValue(searchText);
+    public LiveData<List<Species>> getAllSpeciesByFamily(String family) {
+        return repository.getAllSpeciesByFamily(family);
+    }
+
+    /**
+     * This method gets all species of a given genus from the local database through
+     * the application's data repository.
+     * @param genus a String representing the target genus
+     * @return a LiveData object with a list of species of the given genus.
+     */
+    public LiveData<List<Species>> getAllSpeciesByGenus(String genus) {
+        return repository.getAllSpeciesByGenus(genus);
+    }
+
+    /**
+     * This method gets all species of a given order from the local database through
+     * the application's data repository.
+     * @param order a String representing the target order
+     * @return a LiveData object with a list of species of the given order.
+     */
+    public LiveData<List<Species>> getAllSpeciesByOrder(String order) {
+        return repository.getAllSpeciesByOrder(order);
+    }
+
+    /**
+     * This method gets all the unique family names in the local database from the
+     * species table with the given order.
+     * @param order the target order for families to belong to.
+     * @return a LiveData object with a list of all unique family names as strings
+     * with the specified order.
+     */
+    public LiveData<List<String>> getDistinctFamilies(String order) {
+        return repository.getDistinctFamilies(order);
+    }
+
+    /**
+     * This method gets all the unique genera names in the local database from the
+     * species table with the given family.
+     * @param family the target order for families to belong to.
+     * @return a LiveData object with a list of all unique family names as strings
+     * with the specified family.
+     */
+    public LiveData<List<String>> getDistinctGenera(String family) {
+        return repository.getDistinctGenera(family);
+    }
+
+    /**
+     * This method gets all unique orders for the species from the local database
+     * through the application's data repository.
+     * @return a LiveData object with a list of orders names as strings.
+     */
+    public LiveData<List<String>> getDistinctOrders() {
+        return repository.getDistinctOrders();
     }
 
     /**
@@ -78,6 +130,48 @@ public class SpeciesViewModel extends ViewModel {
     }
 
     /**
+     * This method prototype filters all species that include the user's inputted String
+     * in the search bar, such that it may be an exact match or a substring for available
+     * mammals. The rows are sorted alphabetically within name categories (tiers 0, 1, 2)
+     * and ordered by name, sci_name, alternate_species_names, with all results having
+     * the specified family.
+     * @param pattern the user's String input in the search bar
+     * @param family the selected family as a search filter
+     * @return a LiveData container with the results of the search
+     */
+    public LiveData<List<Species>> getSortedSpeciesNamesByFamilyWhere(String pattern, String family) {
+        return repository.getSortedSpeciesNamesByGenusWhere(pattern, family);
+    }
+
+    /**
+     * This method prototype filters all species that include the user's inputted String
+     * in the search bar, such that it may be an exact match or a substring for available
+     * mammals. The rows are sorted alphabetically within name categories (tiers 0, 1, 2)
+     * and ordered by name, sci_name, alternate_species_names, with all results having
+     * the specified genus.
+     * @param pattern the user's String input in the search bar
+     * @param genus the selected genus as a search filter
+     * @return a LiveData container with the results of the search
+     */
+    public LiveData<List<Species>> getSortedSpeciesNamesByGenusWhere(String pattern, String genus) {
+        return repository.getSortedSpeciesNamesByGenusWhere(pattern, genus);
+    }
+
+    /**
+     * This method prototype filters all species that include the user's inputted String
+     * in the search bar, such that it may be an exact match or a substring for available
+     * mammals. The rows are sorted alphabetically within name categories (tiers 0, 1, 2)
+     * and ordered by name, sci_name, alternate_species_names, with all results having
+     * the specified order.
+     * @param pattern the user's String input in the search bar
+     * @param order the selected order as a search filter
+     * @return a LiveData container with the results of the search
+     */
+    public LiveData<List<Species>> getSortedSpeciesNamesByOrderWhere(String pattern, String order) {
+        return repository.getSortedSpeciesNamesByGenusWhere(pattern, order);
+    }
+
+    /**
      * This method gets a LiveData list of species with common, scientific, and alternative names
      * that include the passed string pattern.
      * @param pattern the substring being searched for
@@ -85,6 +179,14 @@ public class SpeciesViewModel extends ViewModel {
      */
     public LiveData<Species> getSpeciesBySciName(String pattern) {
         return repository.getSpeciesBySciName(pattern);
+    }
+
+    /**
+     * Changes the string in the search mutable data so
+     * @param searchText the text that you want to search for
+     */
+    public void setSearchText(String searchText) {
+        search.setValue(searchText);
     }
 
     public void setSpeciesAsSeen(String sci_name) {
