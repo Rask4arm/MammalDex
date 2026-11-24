@@ -3,17 +3,21 @@ package com.example.mammaldex.view;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.bumptech.glide.Glide;
 import com.example.mammaldex.MammalDexApp;
 import com.example.mammaldex.R;
+import com.example.mammaldex.databinding.FragmentHomeBinding;
 import com.example.mammaldex.databinding.FragmentSpeciesBinding;
 import com.example.mammaldex.model.database.entities.Species;
 import com.example.mammaldex.viewModels.SpeciesViewModel;
@@ -30,6 +34,9 @@ public class SpeciesFragment extends Fragment {
     //Set the binding to the fragment XML elements.
     private FragmentSpeciesBinding binding;
 
+    //Set the Sight Adapter
+    SightedViewAdapter sightAdapter;
+
 
     /**
      * Fragment Constructor
@@ -42,6 +49,28 @@ public class SpeciesFragment extends Fragment {
     }
 
     /**
+     * This method handles all operations needed for when the fragment is being
+     * creating, including initializing the binding variable for UI references.
+     * @param inflater The LayoutInflater object that can be used to inflate
+     * any views in the fragment,
+     * @param container If non-null, this is the parent view that the fragment's
+     * UI should be attached to.  The fragment should not add the view itself,
+     * but this can be used to generate the LayoutParams of the view.
+     * @param savedInstanceState If non-null, this fragment is being re-constructed
+     * from a previous saved state as given here.
+     *
+     * @return the top-layer View of the inflated layout (the outermost element of the
+     * associated XML file).
+     */
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container,
+                             Bundle savedInstanceState) {
+        binding = FragmentSpeciesBinding.inflate(inflater, container, false);
+        return binding.getRoot();
+    }
+
+
+    /**
      * Run functions when the view is first created.
      * @param view The View returned by {onCreateView(LayoutInflater, ViewGroup, Bundle)}.
      * @param savedInstanceState If non-null, this fragment is being re-constructed
@@ -49,10 +78,19 @@ public class SpeciesFragment extends Fragment {
      */
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        binding = FragmentSpeciesBinding.bind(view);
+
+        //Set the adapter
+        sightAdapter = new SightedViewAdapter();
+        setRecyclerViewConfigs(view);
+
+        //TODO USING TEST OBJECT
+        sightAdapter.setTest();
+
+        //Set the view model to connect to the database
         MammalDexApp app = (MammalDexApp) requireActivity().getApplication();
         viewModel = new ViewModelProvider(this, new SpeciesViewModelFactory(app.getRepository())).get(SpeciesViewModel.class);
         setSpeciesInfo(speciesID);
+
     }
 
     /**
@@ -141,6 +179,8 @@ public class SpeciesFragment extends Fragment {
         // Load the image with Glide
         Glide.with(binding.getRoot().getContext())
                 .load(imageUrl)
+                .fallback(R.drawable.image_no_mammal)
+                .placeholder(R.drawable.image_no_mammal)
                 .into(binding.mammalImageView);
 
     }
@@ -152,6 +192,19 @@ public class SpeciesFragment extends Fragment {
     private void setSpeciesID(String species){
         speciesID = species;
     }
+
+
+    /**
+     * This method sets any configurations needed for the fragment's RecyclerView
+     * during class instantiation.
+     * @param view the root View of the fragment's layout
+     */
+    private void setRecyclerViewConfigs(View view) {
+        // Creates a grid layout so the mammal cards are in two columns
+        binding.sightedList.setLayoutManager(new LinearLayoutManager(requireContext()));
+        binding.sightedList.setAdapter(sightAdapter);
+    }
+
 
     /**
      * Helper Function to capitalize a string
