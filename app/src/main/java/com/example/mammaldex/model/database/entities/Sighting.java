@@ -27,6 +27,8 @@ public class Sighting {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     public Long id;
+    @ColumnInfo(name = "documentId")
+    public String documentId;
     @ColumnInfo(name = "species_id")
     public Long speciesId;
     @ColumnInfo(name = "latitude")
@@ -61,6 +63,8 @@ public class Sighting {
         return id;
     }
 
+    public String getDocumentId(){return documentId;}
+
     public Long getSpeciesId() {
         return speciesId;
     }
@@ -84,6 +88,8 @@ public class Sighting {
     public Boolean getDeleted() {
         return deleted;
     }
+
+    public void setDocumentId(String documentId){this.documentId = documentId;}
 
     public void setUpdatedAt(Long updatedAt) {
         this.updatedAt = updatedAt;

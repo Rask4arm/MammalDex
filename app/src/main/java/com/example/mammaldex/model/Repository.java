@@ -3,6 +3,7 @@ package com.example.mammaldex.model;
 import androidx.lifecycle.LiveData;
 import androidx.room.Query;
 
+import com.example.mammaldex.model.database.daos.SightingDao;
 import com.example.mammaldex.model.database.daos.SpeciesDao;
 import com.example.mammaldex.model.database.entities.Species;
 import com.example.mammaldex.model.database.local.AppDatabase;
@@ -17,9 +18,11 @@ import java.util.concurrent.Executors;
  */
 public class Repository {
     private final SpeciesDao speciesDao;
+    private final SightingDao sightingDao;
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
     public Repository(AppDatabase db){
         this.speciesDao = db.speciesDao();
+        this.sightingDao = db.sightingDao();
     }
 
     //Getters and setters

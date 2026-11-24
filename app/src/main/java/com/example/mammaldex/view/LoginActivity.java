@@ -9,6 +9,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mammaldex.databinding.ActivityLoginBinding;
+import com.example.mammaldex.model.Repository;
+import com.example.mammaldex.model.database.entities.Sighting;
+import com.example.mammaldex.model.database.entities.Species;
 import com.example.mammaldex.viewModels.Constants;
 import com.example.mammaldex.viewModels.PreferenceManager;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -80,13 +83,25 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void importUserData(FirebaseFirestore database, DocumentSnapshot document){
+        //Repository repo = new Repository(getApplicationContext().);
         // get sightings data to import into the sightings dao
         document.getReference()
                 .collection(Constants.KEY_COLLECTION_SIGHTINGS)
                 .get()
                 .addOnCompleteListener(task -> {
                    if(task.isSuccessful() && task.getResult() != null && task.getResult().getDocuments().size() > 0) {
-
+                        for(DocumentSnapshot documents : task.getResult()){
+                            Sighting sighting = new Sighting(
+                                    documents.getLong(Constants.KEY_SPECIES_ID),
+                                    documents.getDouble(Constants.KEY_LATITUDE),
+                                    documents.getDouble(Constants.KEY_LONGITUDE)
+                            );
+                            sighting.setDocumentId(documents.getId());
+                            sighting.setSyncStatus(documents.getString(Constants.KEY_SYNC_STATUS));
+                            sighting.setUpdatedAt(documents.getLong(Constants.KEY_UPDATED_AT)); // can also be set as datetime value in firebase
+                            // sighting created
+                            // Viggo put in dao?
+                        }
                    } else if (task.getResult().getDocuments().isEmpty()){
                        showToast("No Sightings Data to import");
                    } else {
@@ -100,7 +115,18 @@ public class LoginActivity extends AppCompatActivity {
                 .get()
                 .addOnCompleteListener( task -> {
                     if(task.isSuccessful() && task.getResult() != null && task.getResult().getDocuments().size() > 0){
+                        for(DocumentSnapshot documents : task.getResult()){
+                            // need to access repository database to get species by id and set as seen
 
+                            //Species species = repository.getSpeciesById(documents.getInt32Value(Constants.KEY_SPECIES_ID));
+                            // repository getter needs to request long or 32int data type
+                            // firestore doesn't support 32bit integers
+
+                            // species.setDocumentId(documents.getId());
+
+                            //species.setSeen(documents.getInt32Value(Constants.KEY_SEEN));
+                            // same issue as repository getter, can accept boolean though
+                        }
                     } else if (task.getResult().getDocuments().isEmpty()){
                         showToast("No Species Data to import");
                     } else {

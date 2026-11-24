@@ -19,6 +19,8 @@ public class Species {
     @PrimaryKey(autoGenerate = false)
     @ColumnInfo(name = "id")
     private Long id;
+    @ColumnInfo(name = "documentId")
+    private String documentId;
     @ColumnInfo(name = "name")
     private String name;
     @ColumnInfo(name = "sci_name")
@@ -57,6 +59,8 @@ public class Species {
     public Long getId() {
         return id;
     }
+
+    public String getDocumentId(){return documentId;}
 
     public String getName() {
         return name;
@@ -101,6 +105,8 @@ public class Species {
     public String getSyncStatus() {
         return syncStatus;
     }
+
+    public void setDocumentId(String documentId){this.documentId = documentId;}
 
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
