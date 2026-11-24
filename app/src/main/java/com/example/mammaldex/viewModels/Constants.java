@@ -13,4 +13,5 @@ public class Constants {
     public static final String KEY_LONGITUDE = "longitude";
     public static final String KEY_LATITUDE = "latitude";
     public static final String KEY_DATE = "date";
+    public static final String KEY_COLLECTION_SPECIES = "Species";
 }

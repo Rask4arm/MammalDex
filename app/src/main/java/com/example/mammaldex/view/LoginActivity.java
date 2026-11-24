@@ -67,6 +67,7 @@ public class LoginActivity extends AppCompatActivity {
                         preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_IN, true);
                         preferenceManager.putString(Constants.KEY_USER_ID, documentSnapshot.getId());
                         preferenceManager.putString(Constants.KEY_NAME, documentSnapshot.getString(Constants.KEY_NAME));
+                        importUserData(database, documentSnapshot);
 
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -76,6 +77,37 @@ public class LoginActivity extends AppCompatActivity {
                         showToast("Unable to sign in");
                     }
                 });
+    }
+
+    private void importUserData(FirebaseFirestore database, DocumentSnapshot document){
+        // get sightings data to import into the sightings dao
+        document.getReference()
+                .collection(Constants.KEY_COLLECTION_SIGHTINGS)
+                .get()
+                .addOnCompleteListener(task -> {
+                   if(task.isSuccessful() && task.getResult() != null && task.getResult().getDocuments().size() > 0) {
+
+                   } else if (task.getResult().getDocuments().isEmpty()){
+                       showToast("No Sightings Data to import");
+                   } else {
+                       showToast("Error importing sightings");
+                   }
+                });
+
+        // get species data to import into the species dao
+        document.getReference()
+                .collection(Constants.KEY_COLLECTION_SPECIES)
+                .get()
+                .addOnCompleteListener( task -> {
+                    if(task.isSuccessful() && task.getResult() != null && task.getResult().getDocuments().size() > 0){
+
+                    } else if (task.getResult().getDocuments().isEmpty()){
+                        showToast("No Species Data to import");
+                    } else {
+                        showToast("Error importing species");
+                    }
+                });
+
     }
 
     /**

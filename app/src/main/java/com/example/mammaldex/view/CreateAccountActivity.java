@@ -19,7 +19,6 @@ public class CreateAccountActivity extends AppCompatActivity {
     private ActivityCreateAccountBinding binding;
     private PreferenceManager preferenceManager;
 
-    private String encodeImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +71,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                         documentReference -> {
                             preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_IN, true);
                             preferenceManager.putString(Constants.KEY_NAME, binding.inputName.getText().toString());
+                            preferenceManager.putString(Constants.KEY_USER_ID, documentReference.getId());
 
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -83,47 +83,6 @@ public class CreateAccountActivity extends AppCompatActivity {
                 });
 
     }
-
-    /**
-     * Takes an image and converts it into a string
-     * @param bitmap the image picked
-     * @return the image converted to a string
-     */
-    /*private String encodeImage(Bitmap bitmap){
-        int previewWidth = 150;
-        int previewHeight = bitmap.getHeight()*previewWidth / bitmap.getWidth();
-
-        Bitmap previewBitmap = Bitmap.createScaledBitmap(bitmap, previewWidth, previewHeight, false);
-
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-
-        previewBitmap.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream);
-
-        byte[] bytes = byteArrayOutputStream.toByteArray();
-        return Base64.encodeToString(bytes, Base64.DEFAULT);
-    }*/
-
-    /**
-     * Holds an image the user picks for their profile picture
-     */
-    /*private final ActivityResultLauncher<Intent> pickImage = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            result ->{
-                if(result.getResultCode() == RESULT_OK){
-                    Uri imageUri = result.getData().getData();
-                    try {
-                        InputStream inputStream = getContentResolver().openInputStream(imageUri);
-                        Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                        binding.imageProfile.setImageBitmap(bitmap);
-                        binding.textAddImage.setVisibility(View.GONE);
-                        encodeImage = encodeImage(bitmap);
-
-                    } catch (FileNotFoundException e){
-                        e.printStackTrace();
-                    }
-                }
-            }
-    );*/
 
     /**
      * Checks if the edit views have valid inputs
