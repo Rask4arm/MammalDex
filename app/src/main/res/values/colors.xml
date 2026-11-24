@@ -9,9 +9,12 @@
     <color name="primary_brown">#613E23</color>
 
     <!-- Input Fields -->
-    <color name="background_input_field">#6EC34A</color>
+    <color name="background_input_field">#F1FBF2</color>
+    <color name="stroke_input_field">#5A7D56</color>
     <color name="hint_text">#8A8A8A</color>
-    <color name="show_password_icon">#613E23</color>
+    <color name="show_password_icon">#424242</color>
+
+
     <!-- Search Bar Colors -->
     <color name="input_background">#ECE6F0</color>
     <color name="input_border">#424642</color>
