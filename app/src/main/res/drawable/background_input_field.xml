@@ -4,6 +4,6 @@
     <solid android:color="@color/background_input_field"/>
     <corners android:radius="20dp"/>
     <stroke
-        android:color="@color/primary_brown"
+        android:color="@color/stroke_input_field"
         android:width="2dp"/>
 </shape>
