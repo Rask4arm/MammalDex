@@ -64,4 +64,5 @@ dependencies {
     annotationProcessor("com.github.bumptech.glide:compiler:4.16.0")
     implementation("com.google.android.gms:play-services-location:21.4.0")
     implementation("androidx.lifecycle:lifecycle-livedata:2.9.4")
+    implementation("androidx.work:work-runtime:2.10.5")
 }

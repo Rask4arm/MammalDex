@@ -8,6 +8,11 @@ import android.location.Location;
 
 import androidx.core.content.ContextCompat;
 
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResponse;
+import com.google.android.gms.location.SettingsClient;
+import com.google.android.gms.tasks.Task;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.Priority;
@@ -37,7 +42,7 @@ public class LocationHelper {
          * @param latitude the device's latitude coordinate
          * @param longitude the device's longitude coordinate
          */
-        void onLocationRecieved(double latitude, double longitude);
+        void onLocationReceived(double latitude, double longitude);
 
         /**
          * Called when the location request cannot be completed.
@@ -47,6 +52,29 @@ public class LocationHelper {
         void onLocationError(String error);
     }
 
+    /**
+     * Checks whether the device's location settings are enabled.
+     *
+     * @return a Task containing the result of the settings check
+     */
+    public Task<LocationSettingsResponse> checkLocationSettings() {
+
+        LocationRequest locationRequest = new LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 5000)
+                .setMinUpdateIntervalMillis(2000) // Fastest allowed interval
+                .build();
+
+
+        LocationSettingsRequest settingsRequest =
+                new LocationSettingsRequest.Builder()
+                        .addLocationRequest(locationRequest)
+                        .setAlwaysShow(true)
+                        .build();
+
+        SettingsClient settingsClient =
+                LocationServices.getSettingsClient(context);
+
+        return settingsClient.checkLocationSettings(settingsRequest);
+    }
     /**
      * Creates a LocationHelper and initializes the Fused Location Provider.
      *
@@ -68,12 +96,12 @@ public class LocationHelper {
      *
      * @param callback the callback that receives the coordinates or an error
      */
-    @SuppressLint("Missing Permissions")
+    @SuppressLint("Missing Permission")
     public void getCurrentLocation(LocationCallback callback) {
 
         //Check whether location is enabled in app settings
         if (!LocationPreferences.isLocationEnabled(context)) {
-            callback.onLocationError("Location services are disabled");
+            callback.onLocationError("Location preference is disabled");
             return;
         }
 
@@ -99,7 +127,7 @@ public class LocationHelper {
                     cancellationTokenSource.getToken()).addOnSuccessListener(location -> {
 
                 if (location != null) {
-                    callback.onLocationRecieved(
+                    callback.onLocationReceived(
                             location.getLatitude(),
                             location.getLongitude()
                     );

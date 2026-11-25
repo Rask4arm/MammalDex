@@ -183,6 +183,26 @@ public class SpeciesFragment extends Fragment {
                 .placeholder(R.drawable.image_no_mammal)
                 .into(binding.mammalImageView);
 
+        // Open the Add Sighting popup.
+        binding.addSightingButton.setOnClickListener(v -> {
+            showAddSightingDialog(speciesData);
+        });
+
+        // Make the quick-add icon open the same popup.
+        binding.quickAddButton.setOnClickListener(v -> {
+            showAddSightingDialog(speciesData);
+        });
+    }
+    /**
+     * Displays a popup that allows the user to record a sighting
+     * of the currently selected species.
+     *
+     * @param speciesData The species associated with the sighting.
+     */
+    private void showAddSightingDialog(Species speciesData) {
+
+        // TODO: Display the sighting dialog and retrieve the user's location.
+
     }
 
     /**

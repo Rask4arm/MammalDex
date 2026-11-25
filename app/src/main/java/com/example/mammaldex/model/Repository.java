@@ -1,11 +1,14 @@
 package com.example.mammaldex.model;
 
+import android.content.Context;
+
 import androidx.lifecycle.LiveData;
 import androidx.room.Query;
 
 import com.example.mammaldex.model.database.daos.SpeciesDao;
 import com.example.mammaldex.model.database.entities.Species;
 import com.example.mammaldex.model.database.local.AppDatabase;
+import com.example.mammaldex.model.database.sync.SyncScheduler;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -18,8 +21,10 @@ import java.util.concurrent.Executors;
 public class Repository {
     private final SpeciesDao speciesDao;
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
-    public Repository(AppDatabase db){
+    private final Context context;
+    public Repository(AppDatabase db, Context context){
         this.speciesDao = db.speciesDao();
+        this.context = context.getApplicationContext();
     }
 
     //Getters and setters
@@ -90,10 +95,12 @@ public class Repository {
 
     public void setSeenTrue(String name) {
         executorService.execute(() -> speciesDao.updateSeen(name, 1));
+        SyncScheduler.scheduleSync(context);
     }
 
     public void setSeenFalse(String name) {
         executorService.execute(() -> speciesDao.updateSeen(name, 0));
+        SyncScheduler.scheduleSync(context);
     }
 
 }
