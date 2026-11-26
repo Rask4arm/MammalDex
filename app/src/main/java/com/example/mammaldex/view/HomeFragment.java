@@ -68,7 +68,7 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         //Connects the adapter
-        dexAdapter = new DexViewAdapter();
+        dexAdapter = new DexViewAdapter(this::getNextLevel);
         setRecyclerViewConfigs(view);
 
         //Set the view model to connect to the database
@@ -94,6 +94,49 @@ public class HomeFragment extends Fragment {
                 dexAdapter.setOrderDex(results, view);
             }
         );
+    }
+
+    private void getNextLevel(DexObject dexObject) {
+
+        switch(dexObject.getLevel()){
+            case 1:
+                viewModel.getDistinctFamilies(dexObject.getDexId()).observe(getViewLifecycleOwner(), results-> {
+
+                    if (!(dexObject.isExpanded())) {
+                        dexAdapter.deExpandDex(dexObject);
+                    } else {
+                        dexAdapter.expandDex(dexObject, results);
+                    }
+
+                });
+                break;
+            case 2:
+                viewModel.getDistinctGenera(dexObject.getDexId()).observe(getViewLifecycleOwner(), results-> {
+
+                    if (!(dexObject.isExpanded())) {
+                        dexAdapter.deExpandDex(dexObject);
+                    } else {
+                        dexAdapter.expandDex(dexObject, results);
+                    }
+
+
+                });
+                break;
+            case 3:
+
+//                viewModel.getAllSpeciesByGenus(dexObject.getDexId()).observe(getViewLifecycleOwner(), results-> {
+//
+//                    if (!(dexObject.isExpanded())) {
+//                        dexAdapter.deExpandDex(dexObject, results.size());
+//                    } else {
+//                        dexAdapter.expandDex(dexObject, results);
+//
+//                    }
+//                });
+                break;
+            default:
+                Toast.makeText(getContext(), "Failed to Expand", Toast.LENGTH_SHORT).show();
+        }
     }
 
 }

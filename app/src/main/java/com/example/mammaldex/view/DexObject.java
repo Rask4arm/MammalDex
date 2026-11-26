@@ -18,6 +18,13 @@ public class DexObject {
     }
 
     /**
+     * Setter methods
+     */
+    public void setExpanded(boolean isExpanded){
+        this.isExpanded = isExpanded;
+    }
+
+    /**
      * Getter Methods
      */
     public String getDexId(){
