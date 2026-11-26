@@ -1,4 +1,4 @@
-package com.example.mammaldex.view;
+package com.example.mammaldex.view.fragments;
 
 import androidx.fragment.app.Fragment;
 

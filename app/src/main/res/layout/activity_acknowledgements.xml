@@ -6,7 +6,7 @@
     android:gravity="top|center"
     xmlns:tools="http://schemas.android.com/tools"
     android:animateLayoutChanges="true"
-    tools:context=".view.AcknowledgementsActivity">
+    tools:context=".view.activities.AcknowledgementsActivity">
 
     <!-- About Us Header and Back Button -->
     <LinearLayout

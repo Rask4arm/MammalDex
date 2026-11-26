@@ -1,4 +1,4 @@
-package com.example.mammaldex.view;
+package com.example.mammaldex.view.fragments;
 
 import android.os.Bundle;
 import android.text.InputFilter;
@@ -13,13 +13,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.SearchView;
 
 import com.example.mammaldex.MammalDexApp;
 import com.example.mammaldex.R;
 import com.example.mammaldex.databinding.FragmentSearchBinding;
 import com.example.mammaldex.databinding.SearchFilterPopupBinding;
+import com.example.mammaldex.view.SearchViewAdapter;
 import com.example.mammaldex.viewModels.SpeciesViewModelFactory;
 import com.example.mammaldex.viewModels.SpeciesViewModel;
 

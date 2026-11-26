@@ -10,7 +10,7 @@
     android:padding="24dp"
     android:scrollbars="none"
     android:animateLayoutChanges="true"
-    tools:context=".view.CreateAccountActivity">
+    tools:context=".view.activities.CreateAccountActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

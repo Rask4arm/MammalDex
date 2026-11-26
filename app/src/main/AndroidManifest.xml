@@ -15,9 +15,9 @@
         android:name=".MammalDexApp"
         android:theme="@style/Theme.MammalDex" >
         <activity
-            android:name=".view.MainActivity"
+            android:name=".view.activities.MainActivity"
             android:exported="true" />
-        <activity android:name=".view.LoginActivity"
+        <activity android:name=".view.activities.LoginActivity"
             android:exported="true">
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
@@ -26,13 +26,13 @@
         </intent-filter>
         </activity>
         <activity
-            android:name=".view.CreateAccountActivity"
+            android:name=".view.activities.CreateAccountActivity"
             android:exported="false"/>
         <activity
-            android:name=".view.AboutUsActivity"
+            android:name=".view.activities.AboutUsActivity"
             android:exported="false"/>
         <activity
-            android:name=".view.AcknowledgementsActivity"
+            android:name=".view.activities.AcknowledgementsActivity"
             android:exported="false"/>
 
         <meta-data

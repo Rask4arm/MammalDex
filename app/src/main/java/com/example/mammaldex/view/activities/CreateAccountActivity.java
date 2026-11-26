@@ -1,4 +1,4 @@
-package com.example.mammaldex.view;
+package com.example.mammaldex.view.activities;
 
 import android.content.Intent;
 import android.os.Bundle;

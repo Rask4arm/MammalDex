@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:gravity="top|center"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.mammaldex.view.ProfileFragment">
+    tools:context="com.example.mammaldex.view.fragments.ProfileFragment">
 
     <!-- Content for Header -->
     <TextView

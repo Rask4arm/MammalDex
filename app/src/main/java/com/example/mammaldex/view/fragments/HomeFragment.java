@@ -1,14 +1,11 @@
-package com.example.mammaldex.view;
+package com.example.mammaldex.view.fragments;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 
 import com.example.mammaldex.R;
 

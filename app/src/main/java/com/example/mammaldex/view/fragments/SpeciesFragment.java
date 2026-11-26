@@ -1,4 +1,4 @@
-package com.example.mammaldex.view;
+package com.example.mammaldex.view.fragments;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -20,6 +20,7 @@ import com.example.mammaldex.R;
 import com.example.mammaldex.databinding.FragmentHomeBinding;
 import com.example.mammaldex.databinding.FragmentSpeciesBinding;
 import com.example.mammaldex.model.database.entities.Species;
+import com.example.mammaldex.view.SightedViewAdapter;
 import com.example.mammaldex.viewModels.SpeciesViewModel;
 import com.example.mammaldex.viewModels.SpeciesViewModelFactory;
 

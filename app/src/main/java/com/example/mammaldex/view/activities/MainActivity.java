@@ -1,4 +1,4 @@
-package com.example.mammaldex.view;
+package com.example.mammaldex.view.activities;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +13,10 @@ import com.example.mammaldex.databinding.ActivityMainBinding;
 import com.example.mammaldex.model.database.DatabaseInitializer;
 import com.example.mammaldex.MammalDexApp;
 import com.example.mammaldex.R;
+import com.example.mammaldex.view.fragments.HomeFragment;
+import com.example.mammaldex.view.fragments.MapFragment;
+import com.example.mammaldex.view.fragments.ProfileFragment;
+import com.example.mammaldex.view.fragments.SearchFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 

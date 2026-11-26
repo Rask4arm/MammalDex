@@ -1,11 +1,9 @@
-package com.example.mammaldex.view;
+package com.example.mammaldex.view.fragments;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
@@ -16,6 +14,9 @@ import androidx.fragment.app.Fragment;
 import com.example.mammaldex.R;
 
 import com.example.mammaldex.databinding.FragmentProfileBinding;
+import com.example.mammaldex.view.activities.AboutUsActivity;
+import com.example.mammaldex.view.activities.AcknowledgementsActivity;
+import com.example.mammaldex.view.activities.LoginActivity;
 import com.example.mammaldex.viewModels.PreferenceManager;
 
 /**

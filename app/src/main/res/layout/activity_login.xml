@@ -10,7 +10,7 @@
     android:padding="24dp"
     android:scrollbars="none"
     android:animateLayoutChanges="true"
-    tools:context=".view.LoginActivity">
+    tools:context=".view.activities.LoginActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

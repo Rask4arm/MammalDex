@@ -4,7 +4,7 @@
     android:layout_height="75dp"
     android:padding="10dp"
     android:orientation="horizontal"
-    android:background="@drawable/bg_dex_item">
+    android:background="@drawable/background_input_field">
 
     <TextView
         android:id="@+id/sightedNumber"
