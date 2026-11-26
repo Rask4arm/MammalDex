@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/speciesDex"
+    android:layout_width="match_parent"
+    android:layout_height="60dp">
+
+    <View
+        android:id="@+id/bufferView"
+        android:layout_width="60dp"
+        android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:orientation="horizontal"
+        android:background="@drawable/bg_dex_species_item">
+
+
+        <TextView
+            android:id="@+id/speciesName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="10dp"
+            android:layout_gravity="center_vertical"
+            android:text="Species Name"
+            android:textSize="13sp"
+            android:textStyle="bold"/>
+
+        <FrameLayout
+            android:layout_width="140dp"
+            android:layout_height="match_parent"
+            android:padding="3dp">
+
+            <ImageView
+                android:id="@+id/speciesImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:scaleType="fitXY"
+                android:src="@drawable/image_no_mammal"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/dex_image_gradiant"
+                android:layout_gravity="top">
+
+            </View>
+
+        </FrameLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>

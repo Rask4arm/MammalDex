@@ -1,14 +1,18 @@
 package com.example.mammaldex.view;
 
+import com.example.mammaldex.model.database.entities.Species;
+
 /**
  * Create a Dex List Object that would get
  */
 public class DexObject {
 
-    private String dexId;
-    private String dexTitle;
-    private int levelInDex;
+    private final String dexId;
+    private final String dexTitle;
+    private final int levelInDex;
     private boolean isExpanded;
+
+    private Species speciesObject;
 
     public DexObject(String dexId, String dexTitle, int levelInDex, boolean isExpanded){
         this.dexId = dexId;
@@ -22,6 +26,10 @@ public class DexObject {
      */
     public void setExpanded(boolean isExpanded){
         this.isExpanded = isExpanded;
+    }
+
+    public void setSpecies(Species species){
+        speciesObject = species;
     }
 
     /**
@@ -41,6 +49,10 @@ public class DexObject {
 
     public boolean isExpanded(){
         return isExpanded;
+    }
+
+    public Species getSpecies(){
+        return speciesObject;
     }
 
 

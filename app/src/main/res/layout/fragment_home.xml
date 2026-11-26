@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:padding="24dp">
+    android:padding="15dp"
+    android:paddingTop="24dp">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/dexList"

@@ -68,7 +68,7 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         //Connects the adapter
-        dexAdapter = new DexViewAdapter(this::getNextLevel);
+        dexAdapter = new DexViewAdapter(this::getNextLevel, this::navigateToSpecies);
         setRecyclerViewConfigs(view);
 
         //Set the view model to connect to the database
@@ -96,10 +96,16 @@ public class HomeFragment extends Fragment {
         );
     }
 
+    /**
+     * Expands the list of the current dex object of next taxonomic rank
+     * @param dexObject to get the next taxonomic rank list
+     */
     private void getNextLevel(DexObject dexObject) {
 
+        //Get the right database function to get data for the next taxonomic rank
         switch(dexObject.getLevel()){
             case 1:
+                //Expand the family rank from Order
                 viewModel.getDistinctFamilies(dexObject.getDexId()).observe(getViewLifecycleOwner(), results-> {
 
                     if (!(dexObject.isExpanded())) {
@@ -111,6 +117,7 @@ public class HomeFragment extends Fragment {
                 });
                 break;
             case 2:
+                //Expand the Genus rank from Family
                 viewModel.getDistinctGenera(dexObject.getDexId()).observe(getViewLifecycleOwner(), results-> {
 
                     if (!(dexObject.isExpanded())) {
@@ -123,20 +130,39 @@ public class HomeFragment extends Fragment {
                 });
                 break;
             case 3:
+                //Expand the species rank from the genus
+                viewModel.getAllSpeciesByGenus(dexObject.getDexId()).observe(getViewLifecycleOwner(), results-> {
 
-//                viewModel.getAllSpeciesByGenus(dexObject.getDexId()).observe(getViewLifecycleOwner(), results-> {
-//
-//                    if (!(dexObject.isExpanded())) {
-//                        dexAdapter.deExpandDex(dexObject, results.size());
-//                    } else {
-//                        dexAdapter.expandDex(dexObject, results);
-//
-//                    }
-//                });
+                    if (!(dexObject.isExpanded())) {
+                        dexAdapter.deExpandDex(dexObject);
+                    } else {
+                        dexAdapter.expandSpecies(dexObject, results);
+
+                    }
+                });
                 break;
             default:
                 Toast.makeText(getContext(), "Failed to Expand", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    /**
+     * Navigates the to the species page of selected species
+     * @param dexObject the selected species.
+     */
+    private void navigateToSpecies(DexObject dexObject){
+
+        String speciesId = dexObject.getSpecies().getSciName();
+
+        try {
+            requireActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.nav_host_fragment, new SpeciesFragment(speciesId)).commit();
+        } catch (Exception e) {
+            System.out.println("Nope" + e);
+            throw new RuntimeException(e);
+        }
+
+
     }
 
 }
