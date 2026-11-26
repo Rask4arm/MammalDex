@@ -13,15 +13,15 @@ import java.util.List;
 public interface SightingDao {
 
     /**
-     * TODO : Add Javadoc
-     * @param sightings
+     * Method to insert all the sightings into the database
+     * @param sightings List of all the sightings to add
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(List<Sighting> sightings);
 
     /**
-     * TODO : Add Javadoc
-     * @return
+     * Method that uses SQL to get all the sightings from the database
+     * @return A list of all the sightings in the database
      */
     @Query("SELECT * FROM sighting")
     List<Sighting> getAll();

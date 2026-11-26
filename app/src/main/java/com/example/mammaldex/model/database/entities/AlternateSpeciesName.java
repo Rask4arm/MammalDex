@@ -30,7 +30,7 @@ public class AlternateSpeciesName {
     private Long speciesId;
 
     /**
-     * TODO : Add Javadoc
+     * Constructor for the AlternateSpeciesName class
      * @param name This should be a String of the alternate name for the species that is specified in the speciesId
      * @param speciesId Long speciesId
      */
